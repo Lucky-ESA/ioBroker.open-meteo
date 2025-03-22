@@ -1,0 +1,974 @@
+{
+    "i18n": true,
+    "type": "tabs",
+    "tabsStyle": {
+        "width": "calc(100% - 100px)"
+    },
+    "items": {
+        "tab1": {
+            "type": "panel",
+            "label": "open-meteo adapter settings",
+            "items": {
+                "_headerAdapter": {
+                    "type": "header",
+                    "text": "standard settings",
+                    "size": 2
+                },
+                "coordinates": {
+                    "type": "coordinates",
+                    "autoInit": true,
+                    "useSystemName": "false",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "forecast": {
+                    "type": "select",
+                    "label": "dayForecast",
+                    "options": [
+                        { "label": "1 Week", "value": 1 },
+                        { "label": "2 Weeks", "value": 2 },
+                        { "label": "3 Weeks", "value": 3 },
+                        { "label": "4 Weeks", "value": 4 },
+                        { "label": "5 Weeks", "value": 5 },
+                        { "label": "6 Weeks", "value": 6 },
+                        { "label": "7 Weeks", "value": 3 },
+                        { "label": "8 Weeks", "value": 8 }
+                    ],
+                    "default": 1,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "interval": {
+                    "type": "number",
+                    "label": "intervalData",
+                    "default": 60,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "temperaturUnit": {
+                    "type": "select",
+                    "label": "Temperatur Unit",
+                    "options": [
+                        { "label": "Celsius", "value": "default" },
+                        { "label": "Fahrenheit", "value": "fahrenheit" }
+                    ],
+                    "default": "default",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "windSpeedUnit": {
+                    "type": "select",
+                    "label": "windSpeedUnit",
+                    "options": [
+                        { "label": "km/h", "value": "default" },
+                        { "label": "m/s", "value": "m/s" },
+                        { "label": "mph", "value": "mph" },
+                        { "label": "Knots", "value": "Knots" }
+                    ],
+                    "default": "default",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "precipitationUnit": {
+                    "type": "select",
+                    "label": "Precipitation Unit",
+                    "options": [
+                        { "label": "Millimeter", "value": "default" },
+                        { "label": "Inch", "value": "inch" }
+                    ],
+                    "default": "default",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "timeformat": {
+                    "type": "select",
+                    "label": "Timeformat",
+                    "options": [
+                        { "label": "ISO 8610 (e.g. 2025-01-01)", "value": "default" },
+                        { "label": "Unix timestamp", "value": "unixtime" }
+                    ],
+                    "default": "default",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "apiKey": {
+                    "type": "password",
+                    "label": "apikey",
+                    "help": "apikey_help",
+                    "default": "",
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "maxRequest": {
+                    "type": "number",
+                    "label": "Maximum requests per day",
+                    "default": 10000,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                }
+            }
+        },
+        "tab2": {
+            "type": "panel",
+            "label": "Hourly Weather Variables",
+            "items": {
+                "_headerAdapter": {
+                    "type": "header",
+                    "text": "Hourly Weather Variables",
+                    "size": 2
+                },
+                "h_temperature_2m": {
+                    "type": "checkbox",
+                    "label": "Temperature (2 m)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_temperature_80m": {
+                    "type": "checkbox",
+                    "label": "Temperature (80 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_temperature_120m": {
+                    "type": "checkbox",
+                    "label": "Temperature (120 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_temperature_180m": {
+                    "type": "checkbox",
+                    "label": "Temperature (180 m)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_apparent_temperature": {
+                    "type": "checkbox",
+                    "label": "Apparent Temperature",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_precipitation": {
+                    "type": "checkbox",
+                    "label": "Precipitation (rain + showers + snow)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_precipitation_probability": {
+                    "type": "checkbox",
+                    "label": "Precipitation probability",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_weather_code": {
+                    "type": "checkbox",
+                    "label": "Weather code",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_wind_speed_10m": {
+                    "type": "checkbox",
+                    "label": "Wind Speed (10 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_wind_speed_80m": {
+                    "type": "checkbox",
+                    "label": "Wind Speed (80 m)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_wind_speed_120m": {
+                    "type": "checkbox",
+                    "label": "Wind Speed (120 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_wind_speed_180m": {
+                    "type": "checkbox",
+                    "label": "Wind Speed (180 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_wind_direction_10m": {
+                    "type": "checkbox",
+                    "label": "Wind Direction (10 m)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_wind_direction_80m": {
+                    "type": "checkbox",
+                    "label": "Wind Direction (80 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_wind_direction_120m": {
+                    "type": "checkbox",
+                    "label": "Wind Direction (120 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_wind_direction_180m": {
+                    "type": "checkbox",
+                    "label": "Wind Direction (180 m)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_wind_gusts_10m": {
+                    "type": "checkbox",
+                    "label": "Wind Gusts (10 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_relative_humidity_2m": {
+                    "type": "checkbox",
+                    "label": "Relative Humidity (2 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_rain": {
+                    "type": "checkbox",
+                    "label": "Rain",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_showers": {
+                    "type": "checkbox",
+                    "label": "Showers",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_snowfall": {
+                    "type": "checkbox",
+                    "label": "Snowfall",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_snow_depth": {
+                    "type": "checkbox",
+                    "label": "Snow depth",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_soil_temperature_0cm": {
+                    "type": "checkbox",
+                    "label": "Soil Temperature (0 cm)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_soil_temperature_6cm": {
+                    "type": "checkbox",
+                    "label": "Soil Temperature (6 cm)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_soil_temperature_18cm": {
+                    "type": "checkbox",
+                    "label": "Soil Temperature (18 cm)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_soil_temperature_54cm": {
+                    "type": "checkbox",
+                    "label": "Soil Temperature (54 cm)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_soil_moisture_0_to_1cm": {
+                    "type": "checkbox",
+                    "label": "Soil Moisture (0-1 cm)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_soil_moisture_1_to_3cm": {
+                    "type": "checkbox",
+                    "label": "Soil Moisture (1-3 cm)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_soil_moisture_3_to_9cm": {
+                    "type": "checkbox",
+                    "label": "Soil Moisture (3-9 cm)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_soil_moisture_9_to_27cm": {
+                    "type": "checkbox",
+                    "label": "Soil Moisture (9-27 cm)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_soil_moisture_27_to_81cm": {
+                    "type": "checkbox",
+                    "label": "Soil Moisture (27-81 cm)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_visibility": {
+                    "type": "checkbox",
+                    "label": "Visibility",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_cloud_cover": {
+                    "type": "checkbox",
+                    "label": "Cloud cover",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_cloud_cover_low": {
+                    "type": "checkbox",
+                    "label": "Cloud cover low",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_cloud_cover_mid": {
+                    "type": "checkbox",
+                    "label": "Cloud cover mid",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_cloud_cover_high": {
+                    "type": "checkbox",
+                    "label": "Cloud cover high",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "h_dew_point_2m": {
+                    "type": "checkbox",
+                    "label": "Dewpoint",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                }
+            }
+        },
+        "tab3": {
+            "type": "panel",
+            "label": "Daily Weather Variables",
+            "items": {
+                "_headerAdapter": {
+                    "type": "header",
+                    "text": "Daily Weather Variables",
+                    "size": 2
+                },
+                "d_apparent_temperature_min": {
+                    "type": "checkbox",
+                    "label": "Minimum Apparent Temperature (2 m)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_apparent_temperature_max": {
+                    "type": "checkbox",
+                    "label": "Maximum Apparent Temperature (2 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_temperature_2m_min": {
+                    "type": "checkbox",
+                    "label": "Minimum Temperature (2 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_temperature_2m_max": {
+                    "type": "checkbox",
+                    "label": "Maximum Temperature (2 m)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_ ": {
+                    "type": "checkbox",
+                    "label": "Precipitation Sum",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_precipitation_probability_max": {
+                    "type": "checkbox",
+                    "label": "Precipitation Probability Max",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_precipitation_hours": {
+                    "type": "checkbox",
+                    "label": "Precipitation Hours",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_weather_code": {
+                    "type": "checkbox",
+                    "label": "Weather code",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_wind_speed_10m_max": {
+                    "type": "checkbox",
+                    "label": "Maximum Wind Speed (10 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_wind_direction_10m_dominant": {
+                    "type": "checkbox",
+                    "label": "Dominant Wind Direction (10 m)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_wind_gusts_10m_max": {
+                    "type": "checkbox",
+                    "label": "Maximum Wind Gusts (10 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_rain_sum": {
+                    "type": "checkbox",
+                    "label": "Rain Sum",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_showers_sum": {
+                    "type": "checkbox",
+                    "label": "Showers Sum",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_snowfall_sum": {
+                    "type": "checkbox",
+                    "label": "Snowfall Sum",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_sunshine_duration": {
+                    "type": "checkbox",
+                    "label": "Sunshine Duration",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_daylight_duration": {
+                    "type": "checkbox",
+                    "label": "Daylight Duration",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_uv_index_max": {
+                    "type": "checkbox",
+                    "label": "UV Index",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "d_uv_index_clear_sky_max": {
+                    "type": "checkbox",
+                    "label": "UV Index Clear Sky",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                }
+            }
+        },
+        "tab4": {
+            "type": "panel",
+            "label": "Current Weather",
+            "items": {
+                "_headerAdapter": {
+                    "type": "header",
+                    "text": "Current Weather",
+                    "size": 2
+                },
+                "c_temperature_2m": {
+                    "type": "checkbox",
+                    "label": "Temperature (2 m)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "c_apparent_temperature": {
+                    "type": "checkbox",
+                    "label": "Apparent Temperature",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "c_precipitation": {
+                    "type": "checkbox",
+                    "label": "Precipitation",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "c_weather_code": {
+                    "type": "checkbox",
+                    "label": "Weather code",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "c_wind_speed_10m": {
+                    "type": "checkbox",
+                    "label": "Wind Speed (10 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "c_wind_direction_10m": {
+                    "type": "checkbox",
+                    "label": "Wind Direction (10 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "c_wind_gusts_10m": {
+                    "type": "checkbox",
+                    "label": "Wind Gusts (10 m)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "c_relative_humidity_2m": {
+                    "type": "checkbox",
+                    "label": "Relative Humidity (2 m)",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "c_rain": {
+                    "type": "checkbox",
+                    "label": "Rain",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "c_showers": {
+                    "type": "checkbox",
+                    "label": "Showers",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "c_snowfall": {
+                    "type": "checkbox",
+                    "label": "Snowfall",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "c_cloud_cover": {
+                    "type": "checkbox",
+                    "label": "Cloud cover",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                }
+            }
+        },
+        "tab5": {
+            "type": "panel",
+            "label": "15-Minutely Weather",
+            "items": {
+                "_headerAdapter": {
+                    "type": "header",
+                    "text": "15-Minutely Weather Forecast",
+                    "size": 2
+                },
+                "m_precipitation": {
+                    "type": "checkbox",
+                    "label": "Precipitation (rain + showers + snow)",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "m_freezing_level_height": {
+                    "type": "checkbox",
+                    "label": "Freezing Level Height",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "m_sunshine_duration": {
+                    "type": "checkbox",
+                    "label": "Sunshine Duration",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "m_rain": {
+                    "type": "checkbox",
+                    "label": "Rain",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "m_cape": {
+                    "type": "checkbox",
+                    "label": "CAPE",
+                    "tooltip": "Convective available potential energy",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "m_snowfall": {
+                    "type": "checkbox",
+                    "label": "Snowfall",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "m_lightning_potential": {
+                    "type": "checkbox",
+                    "label": "Lightning Potential Index LPI",
+                    "default": false,
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "m_snowfall_height": {
+                    "type": "checkbox",
+                    "label": "Snowfall Height",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                },
+                "m_is_day": {
+                    "type": "checkbox",
+                    "label": "Is Day or Night",
+                    "default": false,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
+                }
+            }
+        }
+    }
+}

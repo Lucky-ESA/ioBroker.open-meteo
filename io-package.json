@@ -1,0 +1,209 @@
+{
+    "common": {
+        "name": "open-meteo",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "uk": "Початкова версія",
+                "zh-cn": "首次出版"
+            }
+        },
+        "titleLang": {
+            "en": "Open-Meteo",
+            "de": "Open-Meteo",
+            "ru": "Open-Meteo",
+            "pt": "Meteo aberto",
+            "nl": "Open-meter",
+            "fr": "Envergure",
+            "it": "Meteo aperto",
+            "es": "Meteeo abierto",
+            "pl": "Open-Meteo",
+            "uk": "Відкритий метео",
+            "zh-cn": "开放式"
+        },
+        "desc": {
+            "en": "Weather forecast",
+            "de": "Wettervorhersage",
+            "ru": "Прогноз погоды",
+            "pt": "Previsão do tempo",
+            "nl": "Weersvoorspelling",
+            "fr": "Prévisions météorologiques",
+            "it": "Previsioni meteorologiche",
+            "es": "Pronóstico del tiempo",
+            "pl": "Prognoza pogody",
+            "uk": "Прогноз погоди",
+            "zh-cn": "天气预报"
+        },
+        "authors": [
+            "Lucky-ESA <github@luckyskills.de>"
+        ],
+        "keywords": [
+            "weather",
+            "forecast",
+            "rain",
+            "temperature"
+        ],
+        "licenseInformation": {
+            "type": "free",
+            "license": "MIT"
+        },
+        "platform": "Javascript/Node.js",
+        "icon": "open-meteo.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/Lucky-ESA/ioBroker.open-meteo/main/admin/open-meteo.png",
+        "readme": "https://github.com/Lucky-ESA/ioBroker.open-meteo/blob/main/README.md",
+        "loglevel": "info",
+        "tier": 3,
+        "mode": "daemon",
+        "type": "weather",
+        "compact": true,
+        "connectionType": "cloud",
+        "dataSource": "poll",
+        "adminUI": {
+            "config": "json"
+        },
+        "docs": {
+            "en": [
+                "docs/en/README.md"
+            ],
+            "de": [
+                "docs/de/README.md"
+            ]
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=6.0.11"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=7.4.10"
+            }
+        ]
+    },
+    "native": {
+        "coordinates": "",
+        "forecast": 1,
+        "interval": 60,
+        "temperaturUnit": "default",
+        "windSpeedUnit": "default",
+        "precipitationUnit": "default",
+        "timeformat": "default",
+        "maxRequest": 10000,
+        "h_temperature_2m": false,
+        "h_temperature_80m": false,
+        "h_temperature_120m": false,
+        "h_temperature_180m": false,
+        "h_apparent_temperature": false,
+        "h_precipitation": false,
+        "h_precipitation_probability": false,
+        "h_weather_code": false,
+        "h_wind_speed_10m": false,
+        "h_wind_speed_80m": false,
+        "h_wind_speed_120m": false,
+        "h_wind_speed_180m": false,
+        "h_wind_direction_10m": false,
+        "h_wind_direction_80m": false,
+        "h_wind_direction_120m": false,
+        "h_wind_direction_180m": false,
+        "h_wind_gusts_10m": false,
+        "h_relative_humidity_2m": false,
+        "h_rain": false,
+        "h_showers": false,
+        "h_snowfall": false,
+        "h_snow_depth": false,
+        "h_soil_temperature_0cm": false,
+        "h_soil_temperature_6cm": false,
+        "h_soil_temperature_18cm": false,
+        "h_soil_temperature_54cm": false,
+        "h_soil_moisture_0_to_1cm": false,
+        "h_soil_moisture_1_to_3cm": false,
+        "h_soil_moisture_3_to_9cm": false,
+        "h_soil_moisture_9_to_27cm": false,
+        "h_soil_moisture_27_to_81cm": false,
+        "h_visibility": false,
+        "h_cloud_cover": false,
+        "h_cloud_cover_low": false,
+        "h_cloud_cover_mid": false,
+        "h_cloud_cover_high": false,
+        "h_dew_point_2m": false,
+        "d_apparent_temperature_max": false,
+        "d_apparent_temperature_min": false,
+        "d_temperature_2m_min": false,
+        "d_temperature_2m_max": false,
+        "d_precipitation_sum": false,
+        "d_precipitation_probability_max": false,
+        "d_precipitation_hours": false,
+        "d_weather_code": false,
+        "d_wind_speed_10m_max": false,
+        "d_wind_direction_10m_dominant": false,
+        "d_wind_gusts_10m_max": false,
+        "d_rain_sum": false,
+        "d_showers_sum": false,
+        "d_snowfall_sum": false,
+        "d_sunshine_duration": false,
+        "d_daylight_duration": false,
+        "d_uv_index_max": false,
+        "d_uv_index_clear_sky_max": false,
+        "c_temperature_2m": false,
+        "c_apparent_temperature": false,
+        "c_precipitation": false,
+        "c_weather_code": false,
+        "c_wind_speed_10m": false,
+        "c_wind_gusts_10m": false,
+        "c_relative_humidity_2m": false,
+        "c_rain": false,
+        "c_showers": false,
+        "c_snowfall": false,
+        "c_cloud_cover": false,
+        "m_precipitation": false,
+        "m_freezing_level_height": false,
+        "m_sunshine_duration": false,
+        "m_rain": false,
+        "m_cape": false,
+        "m_snowfall": false,
+        "m_lightning_potential": false,
+        "m_snowfall_height": false,
+        "m_is_day": false,
+        "apiKey": ""
+    },
+    "encryptedNative": [
+        "apiKey"
+    ],
+    "protectedNative": [
+        "apiKey"
+    ],
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": "Device or service connected",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        }
+    ]
+}
