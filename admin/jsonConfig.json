@@ -584,7 +584,7 @@
                     "lg": 4,
                     "xl": 4
                 },
-                "d_ ": {
+                "d_precipitation_sum": {
                     "type": "checkbox",
                     "label": "Precipitation Sum",
                     "default": false,
