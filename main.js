@@ -11,6 +11,7 @@ const { find } = require("geo-tz");
 const axios = require("axios");
 const helper = require("./lib/helper");
 const constants = require("./lib/constants");
+const SunCalc = require("./lib/suncalc3");
 const { RecurrenceRule, scheduleJob } = require("node-schedule");
 let status = {
     countRequest: 0,
@@ -47,6 +48,7 @@ class OpenMeteo extends utils.Adapter {
         this.createObjectsStates = helper.createObjectsStates;
         this.createObjects = helper.createObjects;
         this.checkObjects = helper.checkObjects;
+        this.createObjectsSunCalc = helper.createObjectsSunCalc;
         this.on("unload", this.onUnload.bind(this));
         this.requestClient = axios.create({
             withCredentials: true,
@@ -59,6 +61,8 @@ class OpenMeteo extends utils.Adapter {
         this.conn = false;
         this.req = 0;
         this.clearCount = null;
+        this.updateSun = null;
+        this.intervalPosition = null;
         this.value = {};
         this.getHeader = {};
     }
@@ -118,11 +122,13 @@ class OpenMeteo extends utils.Adapter {
         this.log.info(`Create or update objects!`);
         await this.createObjects();
         await this.checkObjects();
+        await this.createObjectsSunCalc();
         this.setIntervalData();
         this.setWeatherData();
         this.stateCheck = [];
         this.conn = true;
         this.setState("info.connection", true, true);
+        this.setIntervalPosition();
     }
 
     /**
@@ -135,7 +141,9 @@ class OpenMeteo extends utils.Adapter {
             status.stopAdapter = Date.now();
             this.setState("status", { val: JSON.stringify(status), ack: true });
             this.interval && this.clearInterval(this.interval);
+            this.intervalPosition && this.clearInterval(this.intervalPosition);
             this.clearCount && this.clearCount.cancel();
+            this.updateSun && this.updateSun.cancel();
             callback();
         } catch {
             callback();
@@ -207,6 +215,84 @@ class OpenMeteo extends utils.Adapter {
             status.countRequest = 0;
             await this.setState("status", { val: JSON.stringify(status), ack: true });
         });
+    }
+
+    async sunCalculation() {
+        const rule = new RecurrenceRule();
+        rule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
+        rule.hour = 2;
+        rule.minute = 1;
+        this.updateSun = scheduleJob(rule, async () => {
+            this.log.info("Update sun calculation!");
+            this.setSunCac();
+        });
+    }
+
+    async setSunCac() {
+        const times = SunCalc.getSunTimes(new Date(), this.param.latitude, this.param.longitude);
+        const sunriseStart =
+            `${`0${times.sunriseStart.value.getHours()}`.slice(-2)}:` +
+            `${`0${times.sunriseStart.value.getMinutes()}`.slice(-2)}`;
+        await this.setState(`suncalc.sunriseStart`, { val: sunriseStart, ack: true });
+        const sunriseEnd =
+            `${`0${times.sunriseEnd.value.getHours()}`.slice(-2)}:` +
+            `${`0${times.sunriseEnd.value.getMinutes()}`.slice(-2)}`;
+        await this.setState(`suncalc.sunriseEnd`, { val: sunriseEnd, ack: true });
+        const sunsetStart =
+            `${`0${times.sunsetStart.value.getHours()}`.slice(-2)}:` +
+            `${`0${times.sunsetStart.value.getMinutes()}`.slice(-2)}`;
+        await this.setState(`suncalc.sunsetStart`, { val: sunsetStart, ack: true });
+        const sunsetEnd =
+            `${`0${times.sunsetEnd.value.getHours()}`.slice(-2)}:` +
+            `${`0${times.sunsetEnd.value.getMinutes()}`.slice(-2)}`;
+        await this.setState(`suncalc.sunsetEnd`, { val: sunsetEnd, ack: true });
+        const solarNoon =
+            `${`0${times.solarNoon.value.getHours()}`.slice(-2)}:` +
+            `${`0${times.solarNoon.value.getMinutes()}`.slice(-2)}`;
+        await this.setState(`suncalc.solarNoon`, { val: solarNoon, ack: true });
+        this.getPosition();
+    }
+
+    async getPosition() {
+        const sunPosition = SunCalc.getPosition(new Date(), this.param.latitude, this.param.longitude);
+        this.log.debug(JSON.stringify(sunPosition));
+        const moonPosition = SunCalc.getMoonData(new Date(), this.param.latitude, this.param.longitude);
+        this.log.debug(JSON.stringify(moonPosition));
+        await this.setState(`suncalc.sunAzimuth`, { val: this.roundToTwo(sunPosition.azimuth), ack: true });
+        await this.setState(`suncalc.sunAltitudeDegrees`, {
+            val: this.roundToTwo(sunPosition.altitudeDegrees),
+            ack: true,
+        });
+        await this.setState(`suncalc.sunAzimuthDegrees`, {
+            val: this.roundToTwo(sunPosition.azimuthDegrees),
+            ack: true,
+        });
+        await this.setState(`suncalc.moonAzimuth`, { val: this.roundToTwo(moonPosition.azimuth), ack: true });
+        await this.setState(`suncalc.moonAltitudeDegrees`, {
+            val: this.roundToTwo(moonPosition.altitudeDegrees),
+            ack: true,
+        });
+        await this.setState(`suncalc.moonAzimuthDegrees`, {
+            val: this.roundToTwo(moonPosition.azimuthDegrees),
+            ack: true,
+        });
+        await this.setState(`suncalc.moonEmoji`, {
+            val: moonPosition.illumination.phase.emoji,
+            ack: true,
+        });
+    }
+
+    setIntervalPosition() {
+        this.log.debug(`Start position with ${this.intervalPosition} minute!`);
+        this.intervalPosition && this.clearInterval(this.intervalPosition);
+        this.intervalPosition = null;
+        this.intervalPosition = this.setInterval(() => {
+            this.getPosition();
+        }, 60 * 1000);
+    }
+
+    roundToTwo(num) {
+        return Math.round(num * 100) / 100;
     }
 
     calculateAPIrequest() {
@@ -346,6 +432,7 @@ class OpenMeteo extends utils.Adapter {
             customer = "customer-";
         }
         await this.setState(`param`, { val: JSON.stringify(this.param), ack: true });
+        this.setSunCac();
         this.calculateAPIrequest();
         this.updateStates();
     }
