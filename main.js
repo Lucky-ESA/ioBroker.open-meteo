@@ -400,6 +400,14 @@ class OpenMeteo extends utils.Adapter {
             val: constants.ASTRO[timeJSON[next]][this.lang],
             ack: true,
         });
+        await this.setState(`suncalc.currentState`, {
+            val: timeJSON[current],
+            ack: true,
+        });
+        await this.setState(`suncalc.nextState`, {
+            val: timeJSON[next],
+            ack: true,
+        });
     }
 
     setIntervalPosition() {
