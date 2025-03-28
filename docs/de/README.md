@@ -16,6 +16,7 @@
 - [Aktuelle States](#objekte-aktuell)
 - [Stündliche States](#objekte-stündlich)
 - [15-Minütliche](#objekte-15-minütlich)
+- [Astrozeit](#astrotime)
 - [Remote Control](#remote-control)
 
 # Instanz Einstellungen
@@ -271,6 +272,54 @@
 ![weather_states_minutely_1.png](img/weather_states_minutely_1.png)</br>
 ![weather_states_minutely_2.png](img/weather_states_minutely_2.png)</br>
 ![weather_states_minutely_3.png](img/weather_states_minutely_3.png)
+
+### Astrotime
+
+[Zusammenfassung](#zusammenfassung)
+
+🟢 Aktualisierung um 2:01 Uhr</br>
+🔴 minütliche Aktualisierung
+
+| Objekte             | Beschreibung                                   |
+| ------------------- | ---------------------------------------------- |
+| amateurDawn         | Amateurmorgendämmerung 🟢                      |
+| amateurDusk         | Amateurdämmerung 🟢                            |
+| astronomicalDawn    | Sonnenuntergang 🟢                             |
+| astronomicalDusk    | Abenddämmerung 🟢                              |
+| blueHourDawnEnd     | Ende der blauen Stunde im Morgengraue 🟢       |
+| blueHourDawnStart   | Beginn der blauen Stunde im Morgengraue 🟢     |
+| blueHourDuskEnd     | Ende der blauen Stunde in der Dämmerung 🟢     |
+| blueHourDuskStart   | Beginn der blauen Stunde in der Dämmerung 🟢   |
+| civilDawn           | Morgendämmerung 🟢                             |
+| civilDusk           | Dämmerung 🟢                                   |
+| currentAstroTime    | Aktuelle AstroTime 🔴                          |
+| currentState        | Aktuelles Objekt (State - Name) 🔴             |
+| goldenHourDawnEnd   | Ende der goldenen Stunde im Morgengrauen 🟢    |
+| goldenHourDawnStart | Beginn der goldenen Stunde im Morgengrauen 🟢  |
+| goldenHourDuskEnd   | Ende der goldenen Stunde in der Dämmerung 🟢   |
+| goldenHourDuskStart | Beginn der goldenen Stunde in der Dämmerung 🟢 |
+| moonAltitudeDegrees | Mond Höhengrad 🔴                              |
+| moonAzimuthDegrees  | Mond Azimut 🔴                                 |
+| moonElevation       | Mondhöhe 🔴                                    |
+| moonEmoji           | Mond Emoji 🔴                                  |
+| nadir               | Mitternacht 🔴                                 |
+| nauticalDawn        | Nautische Morgendämmerung 🟢                   |
+| nauticalDusk        | Nautische Dämmerung 🟢                         |
+| nextAstroTime       | Nächste Astrozeit 🔴                           |
+| nextState           | Nächstes Objekt (State - Name) 🔴              |
+| seasons             | Jahreszeiten 🟢                                |
+| solarNoon           | Mittagssonne 🟢                                |
+| sunAltitudeDegrees  | Sonne Höhengrade 🔴                            |
+| sunAzimuthDegrees   | Azimuth Sonnenhöhe 🔴                          |
+| sunElevation        | Sonnenhöhe 🔴                                  |
+| sunriseEnd          | Ende Sonnenaufgang 🟢                          |
+| sunriseStart        | Beginn Sonnenaufgang 🟢                        |
+| sunsetEnd           | Ende Sonnenuntergang 🟢                        |
+| sunsetStart         | Beginn Sonnenuntergang 🟢                      |
+
+![weather_states_suncalc_1.png](img/weather_states_suncalc_1.png)</br>
+![weather_states_suncalc_2.png](img/weather_states_suncalc_2.png)</br>
+![weather_states_suncalc_3.png](img/weather_states_suncalc_3.png)
 
 ### Remote Control
 

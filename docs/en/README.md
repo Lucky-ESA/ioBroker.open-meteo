@@ -16,6 +16,7 @@
 - [Current States](#objekte-current)
 - [Hourly States](#objekte-hourly)
 - [15-Minutely](#objekte-15-minutely)
+- [Astrotime](#astrotime)
 - [Remote Control](#remote-control)
 
 # Instance settings
@@ -271,6 +272,54 @@
 ![weather_states_minutely_1.png](img/weather_states_minutely_1.png)</br>
 ![weather_states_minutely_2.png](img/weather_states_minutely_2.png)</br>
 ![weather_states_minutely_3.png](img/weather_states_minutely_3.png)
+
+### Astrotime
+
+[Summary](#summary)
+
+🟢 Updated at 2:01 AM</br>
+🔴 minute update
+
+| Object              | Description                           |
+| ------------------- | ------------------------------------- |
+| amateurDawn         | Amateur dawn 🟢                       |
+| amateurDusk         | Amateur dusk 🟢                       |
+| astronomicalDawn    | Astronomical dawn 🟢                  |
+| astronomicalDusk    | Astronomical dusk 🟢                  |
+| blueHourDawnEnd     | End of the blue hour at dawn 🟢       |
+| blueHourDawnStart   | Beginning of the blue hour at dawn 🟢 |
+| blueHourDuskEnd     | End of the blue hour at dusk 🟢       |
+| blueHourDuskStart   | Beginning of the blue hour at dusk 🟢 |
+| civilDawn           | Dawn 🟢                               |
+| civilDusk           | Dusk 🟢                               |
+| currentAstroTime    | current AstroTime 🔴                  |
+| currentState        | current Object (State - Name) 🔴      |
+| goldenHourDawnEnd   | End of golden hour at dawn 🟢         |
+| goldenHourDawnStart | Beginning of golden hour at dawn 🟢   |
+| goldenHourDuskEnd   | End of golden hour at dusk 🟢         |
+| goldenHourDuskStart | Beginning of golden hour at dusk 🟢   |
+| moonAltitudeDegrees | Altitude Degrees 🔴                   |
+| moonAzimuthDegrees  | Azimuth 🔴                            |
+| moonElevation       | Moon elevation 🔴                     |
+| moonEmoji           | Moon Emoji 🔴                         |
+| nadir               | Nadir 🔴                              |
+| nauticalDawn        | Nautical dawn 🟢                      |
+| nauticalDusk        | Nautical dusk 🟢                      |
+| nextAstroTime       | next Astrozeit 🔴                     |
+| nextState           | next Object (State - Name) 🔴         |
+| seasons             | Seasons 🟢                            |
+| solarNoon           | Solar noon 🟢                         |
+| sunAltitudeDegrees  | Sun altitude degrees 🔴               |
+| sunAzimuthDegrees   | Sun azimuth degrees 🔴                |
+| sunElevation        | Elevation 🔴                          |
+| sunriseEnd          | Sunrise end 🟢                        |
+| sunriseStart        | Sunrise start 🟢                      |
+| sunsetEnd           | Sunset end 🟢                         |
+| sunsetStart         | Sunset start 🟢                       |
+
+![weather_states_suncalc_1.png](img/weather_states_suncalc_1.png)</br>
+![weather_states_suncalc_2.png](img/weather_states_suncalc_2.png)</br>
+![weather_states_suncalc_3.png](img/weather_states_suncalc_3.png)
 
 ### Remote Control
 
