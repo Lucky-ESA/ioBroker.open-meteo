@@ -377,7 +377,8 @@ class OpenMeteo extends utils.Adapter {
         let timeJSON = {};
         this.log.debug(JSON.stringify(this.timeArray));
         for (const timeArray in this.timeArray) {
-            const timestamp = new Date(this.timeArray[timeArray]).getTime() - new Date().getTime();
+            const timestamp =
+                new Date(this.timeArray[timeArray]).getTime() - new Date("2025-03-29T23:37:04.836Z").getTime();
             timeJSON[timestamp] = timeArray;
             diff.push(timestamp);
         }
@@ -391,6 +392,11 @@ class OpenMeteo extends utils.Adapter {
                 return a - b;
             })
             .find(x => x > 0);
+        // Fix nadir all data negativ = 00:01
+        if (next == null) {
+            this.setSunCalc();
+            return;
+        }
         this.log.debug(JSON.stringify(timeJSON));
         this.log.debug(JSON.stringify(diff));
         if (!constants.ASTRO[timeJSON[current]]) {
@@ -424,7 +430,7 @@ class OpenMeteo extends utils.Adapter {
     }
 
     setIntervalPosition() {
-        this.log.debug(`Start position with ${this.intervalPosition} minute!`);
+        this.log.debug(`Start position with 1 minute!`);
         this.intervalPosition && this.clearInterval(this.intervalPosition);
         this.intervalPosition = null;
         this.intervalPosition = this.setInterval(() => {
