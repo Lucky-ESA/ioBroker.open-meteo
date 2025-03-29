@@ -66,6 +66,7 @@ class OpenMeteo extends utils.Adapter {
         this.value = {};
         this.getHeader = {};
         this.timeArray = {};
+        this.lastCurrent = "";
     }
 
     /**
@@ -397,6 +398,11 @@ class OpenMeteo extends utils.Adapter {
             this.setSunCalc();
             return;
         }
+        if (current == null) {
+            const last_current = await this.getStateAsync(`suncalc.currentAstroTime`);
+            this.lastCurrent =
+                last_current != null && last_current.val != null ? last_current.val.toString() : "unknown";
+        }
         this.log.debug(JSON.stringify(timeJSON));
         this.log.debug(JSON.stringify(diff));
         if (!constants.ASTRO[timeJSON[current]]) {
@@ -412,7 +418,7 @@ class OpenMeteo extends utils.Adapter {
             this.log.warn(`constants: ${JSON.stringify(constants.ASTRO[timeJSON[next]])}`);
         }
         await this.setState(`suncalc.currentAstroTime`, {
-            val: constants.ASTRO[timeJSON[current]] ? constants.ASTRO[timeJSON[current]][this.lang] : current,
+            val: constants.ASTRO[timeJSON[current]] ? constants.ASTRO[timeJSON[current]][this.lang] : this.lastCurrent,
             ack: true,
         });
         await this.setState(`suncalc.nextAstroTime`, {
@@ -420,7 +426,7 @@ class OpenMeteo extends utils.Adapter {
             ack: true,
         });
         await this.setState(`suncalc.currentState`, {
-            val: timeJSON[current],
+            val: current != null ? timeJSON[current] : this.lastCurrent,
             ack: true,
         });
         await this.setState(`suncalc.nextState`, {
