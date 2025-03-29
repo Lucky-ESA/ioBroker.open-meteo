@@ -124,14 +124,14 @@ class OpenMeteo extends utils.Adapter {
         await this.createObjects();
         await this.checkObjects();
         await this.createObjectsSunCalc();
-        this.setIntervalData();
-        this.setWeatherData();
+        await this.setIntervalData();
+        await this.setWeatherData();
         this.stateCheck = [];
         this.conn = true;
         this.setState("info.connection", true, true);
-        this.setIntervalPosition();
         this.clearCounter();
         this.sunCalculation();
+        this.setIntervalPosition();
     }
 
     /**
@@ -394,14 +394,16 @@ class OpenMeteo extends utils.Adapter {
         this.log.debug(JSON.stringify(timeJSON));
         this.log.debug(JSON.stringify(diff));
         if (!constants.ASTRO[timeJSON[current]]) {
-            this.log.warn(`${current}`);
-            this.log.warn(`${timeJSON[current]}`);
-            this.log.warn(`${JSON.stringify(constants.ASTRO[timeJSON[current]])}`);
+            this.log.warn(JSON.stringify(this.timeArray));
+            this.log.warn(`current: ${current}`);
+            this.log.warn(`timeJSON: ${timeJSON[current]}`);
+            this.log.warn(`constants: ${JSON.stringify(constants.ASTRO[timeJSON[current]])}`);
         }
         if (!constants.ASTRO[timeJSON[next]]) {
-            this.log.warn(`${next}`);
-            this.log.warn(`${timeJSON[next]}`);
-            this.log.warn(`${JSON.stringify(constants.ASTRO[timeJSON[next]])}`);
+            this.log.warn(JSON.stringify(this.timeArray));
+            this.log.warn(`next: ${next}`);
+            this.log.warn(`timeJSON: ${timeJSON[next]}`);
+            this.log.warn(`constants: ${JSON.stringify(constants.ASTRO[timeJSON[next]])}`);
         }
         await this.setState(`suncalc.currentAstroTime`, {
             val: constants.ASTRO[timeJSON[current]] ? constants.ASTRO[timeJSON[current]][this.lang] : current,
@@ -573,7 +575,7 @@ class OpenMeteo extends utils.Adapter {
         await this.setState(`param`, { val: JSON.stringify(this.param), ack: true });
         this.setSunCalc();
         this.calculateAPIrequest();
-        this.updateStates();
+        await this.updateStates();
     }
 
     async updateStates() {
@@ -581,8 +583,8 @@ class OpenMeteo extends utils.Adapter {
         if (data) {
             this.log.debug(JSON.stringify(data));
             await this.setState(`result`, { val: JSON.stringify(data), ack: true });
-            this.setWeatherStates(data);
-            this.setState("last_update", new Date().getTime(), true);
+            await this.setWeatherStates(data);
+            await this.setState("last_update", new Date().getTime(), true);
         } else {
             this.log.error(`Cannot read data!`);
         }
