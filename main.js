@@ -378,8 +378,7 @@ class OpenMeteo extends utils.Adapter {
         let timeJSON = {};
         this.log.debug(JSON.stringify(this.timeArray));
         for (const timeArray in this.timeArray) {
-            const timestamp =
-                new Date(this.timeArray[timeArray]).getTime() - new Date("2025-03-29T23:37:04.836Z").getTime();
+            const timestamp = new Date(this.timeArray[timeArray]).getTime() - new Date().getTime();
             timeJSON[timestamp] = timeArray;
             diff.push(timestamp);
         }
