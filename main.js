@@ -135,7 +135,7 @@ class OpenMeteo extends utils.Adapter {
         this.param.timezone = utc;
         this.param.latitude = coo[0];
         this.param.longitude = coo[1];
-        //this.param.models = "icon_seamless";
+        this.param.models = "best_match";
         this.log.info(`Create or update objects!`);
         await this.createObjects();
         await this.createIconColor();
