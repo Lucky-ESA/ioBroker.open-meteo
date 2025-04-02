@@ -11,6 +11,7 @@ const { find } = require("geo-tz");
 const axios = require("axios");
 const helper = require("./lib/helper");
 const constants = require("./lib/constants");
+const SVG = require("./lib/svgCreater");
 const SunCalc = require("./lib/suncalc3");
 const { RecurrenceRule, scheduleJob } = require("node-schedule");
 let status = {
@@ -30,6 +31,17 @@ let status = {
 };
 let customer = "";
 let countVal = 0;
+const weather_code = {
+    0: 100,
+    1: 101,
+    2: 102,
+    3: 103,
+    61: 161,
+    63: 163,
+    65: 165,
+    66: 166,
+    67: 167,
+};
 
 class OpenMeteo extends utils.Adapter {
     /**
@@ -49,7 +61,9 @@ class OpenMeteo extends utils.Adapter {
         this.createObjects = helper.createObjects;
         this.checkObjects = helper.checkObjects;
         this.createObjectsSunCalc = helper.createObjectsSunCalc;
+        this.createIconColor = helper.createIconColor;
         this.on("unload", this.onUnload.bind(this));
+        this.svg = new SVG(this);
         this.requestClient = axios.create({
             withCredentials: true,
             timeout: 5000,
@@ -67,6 +81,7 @@ class OpenMeteo extends utils.Adapter {
         this.getHeader = {};
         this.timeArray = {};
         this.lastCurrent = "";
+        this.own_color = {};
     }
 
     /**
@@ -120,12 +135,15 @@ class OpenMeteo extends utils.Adapter {
         this.param.timezone = utc;
         this.param.latitude = coo[0];
         this.param.longitude = coo[1];
-        this.param.models = "icon_seamless";
+        //this.param.models = "icon_seamless";
         this.log.info(`Create or update objects!`);
         await this.createObjects();
+        await this.createIconColor();
+        await this.readColor();
+        await this.setColor();
         await this.checkObjects();
         await this.createObjectsSunCalc();
-        await this.setIntervalData();
+        this.setIntervalData();
         await this.setWeatherData();
         this.stateCheck = [];
         this.conn = true;
@@ -185,6 +203,10 @@ class OpenMeteo extends utils.Adapter {
                 this.setState(id, false, true);
             } else if (command === "param") {
                 this.setOwnParam(state);
+                this.setState(id, { ack: true });
+            } else if (this.own_color[command]) {
+                this.own_color[command] = state.val;
+                this.setColor();
                 this.setState(id, { ack: true });
             }
             this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
@@ -583,8 +605,9 @@ class OpenMeteo extends utils.Adapter {
             this.param.apikey = this.config.apiKey;
             customer = "customer-";
         }
+        this.log.debug(`ParaM ${JSON.stringify(this.param)}`);
         await this.setState(`param`, { val: JSON.stringify(this.param), ack: true });
-        this.setSunCalc();
+        await this.setSunCalc();
         this.calculateAPIrequest();
         await this.updateStates();
     }
@@ -604,6 +627,11 @@ class OpenMeteo extends utils.Adapter {
     async setWeatherStates(val) {
         countVal = 0;
         const current = val.current;
+        const times = new Date();
+        let isDay = "night";
+        if (times > new Date(this.timeArray["sunriseStart"]) && times < new Date(this.timeArray["sunsetStart"])) {
+            isDay = "day";
+        }
         if (current) {
             for (const variable in current) {
                 if (variable === "time") {
@@ -611,11 +639,20 @@ class OpenMeteo extends utils.Adapter {
                 } else if (variable === "interval") {
                     // skip
                 } else if (variable === "weather_code") {
-                    await this.setValue(`current.${variable}`, current.weather_code);
-                    await this.setValue(
-                        `current.${variable}_text`,
-                        constants.WeatherCode[current.weather_code][this.lang],
-                    );
+                    let code = current.weather_code;
+                    if (current.wind_speed_10m != null && current.wind_speed_10m > 20 && weather_code[code]) {
+                        code = weather_code[code];
+                    }
+                    if (!constants.WeatherCode[code]) {
+                        code = 200;
+                    }
+                    const path = constants.WeatherCode[code][isDay].image;
+                    const text = constants.WeatherCode[code][isDay].description[this.lang];
+                    const svg = constants.WeatherCode[code][isDay].svg;
+                    await this.setValue(`current.${variable}`, code);
+                    await this.setValue(`current.${variable}_text`, text);
+                    await this.setValue(`current.${variable}_path`, path);
+                    await this.setValue(`current.${variable}_own`, svg);
                 } else if (current[variable] != null) {
                     await this.setValue(`current.${variable}`, current[variable]);
                 }
@@ -630,11 +667,33 @@ class OpenMeteo extends utils.Adapter {
                     if (variable === "time") {
                         await this.setValue(`${path2}.${variable}`, new Date(daily.time[count]).toString());
                     } else if (variable === "weather_code") {
-                        await this.setValue(`${path2}.${variable}`, daily.weather_code[count]);
-                        await this.setValue(
-                            `${path2}.${variable}_text`,
-                            constants.WeatherCode[daily.weather_code[count]][this.lang],
-                        );
+                        let code = daily.weather_code[count];
+                        if (
+                            daily.wind_speed_10m != null &&
+                            daily.wind_speed_10m[count] != null &&
+                            daily.wind_speed_10m[count] > 20 &&
+                            weather_code[code]
+                        ) {
+                            code = weather_code[code];
+                        }
+                        if (!constants.WeatherCode[code]) {
+                            code = 200;
+                        }
+                        const path = constants.WeatherCode[code][isDay].image;
+                        const text = constants.WeatherCode[code][isDay].description[this.lang];
+                        const svg = constants.WeatherCode[code][isDay].svg;
+                        await this.setValue(`${path2}.${variable}`, code);
+                        await this.setValue(`${path2}.${variable}_text`, text);
+                        await this.setValue(`${path2}.${variable}_path`, path);
+                        await this.setValue(`${path2}.${variable}_own`, svg);
+                    } else if (variable === "uv_index_clear_sky_max" && daily[variable][count] != null) {
+                        const uv = Math.round(daily[variable][count]);
+                        await this.setValue(`${path2}.${variable}_path`, constants.UV_INDEX[uv].image);
+                        await this.setValue(`${path2}.${variable}_own`, constants.UV_INDEX[uv].svg);
+                    } else if (variable === "uv_index_max" && daily[variable][count] != null) {
+                        const uv = Math.round(daily[variable][count]);
+                        await this.setValue(`${path2}.${variable}_path`, constants.UV_INDEX[uv].image);
+                        await this.setValue(`${path2}.${variable}_own`, constants.UV_INDEX[uv].svg);
                     } else if (daily[variable][count] != null) {
                         await this.setValue(`${path2}.${variable}`, daily[variable][count]);
                     }
@@ -653,11 +712,25 @@ class OpenMeteo extends utils.Adapter {
                         if (variable === "time") {
                             await this.setValue(`${path2}.${variable}`, new Date(hourly.time[count]).toString());
                         } else if (variable === "weather_code") {
+                            let code = hourly.weather_code[count];
+                            if (
+                                hourly.wind_speed_10m != null &&
+                                hourly.wind_speed_10m[count] != null &&
+                                hourly.wind_speed_10m[count] > 20 &&
+                                weather_code[code]
+                            ) {
+                                code = weather_code[code];
+                            }
+                            if (!constants.WeatherCode[code]) {
+                                code = 200;
+                            }
+                            const path = constants.WeatherCode[code][isDay].image;
+                            const text = constants.WeatherCode[code][isDay].description[this.lang];
+                            const svg = constants.WeatherCode[code][isDay].svg;
                             await this.setValue(`${path2}.${variable}`, hourly.weather_code[count]);
-                            await this.setValue(
-                                `${path2}.${variable}_text`,
-                                constants.WeatherCode[hourly.weather_code[count]][this.lang],
-                            );
+                            await this.setValue(`${path2}.${variable}_text`, text);
+                            await this.setValue(`${path2}.${variable}_path`, path);
+                            await this.setValue(`${path2}.${variable}_own`, svg);
                         } else if (hourly[variable][count] != null) {
                             await this.setValue(`${path2}.${variable}`, hourly[variable][count]);
                         }
@@ -774,6 +847,253 @@ class OpenMeteo extends utils.Adapter {
             return utc[0];
         }
         return "Europe/Berlin";
+    }
+
+    async readColor() {
+        const colors = await this.getStatesAsync(`open-meteo.${this.instance}.iconcolor.*`);
+        for (const color in colors) {
+            const split = color.split(".");
+            const state = split.pop();
+            this.own_color[state] = colors[color].val;
+        }
+        if (this.own_color.sun_filled && this.own_color.sun_filled == "#000") {
+            this.own_color.sun_filled == "none";
+        }
+        if (this.own_color.cloud_filled && this.own_color.cloud_filled == "#000") {
+            this.own_color.cloud_filled == "none";
+        }
+        if (this.own_color.flash_filled && this.own_color.flash_filled == "#000") {
+            this.own_color.flash_filled == "none";
+        }
+        if (this.own_color.lines_filled && this.own_color.lines_filled == "#000") {
+            this.own_color.lines_filled == "none";
+        }
+        if (this.own_color.moon_filled && this.own_color.moon_filled == "#000") {
+            this.own_color.moon_filled == "none";
+        }
+        if (this.own_color.unknown_filled && this.own_color.unknown_filled == "#000") {
+            this.own_color.unknown_filled == "none";
+        }
+    }
+
+    async setColor() {
+        const width = 128;
+        const height = 100;
+        const WW_XML =
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n';
+        const WW_SVG1 = `<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${width}" height="${height}" viewBox="-64 -50 128 100"><g stroke-width="3">`;
+        const WW_SVG2 = "</g></svg>\n";
+        let val = "";
+        const icon_list = [
+            [0, true, false, false, "clear-day", 0, "day"],
+            [0, true, false, true, "clear-day-wind", 100, "day"],
+            [0, false, true, false, "clear-night", 0, "night"],
+            [0, false, true, true, "clear-night-wind", 100, "night"],
+            [1, true, false, false, "mostly-clear-day", 1, "day"],
+            [1, true, false, true, "mostly-clear-day-wind", 101, "day"],
+            [1, false, true, false, "mostly-clear-night", 1, "night"],
+            [1, false, true, true, "mostly-clear-night-wind", 101, "night"],
+            [2, true, false, false, "partly-cloudy-day", 2, "day"],
+            [2, true, false, true, "partly-cloudy-day-wind", 102, "day"],
+            [2, false, true, false, "partly-cloudy-night", 2, "night"],
+            [2, false, true, true, "partly-cloudy-night-wind", 102, "night"],
+            [4, true, false, false, "cloudy", 3, "day"],
+            [4, true, false, true, "cloudy-wind", 103, "day"],
+            [4, false, true, false, "cloudy-night", 3, "night"],
+            [4, false, true, true, "cloudy-night-wind", 103, "night"],
+        ];
+        for (const list of icon_list) {
+            // @ts-expect-error // Nothing
+            constants.WeatherCode[list[5]][list[6]].svg =
+                WW_XML +
+                WW_SVG1 +
+                this.svg.bewoelkt(
+                    list[0],
+                    list[1],
+                    list[2],
+                    list[3],
+                    this.own_color.sun,
+                    this.own_color.sun_filled,
+                    this.own_color.wind,
+                    this.own_color.moon,
+                    this.own_color.moon_filled,
+                    this.own_color.cloud,
+                    this.own_color.cloud_filled,
+                ) +
+                WW_SVG2;
+        }
+        val = WW_XML + WW_SVG1 + this.svg.nebel(this.hexToRGBA(this.own_color.fog, 90)) + WW_SVG2;
+        constants.WeatherCode[45].day.svg = val;
+        constants.WeatherCode[45].night.svg = val;
+        constants.WeatherCode[48].day.svg = val;
+        constants.WeatherCode[48].night.svg = val;
+        val = this.svg.niesel_gesamt(this.own_color.rain, this.own_color.cloud, this.own_color.cloud_filled);
+        constants.WeatherCode[51].day.svg = val;
+        constants.WeatherCode[51].night.svg = val;
+        constants.WeatherCode[53].day.svg = val;
+        constants.WeatherCode[53].night.svg = val;
+        constants.WeatherCode[55].day.svg = val;
+        constants.WeatherCode[55].night.svg = val;
+        val =
+            WW_XML +
+            WW_SVG1 +
+            this.svg.gefrierender_nieselregen(
+                this.own_color.cloud,
+                this.own_color.cloud_filled,
+                false,
+                this.own_color.rain,
+                this.own_color.lines,
+                this.own_color.lines_filled,
+                this.own_color.snow,
+            ) +
+            WW_SVG2;
+        constants.WeatherCode[56].day.svg = val;
+        constants.WeatherCode[56].night.svg = val;
+        constants.WeatherCode[57].day.svg = val;
+        constants.WeatherCode[57].night.svg = val;
+        val =
+            WW_XML +
+            WW_SVG1 +
+            this.svg.regen_gesamt(
+                this.own_color.cloud,
+                this.own_color.cloud_filled,
+                this.own_color.rain,
+                false,
+                this.own_color.wind,
+            ) +
+            WW_SVG2;
+        constants.WeatherCode[61].day.svg = val;
+        constants.WeatherCode[61].night.svg = val;
+        constants.WeatherCode[63].day.svg = val;
+        constants.WeatherCode[63].night.svg = val;
+        constants.WeatherCode[65].day.svg = val;
+        constants.WeatherCode[65].night.svg = val;
+        constants.WeatherCode[80].day.svg = val;
+        constants.WeatherCode[80].night.svg = val;
+        constants.WeatherCode[81].day.svg = val;
+        constants.WeatherCode[81].night.svg = val;
+        constants.WeatherCode[82].day.svg = val;
+        constants.WeatherCode[82].night.svg = val;
+        val =
+            WW_XML +
+            WW_SVG1 +
+            this.svg.gefrierender_regen4(
+                this.own_color.cloud,
+                this.own_color.cloud_filled,
+                this.own_color.lines,
+                this.own_color.lines_filled,
+                this.own_color.warning_triangle,
+                this.own_color.warning_triangle_rand,
+                false,
+                this.own_color.wind,
+            ) +
+            WW_SVG2;
+        constants.WeatherCode[66].day.svg = val;
+        constants.WeatherCode[66].night.svg = val;
+        constants.WeatherCode[67].day.svg = val;
+        constants.WeatherCode[67].night.svg = val;
+        val =
+            WW_XML +
+            WW_SVG1 +
+            this.svg.gefrierender_regen4(
+                this.own_color.cloud,
+                this.own_color.cloud_filled,
+                this.own_color.lines,
+                this.own_color.lines_filled,
+                this.own_color.warning_triangle,
+                this.own_color.warning_triangle_rand,
+                true,
+                this.own_color.wind,
+            ) +
+            WW_SVG2;
+        constants.WeatherCode[166].day.svg = val;
+        constants.WeatherCode[166].night.svg = val;
+        constants.WeatherCode[167].day.svg = val;
+        constants.WeatherCode[167].night.svg = val;
+        val =
+            WW_XML +
+            WW_SVG1 +
+            this.svg.schneefall(this.own_color.cloud_filled, true, this.own_color.cloud, this.own_color.snow) +
+            WW_SVG2;
+        constants.WeatherCode[71].day.svg = val;
+        constants.WeatherCode[71].night.svg = val;
+        constants.WeatherCode[73].day.svg = val;
+        constants.WeatherCode[73].night.svg = val;
+        constants.WeatherCode[75].day.svg = val;
+        constants.WeatherCode[75].night.svg = val;
+        constants.WeatherCode[77].day.svg = val;
+        constants.WeatherCode[77].night.svg = val;
+        constants.WeatherCode[85].day.svg = val;
+        constants.WeatherCode[85].night.svg = val;
+        constants.WeatherCode[86].day.svg = val;
+        constants.WeatherCode[86].night.svg = val;
+        val =
+            WW_XML +
+            WW_SVG1 +
+            this.svg.gewitter(
+                this.own_color.cloud,
+                this.own_color.cloud_filled,
+                0,
+                this.own_color.flash,
+                this.own_color.flash_filled,
+            ) +
+            WW_SVG2;
+        constants.WeatherCode[95].day.svg = val;
+        constants.WeatherCode[95].night.svg = val;
+        val =
+            WW_XML +
+            WW_SVG1 +
+            this.svg.hagelgewitter(
+                this.own_color.cloud,
+                this.own_color.cloud_filled,
+                this.own_color.rain,
+                this.own_color.flash,
+                this.own_color.flash_filled,
+            ) +
+            WW_SVG2;
+        constants.WeatherCode[96].day.svg = val;
+        constants.WeatherCode[96].night.svg = val;
+        constants.WeatherCode[99].day.svg = val;
+        constants.WeatherCode[99].night.svg = val;
+        val =
+            WW_XML +
+            WW_SVG1 +
+            this.svg.regen_gesamt(
+                this.own_color.cloud,
+                this.own_color.cloud_filled,
+                this.own_color.rain,
+                true,
+                this.own_color.wind,
+            ) +
+            WW_SVG2;
+        constants.WeatherCode[161].day.svg = val;
+        constants.WeatherCode[161].night.svg = val;
+        constants.WeatherCode[163].day.svg = val;
+        constants.WeatherCode[163].night.svg = val;
+        constants.WeatherCode[165].day.svg = val;
+        constants.WeatherCode[165].night.svg = val;
+        if (this.own_color.unknown && this.own_color.unknown_filled) {
+            val = this.svg.unknown(this.own_color.unknown, this.own_color.unknown_filled);
+            constants.WeatherCode[200].day.svg = val;
+            constants.WeatherCode[200].night.svg = val;
+        }
+        for (let i = 0; i < 12; i++) {
+            constants.UV_INDEX[i].svg = this.svg.uv_index(
+                i,
+                this.own_color[`uv_index_${i}`],
+                this.own_color.uv_index_bg,
+                this.own_color.uv_index_desc,
+            );
+        }
+        this.log.debug(`CODE: ${JSON.stringify(constants.WeatherCode)}`);
+        this.log.debug(`UV: ${JSON.stringify(constants.UV_INDEX)}`);
+    }
+
+    hexToRGBA(hex, alpha) {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     }
 
     fromJulian(j) {
