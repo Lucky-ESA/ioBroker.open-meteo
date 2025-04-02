@@ -727,7 +727,7 @@ class OpenMeteo extends utils.Adapter {
                             const path = constants.WeatherCode[code][isDay].image;
                             const text = constants.WeatherCode[code][isDay].description[this.lang];
                             const svg = constants.WeatherCode[code][isDay].svg;
-                            await this.setValue(`${path2}.${variable}`, hourly.weather_code[count]);
+                            await this.setValue(`${path2}.${variable}`, code);
                             await this.setValue(`${path2}.${variable}_text`, text);
                             await this.setValue(`${path2}.${variable}_path`, path);
                             await this.setValue(`${path2}.${variable}_own`, svg);
