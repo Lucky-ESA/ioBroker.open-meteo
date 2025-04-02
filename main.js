@@ -669,9 +669,9 @@ class OpenMeteo extends utils.Adapter {
                     } else if (variable === "weather_code") {
                         let code = daily.weather_code[count];
                         if (
-                            daily.wind_speed_10m != null &&
-                            daily.wind_speed_10m[count] != null &&
-                            daily.wind_speed_10m[count] > 20 &&
+                            daily.wind_speed_10m_max != null &&
+                            daily.wind_speed_10m_max[count] != null &&
+                            daily.wind_speed_10m_max[count] > 20 &&
                             weather_code[code]
                         ) {
                             code = weather_code[code];
