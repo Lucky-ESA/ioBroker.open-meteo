@@ -93,5 +93,13 @@
     "Cloud cover high": "Cloud cover high",
     "UV Index Clear Sky": "UV Index Clear Sky",
     "UV Index": "UV Index",
-    "Dewpoint": "Dewpoint"
+    "Dewpoint": "Dewpoint",
+    "Windspeed": "Wind speed",
+    "Windspeed_tooltip": "At what speed should WInd Icon be displayed",
+    "model": "Weather model",
+    "model_tooltip": "Some models do not provide selected data (e.g. DWD ICON Seamless does not provide a UV index)",
+    "Mean Cloud cover": "Mean Cloud cover",
+    "Mean Relative Humidity": "Mean Relative Humidity (2 m)",
+    "Mean Temperature": "Mean Temperature (2 m)",
+    "Empty": "Empty"
 }

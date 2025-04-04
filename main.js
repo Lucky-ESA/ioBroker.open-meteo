@@ -135,7 +135,9 @@ class OpenMeteo extends utils.Adapter {
         this.param.timezone = utc;
         this.param.latitude = coo[0];
         this.param.longitude = coo[1];
-        this.param.models = "best_match";
+        if (this.config.model != "none") {
+            this.param.models = this.config.model;
+        }
         this.log.info(`Create or update objects!`);
         await this.createObjects();
         await this.createIconColor();
@@ -640,7 +642,11 @@ class OpenMeteo extends utils.Adapter {
                     // skip
                 } else if (variable === "weather_code") {
                     let code = current.weather_code;
-                    if (current.wind_speed_10m != null && current.wind_speed_10m > 20 && weather_code[code]) {
+                    if (
+                        current.wind_speed_10m != null &&
+                        current.wind_speed_10m > this.config.maxWind &&
+                        weather_code[code]
+                    ) {
                         code = weather_code[code];
                     }
                     if (!constants.WeatherCode[code]) {
@@ -671,7 +677,7 @@ class OpenMeteo extends utils.Adapter {
                         if (
                             daily.wind_speed_10m_max != null &&
                             daily.wind_speed_10m_max[count] != null &&
-                            daily.wind_speed_10m_max[count] > 20 &&
+                            daily.wind_speed_10m_max[count] > this.config.maxWind &&
                             weather_code[code]
                         ) {
                             code = weather_code[code];
@@ -687,11 +693,13 @@ class OpenMeteo extends utils.Adapter {
                         await this.setValue(`${path2}.${variable}_path`, path);
                         await this.setValue(`${path2}.${variable}_own`, svg);
                     } else if (variable === "uv_index_clear_sky_max" && daily[variable][count] != null) {
-                        const uv = Math.round(daily[variable][count]);
+                        let uv = Math.round(daily[variable][count]);
+                        uv = uv < 12 ? uv : 11;
                         await this.setValue(`${path2}.${variable}_path`, constants.UV_INDEX[uv].image);
                         await this.setValue(`${path2}.${variable}_own`, constants.UV_INDEX[uv].svg);
                     } else if (variable === "uv_index_max" && daily[variable][count] != null) {
-                        const uv = Math.round(daily[variable][count]);
+                        let uv = Math.round(daily[variable][count]);
+                        uv = uv < 12 ? uv : 11;
                         await this.setValue(`${path2}.${variable}_path`, constants.UV_INDEX[uv].image);
                         await this.setValue(`${path2}.${variable}_own`, constants.UV_INDEX[uv].svg);
                     } else if (daily[variable][count] != null) {
@@ -716,7 +724,7 @@ class OpenMeteo extends utils.Adapter {
                             if (
                                 hourly.wind_speed_10m != null &&
                                 hourly.wind_speed_10m[count] != null &&
-                                hourly.wind_speed_10m[count] > 20 &&
+                                hourly.wind_speed_10m[count] > this.config.maxWind &&
                                 weather_code[code]
                             ) {
                                 code = weather_code[code];

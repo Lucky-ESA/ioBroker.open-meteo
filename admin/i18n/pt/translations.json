@@ -93,5 +93,13 @@
     "Cloud cover high": "Tampa de nuvens alta",
     "UV Index Clear Sky": "Índice UV Clear Sky",
     "UV Index": "Índice UV",
-    "Dewpoint": "Ponto de orvalho"
+    "Dewpoint": "Ponto de orvalho",
+    "Windspeed": "Velocidade do vento",
+    "Windspeed_tooltip": "Em que velocidade o ícone do vento deve ser exibido",
+    "model": "Modelo meteorológico",
+    "model_tooltip": "Alguns modelos não fornecem dados selecionados (por exemplo, o ícone DWD Seamless não fornece um índice UV)",
+    "Mean Cloud cover": "Tampa média de nuvens",
+    "Mean Relative Humidity": "Umidade relativa média (2 m)",
+    "Mean Temperature": "Temperatura média (2 m)",
+    "Empty": "Vazio"
 }

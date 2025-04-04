@@ -18,6 +18,8 @@
 - [15-Minutely](#objekte-15-minutely)
 - [Astrotime](#astrotime)
 - [Remote Control](#remote-control)
+- [Icon Color](#icon-color)
+- [Weather Code](#weather-code)
 
 # Instance settings
 
@@ -36,6 +38,8 @@
 | Timeformat                       | Choose between ISO 8610 (e.g. 2025-01-01) or Unix timestamp |
 | API key                          | Your API Key                                                |
 | Maximum requests per day         | Maximum queries per day. 10,000 by default for a free API.  |
+| Wind speed                       | At what speed should WInd Icon be displayed                 |
+| Weather model                    | See [open-meteo.com](https://open-meteo.com)                |
 
 ![weather_instance_1.png](img/weather_instance_1.png)
 
@@ -90,25 +94,28 @@
 
 [Summary](#summary)
 
-| Settings                           | Description                                                       |
-| ---------------------------------- | ----------------------------------------------------------------- |
-| Minimum Apparent Temperature (2 m) | Minimum daily apparent temperature                                |
-| Maximum Apparent Temperature (2 m) | Maximum daily apparent temperature                                |
-| Minimum Temperature (2 m)          | Minimum daily air temperature at 2 meters above ground            |
-| Maximum Temperature (2 m)          | Maximum daily air temperature at 2 meters above ground            |
-| Precipitation Sum                  | Sum of daily precipitation (including rain, showers and snowfall) |
-| Precipitation Probability Max      | Probability of precipitation                                      |
-| Precipitation Hours                | The number of hours with rain                                     |
-| Weather code                       | The most severe weather condition on a given day                  |
-| Maximum Wind Speed (10 m)          | Maximum wind speed on a day                                       |
-| Dominant Wind Direction (10 m)     | Dominant wind direction                                           |
-| Maximum Wind Gusts (10 m)          | Maximum wind gusts on a day                                       |
-| Rain Sum                           | Sum of daily rain                                                 |
-| Showers Sum                        | Sum of daily showers                                              |
-| Snowfall Sum                       | Sum of daily snowfall                                             |
-| Sunshine Duration                  | The number of seconds of sunshine per day                         |
-| Daylight Duration                  | Number of seconds of daylight per day                             |
-| Cloud cover                        | Total cloud cover as an area fraction                             |
+| Settings                                 | Description                                                       |
+| ---------------------------------------- | ----------------------------------------------------------------- |
+| Minimum Apparent Temperature (2 m)       | Minimum daily apparent temperature                                |
+| Maximum Apparent Temperature (2 m)       | Maximum daily apparent temperature                                |
+| Minimum Temperature (2 m)                | Minimum daily air temperature at 2 meters above ground            |
+| Maximum Temperature (2 m)                | Maximum daily air temperature at 2 meters above ground            |
+| Precipitation Sum                        | Sum of daily precipitation (including rain, showers and snowfall) |
+| Precipitation Probability Max            | Probability of precipitation                                      |
+| Precipitation Hours                      | The number of hours with rain                                     |
+| Weather code                             | The most severe weather condition on a given day                  |
+| Maximum Wind Speed (10 m)                | Maximum wind speed on a day                                       |
+| Dominant Wind Direction (10 m)           | Dominant wind direction                                           |
+| Maximum Wind Gusts (10 m)                | Maximum wind gusts on a day                                       |
+| Rain Sum                                 | Sum of daily rain                                                 |
+| Showers Sum                              | Sum of daily showers                                              |
+| Snowfall Sum                             | Sum of daily snowfall                                             |
+| Sunshine Duration                        | The number of seconds of sunshine per day                         |
+| Daylight Duration                        | Number of seconds of daylight per day                             |
+| Cloud cover                              | Total cloud cover as an area fraction                             |
+| Mittlere Wolkendecke                     | Mittlere Wolkendecke                                              |
+| Mittlere relative Luftfeuchtigkeit (2 m) | Mittlere relative Luftfeuchtigkeit in 2 Metern Höhe               |
+| Mittlere Temperatur (2 m)                | Lufttemperatur in 2 Metern Höhe                                   |
 
 ![weather_instance_4.png](img/weather_instance_4.png)
 
@@ -168,6 +175,8 @@
 | temperature_2m       | Air temperature at 2 meters above ground                                                                                                                         |
 | time                 | Date                                                                                                                                                             |
 | weather_code         | Weather condition as a numeric code.                                                                                                                             |
+| weather_code_own     | Custom icon with the selected colors                                                                                                                             |
+| weather_code_path    | Path to the icon                                                                                                                                                 |
 | weather_code_text    | Weather condition as a string code.                                                                                                                              |
 | wind_speed_10m       | Wind speed at 10 meters above ground.                                                                                                                            |
 
@@ -181,20 +190,29 @@
 | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | apparent_temperature_max      | Maximum daily apparent temperature                                                                                          |
 | apparent_temperature_min      | Minimum daily apparent temperature                                                                                          |
+| cloud_cover_mean              | Mean Cloud cover                                                                                                            |
 | daylight_duration             | Number of seconds of daylight per day                                                                                       |
 | precipitation_hours           | The number of hours with rain                                                                                               |
 | precipitation_probability_max | Sum of daily precipitation (including rain, showers and snowfall)                                                           |
 | precipitation_sum             | Sum of daily precipitation (including rain, showers and snowfall)                                                           |
 | rain_sum                      | Sum of daily rain                                                                                                           |
+| relative_humidity_2m_mean     | Mean Relative Humidity (2 m)                                                                                                |
 | showers_sum                   | Sum of daily showers                                                                                                        |
 | snowfall_sum                  | Sum of daily snowfall                                                                                                       |
 | sunshine_duration             | Number of seconds of sunshine of the preceding hour per hour calculated by direct normalized irradiance exceeding 120 W/m². |
 | temperature_2m_max            | Maximum daily air temperature at 2 meters above ground                                                                      |
+| temperature_2m_mean           | Mean Temperature (2 m)                                                                                                      |
 | temperature_2m_min            | Minimum daily air temperature at 2 meters above ground                                                                      |
 | time                          | Date                                                                                                                        |
-| uv_index_clear_sky_max        | UV-Index on clear sky                                                                                                       |
+| uv_index_clear_sky_max        | UV Index for Clear Sky                                                                                                      |
+| uv_index_clear_sky_max_own    | Custom icon with the selected colors                                                                                        |
+| uv_index_clear_sky_max_path   | Path to the UV icon                                                                                                         |
 | uv_index_max                  | UV Index                                                                                                                    |
+| uv_index_max_own              | Custom icon with the selected colors                                                                                        |
+| uv_index_max_path             | Path to the UV icon                                                                                                         |
 | weather_code                  | Weather condition as a numeric code.                                                                                        |
+| weather_code_own              | Custom icon with the selected colors                                                                                        |
+| weather_code_path             | Path to the icon                                                                                                            |
 | weather_code_text             | Weather condition as a string code.                                                                                         |
 | wind_direction_10m_dominant   | Dominant wind direction                                                                                                     |
 | wind_speed_10m_max            | Maximum wind speed on a day                                                                                                 |
@@ -235,6 +253,8 @@
 | time                      | Date                                                                                                                                                             |
 | visibility                | Viewing distance in meters. Influenced by low clouds, humidity and aerosols.                                                                                     |
 | weather_code              | Weather condition as a numeric code.                                                                                                                             |
+| weather_code_own          | Custom icon with the selected colors                                                                                                                             |
+| weather_code_path         | Path to the icon                                                                                                                                                 |
 | weather_code_text         | Weather condition as a string code.                                                                                                                              |
 | wind_direction_10m        | Wind direction at 10 meters above ground                                                                                                                         |
 | wind_direction_120m       | Wind direction at 120 meters above ground                                                                                                                        |
@@ -352,4 +372,91 @@
 
 ![weather_states_overview.png](img/weather_states_overview.png)
 
-[Zusammenfassung](#zusammenfassung)
+### Icon Color
+
+[Summary](#summary)
+
+| Objects               | Description                          |
+| --------------------- | ------------------------------------ |
+| cloud                 | Cloud edge color                     |
+| cloud_filled          | Cloud color                          |
+| flash                 | Lightning color                      |
+| flash_filled          | Lightning color                      |
+| fog                   | Fog color                            |
+| lines                 | Edge color: slithering lines         |
+| lines_filled          | Sliding lines color                  |
+| moon                  | Moon edge color                      |
+| moon_filled           | Moon color                           |
+| rain                  | Rain color                           |
+| snow                  | Snowflake color                      |
+| sun                   | Sun edge color                       |
+| sun_filled            | Sun color                            |
+| unknown               | Border color of unknown code (cloud) |
+| unknown_filled        | Color of unknown code (cloud)        |
+| uv_index_0            | Color for UV index 0                 |
+| uv_index_1            | Color for UV index 1                 |
+| uv_index_10           | Color for UV index 10                |
+| uv_index_11           | Color for UV index 11+               |
+| uv_index_2            | Color for UV index 2                 |
+| uv_index_3            | Color for UV index 3                 |
+| uv_index_4            | Color for UV index 4                 |
+| uv_index_5            | Color for UV index 5                 |
+| uv_index_6            | Color for UV Index 6                 |
+| uv_index_7            | Color for UV Index 7                 |
+| uv_index_8            | Color for UV Index 8                 |
+| uv_index_9            | Color for UV Index 9                 |
+| uv_index_bg           | Background color for UV Index icons  |
+| uv_index_desc         | Text color for UV Index icons        |
+| warning_triangle      | Danger of skidding icon              |
+| warning_triangle_rand | Edge of dangerous skidding icon      |
+| wind                  | Color of wind icon                   |
+
+![wweather_states_icon_1.png](img/weather_states_icon_1.png)</br>
+![wweather_states_icon_2.png](img/weather_states_icon_2.png)</br>
+![wweather_states_icon_3.png](img/weather_states_icon_3.png)
+
+### Weather Code
+
+[Summary](#summary)
+
+| Code | During the day                | At Night                      |
+| ---- | ----------------------------- | ----------------------------- |
+| 0    | Sunny                         | Clear Sky                     |
+| 1    | Mainly Sunny                  | Mainly Clear Sky              |
+| 2    | Partly Cloudy                 | Partly Cloudy                 |
+| 3    | Cloudy                        | Cloudy                        |
+| 45   | Foggy                         | Foggy                         |
+| 48   | Rime Fog                      | Rime Fog                      |
+| 51   | Light Drizzle                 | Light Drizzle                 |
+| 53   | Moderate drizzle              | Moderate drizzle              |
+| 55   | Heavy Drizzle                 | Heavy Drizzle                 |
+| 56   | Light Freezing Drizzle        | Light Freezing Drizzle        |
+| 57   | Freezing Drizzle              | Freezing Drizzle              |
+| 61   | Light Rain                    | Light Rain                    |
+| 63   | Moderate rain                 | Moderate rain                 |
+| 65   | Heavy Rain                    | Heavy Rain                    |
+| 66   | Light Freezing Rain           | Light Freezing Rain           |
+| 67   | Freezing Rain                 | Freezing Rain                 |
+| 71   | Light Snow                    | Light Snow                    |
+| 73   | Moderate Snow                 | Moderate Snow                 |
+| 75   | Heavy Snow                    | Heavy Snow                    |
+| 77   | Snow Grains                   | Snow Grains                   |
+| 80   | Light Showers                 | Light Showers                 |
+| 81   | Moderate rain showers         | Moderate rain showers         |
+| 82   | Heavy Showers                 | Heavy Showers                 |
+| 85   | Light Snow Showers            | Light Snow Showers            |
+| 86   | Moderate snow showers         | Moderate snow showers         |
+| 95   | Thunderstorm                  | Thunderstorm                  |
+| 96   | Thunderstorm With slight hail | Thunderstorm With slight hail |
+| 99   | Thunderstorm With heavy hail  | Thunderstorm With heavy hail  |
+| 100  | Sunny with wind               | Clear Sky with wind           |
+| 101  | Mainly Sunny with wind        | Mainly Clear Sky with wind    |
+| 102  | Partly Cloudy with wind       | Partly Cloudy with wind       |
+| 103  | Cloudy with wind              | Cloudy with wind              |
+| 61   | Light Rain with wind          | Light Rain with wind          |
+| 63   | Moderate Rain with wind       | Moderate Rain with wind       |
+| 65   | Heavy Rain with wind          | Heavy Rain with wind          |
+| 66   | Light Freezing Rain with wind | Light Freezing Rain with wind |
+| 67   | Freezing Rain with wind       | Freezing Rain with wind       |
+
+[Summary](#summary)

@@ -93,5 +93,13 @@
     "Cloud cover high": "Chmurka wysoka",
     "UV Index Clear Sky": "Indeks UV Clear Sky",
     "UV Index": "Indeks UV",
-    "Dewpoint": "Punkt rosy"
+    "Dewpoint": "Punkt rosy",
+    "Windspeed": "Prędkość wiatru",
+    "Windspeed_tooltip": "Przy jakiej prędkości powinna być wyświetlana ikona wiatru",
+    "model": "Model pogody",
+    "model_tooltip": "Niektóre modele nie dostarczają wybranych danych (np. Ikona DWD Seamless nie zapewnia indeksu UV)",
+    "Mean Cloud cover": "Średnia ochrona chmur",
+    "Mean Relative Humidity": "Średnia wilgotność względna (2 m)",
+    "Mean Temperature": "Średnia temperatura (2 m)",
+    "Empty": "Pusty"
 }

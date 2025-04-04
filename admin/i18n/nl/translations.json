@@ -93,5 +93,13 @@
     "Cloud cover high": "Wolkenbedekking hoog",
     "UV Index Clear Sky": "UV Index Clear Sky",
     "UV Index": "UV -index",
-    "Dewpoint": "Dauwpunt"
+    "Dewpoint": "Dauwpunt",
+    "Windspeed": "Windsnelheid",
+    "Windspeed_tooltip": "Op welke snelheid moet het windpictogram worden weergegeven",
+    "model": "Weermodel",
+    "model_tooltip": "Sommige modellen bieden geen geselecteerde gegevens (bijvoorbeeld naadloos DWD -pictogram biedt geen UV -index)",
+    "Mean Cloud cover": "Gemiddelde wolkenbedekking",
+    "Mean Relative Humidity": "Gemiddelde relatieve vochtigheid (2 m)",
+    "Mean Temperature": "Gemiddelde temperatuur (2 m)",
+    "Empty": "Leeg"
 }

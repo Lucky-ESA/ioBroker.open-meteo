@@ -93,5 +93,13 @@
     "Cloud cover high": "Wolkendecke hoch",
     "UV Index Clear Sky": "UV-Index bei klarerm Himmel",
     "UV Index": "UV-Index",
-    "Dewpoint": "Taupunkt"
+    "Dewpoint": "Taupunkt",
+    "Windspeed": "Windgeschwindigkeit",
+    "Windspeed_tooltip": "Bei welcher Geschwindigkeit soll Wind Icon angezeigt werden",
+    "model": "Wettermodell",
+    "model_tooltip": "Einige Modelle liefern keine ausgewählten Daten (z. B. DWD ICON Seamless liefert kein UV-Index.)",
+    "Mean Cloud cover": "Mittlere Wolkendecke",
+    "Mean Relative Humidity": "Mittlere relative Luftfeuchtigkeit (2 m)",
+    "Mean Temperature": "Mittlere Temperatur (2 m)",
+    "Empty": "Leer"
 }

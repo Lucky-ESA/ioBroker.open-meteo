@@ -93,5 +93,13 @@
     "Cloud cover high": "Couverture nuageuse élevée",
     "UV Index Clear Sky": "INDEX UV CAY",
     "UV Index": "Indice UV",
-    "Dewpoint": "Point de rosée"
+    "Dewpoint": "Point de rosée",
+    "Windspeed": "Vitesse du vent",
+    "Windspeed_tooltip": "À quelle vitesse devrait être affiché",
+    "model": "Modèle météorologique",
+    "model_tooltip": "Certains modèles ne fournissent pas de données sélectionnées (par exemple, l'icône DWD ne fournit pas d'indice UV)",
+    "Mean Cloud cover": "Couverture nuageuse moyenne",
+    "Mean Relative Humidity": "Humidité relative moyenne (2 m)",
+    "Mean Temperature": "Température moyenne (2 m)",
+    "Empty": "Vide"
 }

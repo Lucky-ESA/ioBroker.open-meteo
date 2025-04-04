@@ -18,6 +18,8 @@
 - [15-Minütliche](#objekte-15-minütlich)
 - [Astrozeit](#astrotime)
 - [Remote Control](#remote-control)
+- [Farbe Icons](#icon-farben)
+- [Wetter Code](#wetter-code)
 
 # Instanz Einstellungen
 
@@ -36,6 +38,8 @@
 | Timeformat                                     | Wählen zwischen ISO 8610 (z. B. 2025-01-01) oder Unix-Zeitstempel  |
 | API-Schlüssel                                  | API-Schlüssel                                                      |
 | Maximale Anfragen pro Tag                      | Maximale Abfragen pro Tag. Standard 10000 einer kostenlose API.    |
+| Windgeschwindigkeit                            | Geschwindigkeit ab dem Wind Icons angezeigt werden                 |
+| Wettermodell                                   | Siehe [open-meteo.com](https://open-meteo.com)                     |
 
 ![weather_instance_1.png](img/weather_instance_1.png)
 
@@ -116,21 +120,24 @@
 
 [Zusammenfassung](#zusammenfassung)
 
-| Einstellung                     | Beschreibung                                                           |
-| ------------------------------- | ---------------------------------------------------------------------- |
-| Temperatur (2 m)                | Lufttemperatur in 2 Metern Höhe                                        |
-| Gefühlte Temperatur             | Gefühlte Temperatur                                                    |
-| Niederschlag                    | Gesamtniederschlag (Regen, Schauer, Schnee) Summe der letzten Stunde   |
-| Wettercode                      | Wetterbedingung als numerischer Code und Zeichenfolge                  |
-| Windgeschwindigkeit (10 m)      | Windgeschwindigkeit in 10 Metern Höhe                                  |
-| Windrichtung (10 m)             | Windrichtung in 10 Metern Höhe                                         |
-| Windböen (10 m)                 | Böen in 10 Metern Höhe als Maximum der letzten Stunde                  |
-| Relative Luftfeuchtigkeit (2 m) | Relative Luftfeuchtigkeit in 2 Metern Höhe                             |
-| Regen                           | Regen aus großräumigen Wettersystemen der letzten Stunde in Millimeter |
-| Schauer                         | Schauer aus konvektivem Niederschlag in Millimeter der letzten Stunde  |
-| Schneefall                      | Schneefallmenge der letzten Stunde in Zentimetern                      |
-| UV-Index                        | Tagesmaximum im UV-Index ab 0                                          |
-| UV-Index bei klarerm Himmel     | Tägliches Maximum des UV-Index ab 0 bei wolkenlosen Bedingungen        |
+| Einstellung                              | Beschreibung                                                           |
+| ---------------------------------------- | ---------------------------------------------------------------------- |
+| Temperatur (2 m)                         | Lufttemperatur in 2 Metern Höhe                                        |
+| Gefühlte Temperatur                      | Gefühlte Temperatur                                                    |
+| Niederschlag                             | Gesamtniederschlag (Regen, Schauer, Schnee) Summe der letzten Stunde   |
+| Wettercode                               | Wetterbedingung als numerischer Code und Zeichenfolge                  |
+| Windgeschwindigkeit (10 m)               | Windgeschwindigkeit in 10 Metern Höhe                                  |
+| Windrichtung (10 m)                      | Windrichtung in 10 Metern Höhe                                         |
+| Windböen (10 m)                          | Böen in 10 Metern Höhe als Maximum der letzten Stunde                  |
+| Relative Luftfeuchtigkeit (2 m)          | Relative Luftfeuchtigkeit in 2 Metern Höhe                             |
+| Regen                                    | Regen aus großräumigen Wettersystemen der letzten Stunde in Millimeter |
+| Schauer                                  | Schauer aus konvektivem Niederschlag in Millimeter der letzten Stunde  |
+| Schneefall                               | Schneefallmenge der letzten Stunde in Zentimetern                      |
+| UV-Index                                 | Tagesmaximum im UV-Index ab 0                                          |
+| UV-Index bei klarerm Himmel              | Tägliches Maximum des UV-Index ab 0 bei wolkenlosen Bedingungen        |
+| Mittlere Wolkendecke                     | Mittlere Wolkendecke                                                   |
+| Mittlere relative Luftfeuchtigkeit (2 m) | Mittlere relative Luftfeuchtigkeit in 2 Metern Höhe                    |
+| Mittlere Temperatur (2 m)                | Lufttemperatur in 2 Metern Höhe                                        |
 
 ![weather_instance_5.png](img/weather_instance_5.png)
 
@@ -168,6 +175,8 @@
 | temperature_2m       | Lufttemperatur in 2 Metern Höhe                                                                                                                                                       |
 | time                 | Datum                                                                                                                                                                                 |
 | weather_code         | Wetterbedingungen als numerische code.                                                                                                                                                |
+| weather_code_own     | Eigendes Icon mit den ausgewählten Farben                                                                                                                                             |
+| weather_code_path    | Pfad zum Icon                                                                                                                                                                         |
 | weather_code_text    | Wetterbedingungen als Zeichenfolge.                                                                                                                                                   |
 | wind_speed_10m       | Windgeschwindigkeit in 10 Metern Höhe über Grund.                                                                                                                                     |
 
@@ -181,20 +190,29 @@
 | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | apparent_temperature_max      | Maximum daily apparent temperature                                                                                                                 |
 | apparent_temperature_min      | Minimum daily apparent temperature                                                                                                                 |
+| cloud_cover_mean              | Mittlere Wolkendecke                                                                                                                               |
 | daylight_duration             | Anzahl der Sekunden Tageslicht pro Tag                                                                                                             |
 | precipitation_hours           | Die Anzahl der Stunden mit Regen                                                                                                                   |
 | precipitation_probability_max | Summe der täglichen Niederschlagsmengen (einschließlich Regen, Schauer und Schneefall)                                                             |
 | precipitation_sum             | Summe der täglichen Niederschlagsmengen (einschließlich Regen, Schauer und Schneefall)                                                             |
 | rain_sum                      | Summe des täglichen Niederschlags                                                                                                                  |
+| relative_humidity_2m_mean     | Mittlere relative Luftfeuchtigkeit (2 m)                                                                                                           |
 | showers_sum                   | Summe der täglichen Regenfälle                                                                                                                     |
 | snowfall_sum                  | Summe der täglichen Schneefälle                                                                                                                    |
 | sunshine_duration             | Anzahl der Sonnenscheinsekunden der vorangegangenen Stunde pro Stunde, berechnet durch die direkte normalisierte Bestrahlungsstärke über 120 W/m². |
 | temperature_2m_max            | Maximum tägliche Lufttemperatur in 2 Metern Höhe                                                                                                   |
+| temperature_2m_mean           | Mittlere Temperatur (2 m)                                                                                                                          |
 | temperature_2m_min            | Minimum tägliche Lufttemperatur in 2 Metern Höhe                                                                                                   |
 | time                          | Datum                                                                                                                                              |
 | uv_index_clear_sky_max        | UV-Index bei klarem Himmel                                                                                                                         |
+| uv_index_clear_sky_max_own    | Eigenes Icon mit den ausgewählten Farben                                                                                                           |
+| uv_index_clear_sky_max_path   | Pfad zum UV Icon                                                                                                                                   |
 | uv_index_max                  | UV Index                                                                                                                                           |
+| uv_index_max_own              | Eigenes Icon mit den ausgewählten Farben                                                                                                           |
+| uv_index_max_path             | Pfad zum UV Icon                                                                                                                                   |
 | weather_code                  | Wetterbedingungen als numerische code.                                                                                                             |
+| weather_code_own              | Eigendes Icon mit den ausgewählten Farben                                                                                                          |
+| weather_code_path             | Pfad zum Icon                                                                                                                                      |
 | weather_code_text             | Wetterbedingungen als Zeichenfolge.                                                                                                                |
 | wind_direction_10m_dominant   | Dominante Windrichtung                                                                                                                             |
 | wind_speed_10m_max            | Maximale Windgeschwindigkeit an einem Tag                                                                                                          |
@@ -235,6 +253,8 @@
 | time                      | Datum                                                                                                                                                                                 |
 | visibility                | Betrachtungsdistanz in Metern. Beeinflusst durch niedrige Wolken, Luftfeuchtigkeit und Aerosole.                                                                                      |
 | weather_code              | Wetterbedingungen als numerische code.                                                                                                                                                |
+| weather_code_own          | Eigenes Icon mit den ausgewählten Farben                                                                                                                                              |
+| weather_code_path         | Pfad zum Icon                                                                                                                                                                         |
 | weather_code_text         | Wetterbedingungen als Zeichenfolge.                                                                                                                                                   |
 | wind_direction_10m        | Windrichtung in 10 Metern Höhe                                                                                                                                                        |
 | wind_direction_120m       | Windrichtung in 120 Metern Höhe                                                                                                                                                       |
@@ -351,5 +371,92 @@
 ```
 
 ![weather_states_overview.png](img/weather_states_overview.png)
+
+### Icon Farben
+
+[Zusammenfassung](#zusammenfassung)
+
+| Objekte               | Beschreibung                       |
+| --------------------- | ---------------------------------- |
+| cloud                 | Randfarbe der Wolke                |
+| cloud_filled          | Farbe der Wolke                    |
+| flash                 | Farbe vom Gewitterblitz            |
+| flash_filled          | Farbe vom Gewitterblitz            |
+| fog                   | Farbe Nebel                        |
+| lines                 | Randfarbe Schlitterlinien          |
+| lines_filled          | Farbe Schlitterlinien              |
+| moon                  | Randfarbe vom Mond                 |
+| moon_filled           | Farbe vom Mond                     |
+| rain                  | Farbe Regen                        |
+| snow                  | Farbe Schneeflocken                |
+| sun                   | Randfarbe Sonne                    |
+| sun_filled            | Farbe Sonne                        |
+| unknown               | Randfarbe unbekannter Code (Wolke) |
+| unknown_filled        | Farbe unbekannter Code (Wolke)     |
+| uv_index_0            | Farbe für UV Index 0               |
+| uv_index_1            | Farbe für UV Index 1               |
+| uv_index_10           | Farbe für UV Index 10              |
+| uv_index_11           | Farbe für UV Index 11+             |
+| uv_index_2            | Farbe für UV Index 2               |
+| uv_index_3            | Farbe für UV Index 3               |
+| uv_index_4            | Farbe für UV Index 4               |
+| uv_index_5            | Farbe für UV Index 5               |
+| uv_index_6            | Farbe für UV Index 6               |
+| uv_index_7            | Farbe für UV Index 7               |
+| uv_index_8            | Farbe für UV Index 8               |
+| uv_index_9            | Farbe für UV Index 9               |
+| uv_index_bg           | Hintergrundfarbe UV Index Icons    |
+| uv_index_desc         | Textfarbe UV Index Icons           |
+| warning_triangle      | Schleudergefahr Icon               |
+| warning_triangle_rand | Rand Schleudergefahr Icon          |
+| wind                  | Farbe Wind Icon                    |
+
+![wweather_states_icon_1.png](img/weather_states_icon_1.png)</br>
+![wweather_states_icon_2.png](img/weather_states_icon_2.png)</br>
+![wweather_states_icon_3.png](img/weather_states_icon_3.png)
+
+### Wetter Code
+
+[Zusammenfassung](#zusammenfassung)
+
+| Code | Tagsüber                               | Nachts                                 |
+| ---- | -------------------------------------- | -------------------------------------- |
+| 0    | Sonne                                  | klarer Himmel                          |
+| 1    | Überwiegend sonnig                     | Überwiegend klarer Himmel              |
+| 2    | Teilweise bewölkt                      | Teilweise bewölkt                      |
+| 3    | Wolkig                                 | Wolkig                                 |
+| 45   | Nebelig                                | Nebelig                                |
+| 48   | Raureifnebel                           | Raureifnebel                           |
+| 51   | Leichter Nieselregen                   | Leichter Nieselregen                   |
+| 53   | Mäßiger Nieselregen                    | Mäßiger Nieselregen                    |
+| 55   | Starker Nieselregen                    | Starker Nieselregen                    |
+| 56   | Leichter gefrierender Nieselregen      | Leichter gefrierender Nieselregen      |
+| 57   | Gefrierender Nieselregen               | Gefrierender Nieselregen               |
+| 61   | Leichter Regen                         | Leichter Regen                         |
+| 63   | Mäßiger Regen                          | Mäßiger Regen                          |
+| 65   | Starker Regen                          | Starker Regen                          |
+| 66   | Leichter gefrierender Regen            | Leichter gefrierender Regen            |
+| 67   | Eisregen                               | Eisregen                               |
+| 71   | Leichter Schneefall                    | Leichter Schneefall                    |
+| 73   | Mäßiger Schneefall                     | Mäßiger Schneefall                     |
+| 75   | Starker Schneefall                     | Starker Schneefall                     |
+| 77   | Schneekörner                           | Schneekörner                           |
+| 80   | Leichte Schauer                        | Leichte Schauer                        |
+| 81   | Mäßige Regenschauer                    | Mäßige Regenschauer                    |
+| 82   | Starke Regenschauer                    | Starke Regenschauer                    |
+| 85   | Leichte Schneeschauer                  | Leichte Schneeschauer                  |
+| 86   | Mäßige Schneeschauer                   | Mäßige Schneeschauer                   |
+| 95   | Gewitter                               | Gewitter                               |
+| 96   | Gewitter mit leichtem Hagel            | Gewitter mit leichtem Hagel            |
+| 99   | Gewitter mit starkem Hagel             | Gewitter mit starkem Hagel             |
+| 100  | Sonne und windig                       | klarer Himmel und windig               |
+| 101  | Überwiegend sonnig und windig          | Überwiegend klarer Himmel und windig   |
+| 102  | Teilweise bewölkt und windig           | Teilweise bewölkt und windig           |
+| 103  | Wolkig und windig                      | Wolkig und windig                      |
+| 161  | Leichter Regen und windig              | Leichter Regen und windig              |
+| 163  | Mäßiger Regen und windig               | Mäßiger Regen und windig               |
+| 165  | Starker Regen und windig               | Starker Regen und windig               |
+| 166  | Leichter gefrierender Regen und windig | Leichter gefrierender Regen und windig |
+| 167  | Eisregen und windig                    | Eisregen und windig                    |
 
 [Zusammenfassung](#zusammenfassung)

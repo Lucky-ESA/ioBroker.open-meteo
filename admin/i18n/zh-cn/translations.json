@@ -93,5 +93,13 @@
     "Cloud cover high": "云盖高",
     "UV Index Clear Sky": "UV索引晴朗的天空",
     "UV Index": "UV索引",
-    "Dewpoint": "露点"
+    "Dewpoint": "露点",
+    "Windspeed": "风速",
+    "Windspeed_tooltip": "以什么速度显示风图标",
+    "model": "天气模型",
+    "model_tooltip": "一些模型不提供选定的数据（例如DWD图标无缝不提供UV索引）",
+    "Mean Cloud cover": "平均云盖",
+    "Mean Relative Humidity": "平均相对湿度（2 M）",
+    "Mean Temperature": "平均温度（2 m）",
+    "Empty": "空的"
 }
