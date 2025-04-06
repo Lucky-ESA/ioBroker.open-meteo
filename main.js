@@ -227,15 +227,16 @@ class OpenMeteo extends utils.Adapter {
                 this.setState(`html.trigger`, { val: this.html.trigger ? false : true, ack: true });
                 this.html.trigger = this.html.trigger ? false : true;
             } else if (this.html[command]) {
+                this.log.debug(`HTML changed!`);
                 this.html[command] = state.val;
                 this.updateHTML();
                 this.setState(id, { ack: true });
             } else if (this.own_color[command]) {
+                this.log.debug(`Icon color changed!`);
                 this.own_color[command] = state.val;
                 this.setColor();
                 this.setState(id, { ack: true });
             }
-            this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
         }
     }
 
@@ -1306,7 +1307,10 @@ class OpenMeteo extends utils.Adapter {
         const actual_date = this.formatDate(new Date(actual_times), "DD.MM.YYYY");
         const actual_text = this.value[`current.weather_code_text`];
         const actual_clock = `${`0${new Date().getHours()}`.slice(-2)}:` + `${`0${new Date().getMinutes()}`.slice(-2)}`;
-        const actual_temp = await this.getForeignStateAsync(this.config.objectId);
+        let actual_temp;
+        if (this.config.objectId && this.config.objectId != "") {
+            actual_temp = await this.getForeignStateAsync(this.config.objectId);
+        }
         let actual_temperature = 0;
         if (actual_temp && actual_temp.val != null && actual_temp.val != "") {
             actual_temperature = parseFloat(actual_temp.val.toString());
@@ -1316,11 +1320,17 @@ class OpenMeteo extends utils.Adapter {
             `<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">` +
             `<style>` +
             `   ${bg}` +
-            `   span {text-align:${this.html.today_text_algin}${font};}` +
+            `   span {text-align:${this.html.today_text_algin}${font};` +
+            `   border-radius:${this.html.today_border_radius}px;border-collapse:separate;border:${this.html.today_border}px solid gainsboro;` +
+            `   border-color:${this.hexToRGBA(this.html.today_border_color, this.html.today_border_color_alpha)};}` +
             `   td {border-width:0px;border-style:solid;border-color:silver;}` +
             `   input {height:10vw;width:10vw;}` +
-            `   .container_column {display:flex;flex-direction: column;justify-content: flex-start;}` +
-            `   .container_row {display: flex;flex-direction: row;justify-content: space-between;}` +
+            `   .container_column {display:flex;flex-direction: column;justify-content: flex-start;` +
+            `   border-radius:${this.html.forecast_border_radius}px;border-collapse:separate;border:${this.html.forecast_border}px solid gainsboro;` +
+            `   border-color:${this.hexToRGBA(this.html.forecast_border_color, this.html.forecast_border_color_alpha)};}` +
+            `   .container_row {display: flex;flex-direction: row;justify-content: space-between;` +
+            `   border-radius:${this.html.today_text_border_radius}px;border-collapse:separate;border:${this.html.today_text_border}px solid gainsboro;` +
+            `   border-color:${this.hexToRGBA(this.html.today_text_border_color, this.html.today_text_border_color_alpha)};}` +
             `   .img_weather {height:${this.html.today_image_height}vw;width:${this.html.today_image_width}vw;}` +
             `   .box_time {font-size:${this.html.today_clock_font_size}vmax;}` +
             `   .box_date {font-size:${this.html.today_date_font_size}vmax;text-align:center;}` +
@@ -1357,10 +1367,12 @@ class OpenMeteo extends utils.Adapter {
             const temp_min = this.value[`daily.day0${i}.temperature_2m_min`];
             const temp_max = this.value[`daily.day0${i}.temperature_2m_max`];
             const text = this.value[`daily.day0${i}.weather_code_text`];
+            const humidity = this.value[`daily.day0${i}.relative_humidity_2m_mean`];
             html += `<tr>
                         <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]}</td>
-                        <td><img width="${this.html.forecast_image_width}vm" height="${this.html.forecast_image_height}vm" alt="${text}" title="${text}" src='${this.setIcon(`daily.day0${i}`, daily_id)}'/></td>
+                        <td><img width="${this.html.forecast_image_width}px" height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" src='${this.setIcon(`daily.day0${i}`, daily_id)}'/></td>
                         <td nowrap>${temp_min}°C ${constants.DAYNAME.unit[this.lang]} ${temp_max}°C</td>
+                        <td>${humidity}%</td>
                         <td align=left>${text}</td>
                     </tr>`;
         }
