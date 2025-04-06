@@ -20,6 +20,7 @@
 - [Remote Control](#remote-control)
 - [Icon Color](#icon-color)
 - [Weather Code](#weather-code)
+- [IQontrol](#iqontrol)
 
 # Instance settings
 
@@ -27,19 +28,20 @@
 
 [Summary](#summary)
 
-| Settings                         | Description                                                 |
-| -------------------------------- | ----------------------------------------------------------- |
-| Use system settings for position | Choose between automatic or manual input                    |
-| Forecast days                    | Choose between 1-7 days                                     |
-| Update Interval                  | Update interval in minutes (max. 10,000 requests per day)   |
-| Temperature Unit                 | Choose between celsius or fahrenheit                        |
-| Wind Speed Unit                  | Choose between km/h, m/s, mph or knots                      |
-| Precipitation Unit               | Choose between millimeter or inch                           |
-| Timeformat                       | Choose between ISO 8610 (e.g. 2025-01-01) or Unix timestamp |
-| API key                          | Your API Key                                                |
-| Maximum requests per day         | Maximum queries per day. 10,000 by default for a free API.  |
-| Wind speed                       | At what speed should WInd Icon be displayed                 |
-| Weather model                    | See [open-meteo.com](https://open-meteo.com)                |
+| Settings                             | Description                                                 |
+| ------------------------------------ | ----------------------------------------------------------- |
+| Use system settings for position     | Choose between automatic or manual input                    |
+| Forecast days                        | Choose between 1-7 days                                     |
+| Update Interval                      | Update interval in minutes (max. 10,000 requests per day)   |
+| Temperature Unit                     | Choose between celsius or fahrenheit                        |
+| Wind Speed Unit                      | Choose between km/h, m/s, mph or knots                      |
+| Precipitation Unit                   | Choose between millimeter or inch                           |
+| Timeformat                           | Choose between ISO 8610 (e.g. 2025-01-01) or Unix timestamp |
+| API key                              | Your API Key                                                |
+| Maximum requests per day             | Maximum queries per day. 10,000 by default for a free API.  |
+| Wind speed                           | At what speed should WInd Icon be displayed                 |
+| Weather model                        | See [open-meteo.com](https://open-meteo.com)                |
+| Object ID of the current temperature | Current Temperature for IQontrol                            |
 
 ![weather_instance_1.png](img/weather_instance_1.png)
 
@@ -458,5 +460,14 @@
 | 65   | Heavy Rain with wind          | Heavy Rain with wind          |
 | 66   | Light Freezing Rain with wind | Light Freezing Rain with wind |
 | 67   | Freezing Rain with wind       | Freezing Rain with wind       |
+
+### IQontrol
+
+[Summary](#summary)
+
+| Objects | Description |
+| ------- | ----------- |
+
+![wweather_states_icon_3.png](img/weather_states_icon_3.png)
 
 [Summary](#summary)

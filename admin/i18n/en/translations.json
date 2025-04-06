@@ -101,5 +101,6 @@
     "Mean Cloud cover": "Mean Cloud cover",
     "Mean Relative Humidity": "Mean Relative Humidity (2 m)",
     "Mean Temperature": "Mean Temperature (2 m)",
-    "Empty": "Empty"
+    "Empty": "Empty",
+    "select an objectId": "Object ID of the current temperature"
 }

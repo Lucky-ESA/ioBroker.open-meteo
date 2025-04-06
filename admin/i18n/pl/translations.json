@@ -101,5 +101,6 @@
     "Mean Cloud cover": "Średnia ochrona chmur",
     "Mean Relative Humidity": "Średnia wilgotność względna (2 m)",
     "Mean Temperature": "Średnia temperatura (2 m)",
-    "Empty": "Pusty"
+    "Empty": "Pusty",
+    "select an objectId": "ID obiektu bieżącej temperatury"
 }

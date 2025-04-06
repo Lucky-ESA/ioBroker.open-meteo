@@ -101,5 +101,6 @@
     "Mean Cloud cover": "Gemiddelde wolkenbedekking",
     "Mean Relative Humidity": "Gemiddelde relatieve vochtigheid (2 m)",
     "Mean Temperature": "Gemiddelde temperatuur (2 m)",
-    "Empty": "Leeg"
+    "Empty": "Leeg",
+    "select an objectId": "Object -ID van de huidige temperatuur"
 }

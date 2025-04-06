@@ -43,15 +43,8 @@
             "uk": "Прогноз погоди",
             "zh-cn": "天气预报"
         },
-        "authors": [
-            "Lucky-ESA <github@luckyskills.de>"
-        ],
-        "keywords": [
-            "weather",
-            "forecast",
-            "rain",
-            "temperature"
-        ],
+        "authors": ["Lucky-ESA <github@luckyskills.de>"],
+        "keywords": ["weather", "forecast", "rain", "temperature"],
         "licenseInformation": {
             "type": "free",
             "license": "MIT"
@@ -72,12 +65,8 @@
             "config": "json"
         },
         "docs": {
-            "en": [
-                "docs/en/README.md"
-            ],
-            "de": [
-                "docs/de/README.md"
-            ]
+            "en": ["docs/en/README.md"],
+            "de": ["docs/de/README.md"]
         },
         "dependencies": [
             {
@@ -101,6 +90,7 @@
         "maxRequest": 10000,
         "maxWind": 20,
         "model": "none",
+        "objectId": "",
         "h_temperature_2m": false,
         "h_temperature_80m": false,
         "h_temperature_120m": false,
@@ -181,19 +171,48 @@
         "m_is_day": false,
         "apiKey": ""
     },
-    "encryptedNative": [
-        "apiKey"
-    ],
-    "protectedNative": [
-        "apiKey"
-    ],
+    "encryptedNative": ["apiKey"],
+    "protectedNative": ["apiKey"],
     "objects": [],
     "instanceObjects": [
+        {
+            "_id": "",
+            "type": "meta",
+            "common": {
+                "name": {
+                    "en": "Meta storage for user files",
+                    "de": "Meta-Speicher für Benutzerdateien",
+                    "ru": "Meta Storage для файлов пользователей",
+                    "pt": "Meta de armazenamento para arquivos de usuário",
+                    "nl": "Meta opslag voor gebruikersbestanden",
+                    "fr": "Stockage Meta pour les fichiers utilisateur",
+                    "it": "Meta storage per i file utente",
+                    "es": "Meta almacenamiento para archivos de usuario",
+                    "pl": "Meta storage for user files",
+                    "uk": "Зберігання мета для файлів користувачів",
+                    "zh-cn": "用户档案的储存"
+                },
+                "type": "meta.user"
+            },
+            "native": {}
+        },
         {
             "_id": "info",
             "type": "channel",
             "common": {
-                "name": "Information"
+                "name": {
+                    "en": "Information",
+                    "de": "Informationen",
+                    "ru": "Информация",
+                    "pt": "Informação",
+                    "nl": "Informatie",
+                    "fr": "Information",
+                    "it": "Informazioni",
+                    "es": "Información",
+                    "pl": "Informacja",
+                    "uk": "Інформація",
+                    "zh-cn": "信息"
+                }
             },
             "native": {}
         },
@@ -202,7 +221,19 @@
             "type": "state",
             "common": {
                 "role": "indicator.connected",
-                "name": "Device or service connected",
+                "name": {
+                    "en": "Device or service connected",
+                    "de": "Geräte- oder Serviceanschluss",
+                    "ru": "Устройство или сервис подключены",
+                    "pt": "Dispositivo ou serviço conectado",
+                    "nl": "Device of dienst verbonden",
+                    "fr": "Appareil ou service connecté",
+                    "it": "Dispositivo o servizio collegato",
+                    "es": "Dispositivo o servicio conectado",
+                    "pl": "Urządzenie lub usługa połączona",
+                    "uk": "Пристрої або послуги підключені",
+                    "zh-cn": "证人或有关服务"
+                },
                 "type": "boolean",
                 "read": true,
                 "write": false,

@@ -101,5 +101,6 @@
     "Mean Cloud cover": "Tampa média de nuvens",
     "Mean Relative Humidity": "Umidade relativa média (2 m)",
     "Mean Temperature": "Temperatura média (2 m)",
-    "Empty": "Vazio"
+    "Empty": "Vazio",
+    "select an objectId": "ID do objeto da temperatura atual"
 }

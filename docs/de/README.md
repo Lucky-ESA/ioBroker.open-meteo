@@ -20,6 +20,7 @@
 - [Remote Control](#remote-control)
 - [Farbe Icons](#icon-farben)
 - [Wetter Code](#wetter-code)
+- [IQontrol](#iqontrol)
 
 # Instanz Einstellungen
 
@@ -40,6 +41,7 @@
 | Maximale Anfragen pro Tag                      | Maximale Abfragen pro Tag. Standard 10000 einer kostenlose API.    |
 | Windgeschwindigkeit                            | Geschwindigkeit ab dem Wind Icons angezeigt werden                 |
 | Wettermodell                                   | Siehe [open-meteo.com](https://open-meteo.com)                     |
+| Objekt-ID der aktuellen Temperatur             | Aktuelle Temperatur für IQontrol                                   |
 
 ![weather_instance_1.png](img/weather_instance_1.png)
 
@@ -458,5 +460,14 @@
 | 165  | Starker Regen und windig               | Starker Regen und windig               |
 | 166  | Leichter gefrierender Regen und windig | Leichter gefrierender Regen und windig |
 | 167  | Eisregen und windig                    | Eisregen und windig                    |
+
+### IQontrol
+
+[Zusammenfassung](#zusammenfassung)
+
+| Objekte | Beschreibung |
+| ------- | ------------ |
+
+![wweather_states_icon_3.png](img/weather_states_icon_3.png)
 
 [Zusammenfassung](#zusammenfassung)

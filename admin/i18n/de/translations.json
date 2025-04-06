@@ -101,5 +101,6 @@
     "Mean Cloud cover": "Mittlere Wolkendecke",
     "Mean Relative Humidity": "Mittlere relative Luftfeuchtigkeit (2 m)",
     "Mean Temperature": "Mittlere Temperatur (2 m)",
-    "Empty": "Leer"
+    "Empty": "Leer",
+    "select an objectId": "Objekt-ID der aktuellen Temperatur"
 }

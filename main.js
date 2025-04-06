@@ -62,6 +62,7 @@ class OpenMeteo extends utils.Adapter {
         this.checkObjects = helper.checkObjects;
         this.createObjectsSunCalc = helper.createObjectsSunCalc;
         this.createIconColor = helper.createIconColor;
+        this.createHTML = helper.createHTML;
         this.on("unload", this.onUnload.bind(this));
         this.svg = new SVG(this);
         this.requestClient = axios.create({
@@ -82,6 +83,8 @@ class OpenMeteo extends utils.Adapter {
         this.timeArray = {};
         this.lastCurrent = "";
         this.own_color = {};
+        this.html = {};
+        this.isDay = "night";
     }
 
     /**
@@ -100,7 +103,6 @@ class OpenMeteo extends utils.Adapter {
         status.countRequestMaxDay = this.config.maxRequest != null ? this.config.maxRequest : 100000;
         this.stateCheck.push(`${this.namespace}.info.connection`);
         this.setState("info.connection", false, true);
-        this.subscribeStates("*");
         const obj = await this.getForeignObjectAsync("system.config");
         if (obj && obj.common && obj.common.language) {
             try {
@@ -146,13 +148,26 @@ class OpenMeteo extends utils.Adapter {
         await this.checkObjects();
         await this.createObjectsSunCalc();
         this.setIntervalData();
-        await this.setWeatherData();
+        await this.setWeatherData(true);
         this.stateCheck = [];
         this.conn = true;
         this.setState("info.connection", true, true);
         this.clearCounter();
+        if (
+            this.param.current &&
+            this.param.daily &&
+            this.param.daily.includes("temperature_2m_max") &&
+            this.param.daily.includes("temperature_2m_min")
+        ) {
+            await this.createHTML();
+            await this.readHTML();
+            this.updateHTML();
+        } else {
+            await this.delObjectAsync(`html`, { recursive: true });
+        }
         this.sunCalculation();
         this.setIntervalPosition();
+        this.subscribeStates("*");
     }
 
     /**
@@ -206,6 +221,15 @@ class OpenMeteo extends utils.Adapter {
             } else if (command === "param") {
                 this.setOwnParam(state);
                 this.setState(id, { ack: true });
+            } else if (command === "trigger_iqontrol") {
+                this.html.trigger_iqontrol = state.val;
+                this.setState(id, { ack: true });
+                this.setState(`html.trigger`, { val: this.html.trigger ? false : true, ack: true });
+                this.html.trigger = this.html.trigger ? false : true;
+            } else if (this.html[command]) {
+                this.html[command] = state.val;
+                this.updateHTML();
+                this.setState(id, { ack: true });
             } else if (this.own_color[command]) {
                 this.own_color[command] = state.val;
                 this.setColor();
@@ -252,11 +276,11 @@ class OpenMeteo extends utils.Adapter {
         rule.minute = 1;
         this.updateSun = scheduleJob(rule, async () => {
             this.log.info("Update sun calculation!");
-            this.setSunCalc();
+            this.setSunCalc(false);
         });
     }
 
-    async setSunCalc() {
+    async setSunCalc(first) {
         const times = SunCalc.getSunTimes(new Date(), this.param.latitude, this.param.longitude);
         const sunriseStart =
             `${`0${times.sunriseStart.value.getHours()}`.slice(-2)}:` +
@@ -368,10 +392,10 @@ class OpenMeteo extends utils.Adapter {
         await this.setState(`suncalc.amateurDusk`, { val: amateurDusk, ack: true });
         this.timeArray["amateurDusk"] = times.amateurDusk.value;
         await this.setState(`suncalc.seasons`, { val: this.seasonalBackground(), ack: true });
-        this.getPosition();
+        this.getPosition(first);
     }
 
-    async getPosition() {
+    async getPosition(first) {
         const sunPosition = SunCalc.getPosition(new Date(), this.param.latitude, this.param.longitude);
         this.log.debug(JSON.stringify(sunPosition));
         const moonPosition = SunCalc.getMoonData(new Date(), this.param.latitude, this.param.longitude);
@@ -456,6 +480,15 @@ class OpenMeteo extends utils.Adapter {
             val: timeJSON[next],
             ack: true,
         });
+        if (
+            this.param.current &&
+            this.param.daily &&
+            this.param.daily.includes("temperature_2m_max") &&
+            this.param.daily.includes("temperature_2m_min") &&
+            !first
+        ) {
+            await this.updateHTML();
+        }
     }
 
     setIntervalPosition() {
@@ -559,7 +592,7 @@ class OpenMeteo extends utils.Adapter {
         }
     }
 
-    async setWeatherData() {
+    async setWeatherData(first) {
         if (this.config.temperaturUnit !== "default") {
             this.param.temperature_unit = this.config.temperaturUnit;
         }
@@ -609,7 +642,7 @@ class OpenMeteo extends utils.Adapter {
         }
         this.log.debug(`ParaM ${JSON.stringify(this.param)}`);
         await this.setState(`param`, { val: JSON.stringify(this.param), ack: true });
-        await this.setSunCalc();
+        await this.setSunCalc(first);
         this.calculateAPIrequest();
         await this.updateStates();
     }
@@ -630,9 +663,9 @@ class OpenMeteo extends utils.Adapter {
         countVal = 0;
         const current = val.current;
         const times = new Date();
-        let isDay = "night";
+        this.isDay = "night";
         if (times > new Date(this.timeArray["sunriseStart"]) && times < new Date(this.timeArray["sunsetStart"])) {
-            isDay = "day";
+            this.isDay = "day";
         }
         if (current) {
             for (const variable in current) {
@@ -652,9 +685,9 @@ class OpenMeteo extends utils.Adapter {
                     if (!constants.WeatherCode[code]) {
                         code = 200;
                     }
-                    const path = constants.WeatherCode[code][isDay].image;
-                    const text = constants.WeatherCode[code][isDay].description[this.lang];
-                    const svg = constants.WeatherCode[code][isDay].svg;
+                    const path = constants.WeatherCode[code][this.isDay].image;
+                    const text = constants.WeatherCode[code][this.isDay].description[this.lang];
+                    const svg = constants.WeatherCode[code][this.isDay].svg;
                     await this.setValue(`current.${variable}`, code);
                     await this.setValue(`current.${variable}_text`, text);
                     await this.setValue(`current.${variable}_path`, path);
@@ -685,9 +718,9 @@ class OpenMeteo extends utils.Adapter {
                         if (!constants.WeatherCode[code]) {
                             code = 200;
                         }
-                        const path = constants.WeatherCode[code][isDay].image;
-                        const text = constants.WeatherCode[code][isDay].description[this.lang];
-                        const svg = constants.WeatherCode[code][isDay].svg;
+                        const path = constants.WeatherCode[code][this.isDay].image;
+                        const text = constants.WeatherCode[code][this.isDay].description[this.lang];
+                        const svg = constants.WeatherCode[code][this.isDay].svg;
                         await this.setValue(`${path2}.${variable}`, code);
                         await this.setValue(`${path2}.${variable}_text`, text);
                         await this.setValue(`${path2}.${variable}_path`, path);
@@ -732,9 +765,9 @@ class OpenMeteo extends utils.Adapter {
                             if (!constants.WeatherCode[code]) {
                                 code = 200;
                             }
-                            const path = constants.WeatherCode[code][isDay].image;
-                            const text = constants.WeatherCode[code][isDay].description[this.lang];
-                            const svg = constants.WeatherCode[code][isDay].svg;
+                            const path = constants.WeatherCode[code][this.isDay].image;
+                            const text = constants.WeatherCode[code][this.isDay].description[this.lang];
+                            const svg = constants.WeatherCode[code][this.isDay].svg;
                             await this.setValue(`${path2}.${variable}`, code);
                             await this.setValue(`${path2}.${variable}_text`, text);
                             await this.setValue(`${path2}.${variable}_path`, path);
@@ -885,6 +918,7 @@ class OpenMeteo extends utils.Adapter {
     }
 
     async setColor() {
+        const old_code = JSON.parse(JSON.stringify(constants.WeatherCode));
         const width = 128;
         const height = 100;
         const WW_XML =
@@ -1085,6 +1119,14 @@ class OpenMeteo extends utils.Adapter {
             constants.WeatherCode[200].day.svg = val;
             constants.WeatherCode[200].night.svg = val;
         }
+        for (const id in constants.WeatherCode) {
+            if (old_code[id].day.svg != constants.WeatherCode[id].day.svg) {
+                await this.writeFileAsync(this.namespace, `${id}day.svg`, constants.WeatherCode[id].day.svg);
+            }
+            if (old_code[id].night.svg != constants.WeatherCode[id].night.svg) {
+                await this.writeFileAsync(this.namespace, `${id}night.svg`, constants.WeatherCode[id].night.svg);
+            }
+        }
         for (let i = 0; i < 12; i++) {
             constants.UV_INDEX[i].svg = this.svg.uv_index(
                 i,
@@ -1092,6 +1134,7 @@ class OpenMeteo extends utils.Adapter {
                 this.own_color.uv_index_bg,
                 this.own_color.uv_index_desc,
             );
+            await this.writeFileAsync(this.namespace, `${i}.svg`, constants.UV_INDEX[i].svg);
         }
         this.log.debug(`CODE: ${JSON.stringify(constants.WeatherCode)}`);
         this.log.debug(`UV: ${JSON.stringify(constants.UV_INDEX)}`);
@@ -1196,7 +1239,7 @@ class OpenMeteo extends utils.Adapter {
             w = 35999.373 * t - 2.47;
             d = 1 + 0.0334 * this.degCos(w) + 0.0007 * this.degCos(2 * w);
             est = 0;
-            for (var n = 0; n < 24; n++) {
+            for (let n = 0; n < 24; n++) {
                 est += e1[n] * this.degCos(e2[n] + e3[n] * t);
             }
             jd += (0.00001 * est) / d;
@@ -1235,6 +1278,108 @@ class OpenMeteo extends utils.Adapter {
             season = constants.Seasons["winter"][this.lang];
         }
         return season;
+    }
+
+    async readHTML() {
+        const html_states = await this.getStatesAsync(`open-meteo.${this.instance}.html.*`);
+        for (const html_state in html_states) {
+            const split = html_state.split(".");
+            const state = split.pop();
+            if (state != "html") {
+                this.html[state] = html_states[html_state].val;
+            }
+        }
+    }
+
+    async updateHTML() {
+        const bg =
+            this.html.bg_color != "#000"
+                ? `	 body {background-color:${this.hexToRGBA(this.html.bg_color, this.html.bg_color_alpha)};}`
+                : "";
+        const font =
+            this.html.font_color != "#000"
+                ? `;color:${this.hexToRGBA(this.html.font_color, this.html.font_color_alpha)}`
+                : "";
+        const id = this.value[`current.weather_code`];
+        const actual_times = this.value[`current.time`];
+        const name = constants.DAYNAME[new Date(actual_times).getDay()][this.lang];
+        const actual_date = this.formatDate(new Date(actual_times), "DD.MM.YYYY");
+        const actual_text = this.value[`current.weather_code_text`];
+        const actual_clock = `${`0${new Date().getHours()}`.slice(-2)}:` + `${`0${new Date().getMinutes()}`.slice(-2)}`;
+        const actual_temp = await this.getForeignStateAsync(this.config.objectId);
+        let actual_temperature = 0;
+        if (actual_temp && actual_temp.val != null && actual_temp.val != "") {
+            actual_temperature = parseFloat(actual_temp.val.toString());
+        }
+        let html =
+            `<head>` +
+            `<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">` +
+            `<style>` +
+            `   ${bg}` +
+            `   span {text-align:${this.html.today_text_algin}${font};}` +
+            `   td {border-width:0px;border-style:solid;border-color:silver;}` +
+            `   input {height:10vw;width:10vw;}` +
+            `   .container_column {display:flex;flex-direction: column;justify-content: flex-start;}` +
+            `   .container_row {display: flex;flex-direction: row;justify-content: space-between;}` +
+            `   .img_weather {height:${this.html.today_image_height}vw;width:${this.html.today_image_width}vw;}` +
+            `   .box_time {font-size:${this.html.today_clock_font_size}vmax;}` +
+            `   .box_date {font-size:${this.html.today_date_font_size}vmax;text-align:center;}` +
+            `   .box_weather {font-size:${this.html.today_weather_font_size}vmax;margin-right:1.5vw;text-align:left;}` +
+            `   .table_forecast {margin-top:4vw;border-collapse: collapse;font-size:${this.html.forecast_font_size}vmax${font};}` +
+            `</style>` +
+            `<script type="text/javascript">` +
+            `    function setState(stateId, value){` +
+            `        sendPostMessage("setState", stateId, value);` +
+            `    }` +
+            `    function sendPostMessage(command, stateId, value){` +
+            `        message = {command: command, stateId: stateId, value: value};` +
+            `        window.parent.postMessage(message, "*");` +
+            `    }` +
+            `</script>` +
+            `</head>` +
+            `<div class="container_row"><span class="box_time"><b>${actual_clock}</b></span>` +
+            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger_iqontrol', true)" src='${this.setIcon("current", id)}' />` +
+            `</div>` +
+            `<div class="container_row">` +
+            `    <div class="container_column">` +
+            `        <span class="box_date"><b><i>${name}, ${actual_date}</i></b></span>` +
+            `    </div>` +
+            `    <div class="container_column">` +
+            `        <span class="box_weather"><b><i>${actual_temperature}°C</i></b></span>` +
+            `        <span class="box_weather"><i>${actual_text}</i></span>` +
+            `    </div>` +
+            `</div>` +
+            `<div class="container_column">` +
+            `    <table class="table_forecast">`;
+        for (let i = 2; i < this.config.forecast + 1; i++) {
+            const daily_id = this.value[`daily.day0${i}.weather_code`];
+            const times = this.value[`daily.day0${i}.time`];
+            const temp_min = this.value[`daily.day0${i}.temperature_2m_min`];
+            const temp_max = this.value[`daily.day0${i}.temperature_2m_max`];
+            const text = this.value[`daily.day0${i}.weather_code_text`];
+            html += `<tr>
+                        <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]}</td>
+                        <td><img width="${this.html.forecast_image_width}vm" height="${this.html.forecast_image_height}vm" alt="${text}" title="${text}" src='${this.setIcon(`daily.day0${i}`, daily_id)}'/></td>
+                        <td nowrap>${temp_min}°C ${constants.DAYNAME.unit[this.lang]} ${temp_max}°C</td>
+                        <td align=left>${text}</td>
+                    </tr>`;
+        }
+        html += `    </table>` + `</div>`;
+        this.log.debug(html);
+        await this.setState(`html.html_code`, { val: html, ack: true });
+    }
+
+    setIcon(path, id) {
+        if (this.html.icon_select == "own") {
+            return `/${this.namespace}/${id}${this.isDay}.svg`;
+        } else if (this.html.icon_select == "path") {
+            const icon = this.value[`${path}.weather_code_path`];
+            if (!icon) {
+                return "";
+            }
+            return icon;
+        }
+        return this.html.icon_own_path.replace("<code>", id.val).replace("<day>", this.isDay);
     }
 }
 

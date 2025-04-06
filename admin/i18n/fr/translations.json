@@ -101,5 +101,6 @@
     "Mean Cloud cover": "Couverture nuageuse moyenne",
     "Mean Relative Humidity": "Humidité relative moyenne (2 m)",
     "Mean Temperature": "Température moyenne (2 m)",
-    "Empty": "Vide"
+    "Empty": "Vide",
+    "select an objectId": "ID d'objet de la température actuelle"
 }
