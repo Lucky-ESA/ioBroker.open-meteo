@@ -102,5 +102,6 @@
     "Mean Relative Humidity": "Gemiddelde relatieve vochtigheid (2 m)",
     "Mean Temperature": "Gemiddelde temperatuur (2 m)",
     "Empty": "Leeg",
-    "select an objectId": "Object -ID van de huidige temperatuur"
+    "select an objectId": "Object -ID van de huidige temperatuur",
+    "AM_PM": "Uur tellen"
 }

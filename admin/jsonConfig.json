@@ -214,6 +214,21 @@
                     "md": 6,
                     "lg": 4,
                     "xl": 4
+                },
+                "am_pm": {
+                    "type": "select",
+                    "label": "AM_PM",
+                    "options": [
+                        { "value": 24, "label": "24 h" },
+                        { "value": 12, "label": "12 AM/PM" }
+                    ],
+                    "default": "24",
+                    "newLine": true,
+                    "xs": 12,
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 4,
+                    "xl": 4
                 }
             }
         },

@@ -43,8 +43,15 @@
             "uk": "Прогноз погоди",
             "zh-cn": "天气预报"
         },
-        "authors": ["Lucky-ESA <github@luckyskills.de>"],
-        "keywords": ["weather", "forecast", "rain", "temperature"],
+        "authors": [
+            "Lucky-ESA <github@luckyskills.de>"
+        ],
+        "keywords": [
+            "weather",
+            "forecast",
+            "rain",
+            "temperature"
+        ],
         "licenseInformation": {
             "type": "free",
             "license": "MIT"
@@ -65,8 +72,12 @@
             "config": "json"
         },
         "docs": {
-            "en": ["docs/en/README.md"],
-            "de": ["docs/de/README.md"]
+            "en": [
+                "docs/en/README.md"
+            ],
+            "de": [
+                "docs/de/README.md"
+            ]
         },
         "dependencies": [
             {
@@ -91,6 +102,7 @@
         "maxWind": 20,
         "model": "none",
         "objectId": "",
+        "am_pm": 24,
         "h_temperature_2m": false,
         "h_temperature_80m": false,
         "h_temperature_120m": false,
@@ -171,8 +183,12 @@
         "m_is_day": false,
         "apiKey": ""
     },
-    "encryptedNative": ["apiKey"],
-    "protectedNative": ["apiKey"],
+    "encryptedNative": [
+        "apiKey"
+    ],
+    "protectedNative": [
+        "apiKey"
+    ],
     "objects": [],
     "instanceObjects": [
         {

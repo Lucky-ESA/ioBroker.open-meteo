@@ -102,5 +102,6 @@
     "Mean Relative Humidity": "平均相对湿度（2 M）",
     "Mean Temperature": "平均温度（2 m）",
     "Empty": "空的",
-    "select an objectId": "当前温度的对象ID"
+    "select an objectId": "当前温度的对象ID",
+    "AM_PM": "小时计数"
 }

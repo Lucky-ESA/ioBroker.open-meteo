@@ -12,7 +12,7 @@ const axios = require("axios");
 const helper = require("./lib/helper");
 const constants = require("./lib/constants");
 const SVG = require("./lib/svgCreater");
-const SunCalc = require("./lib/suncalc3");
+const SunCalc = require("suncalc3");
 const { RecurrenceRule, scheduleJob } = require("node-schedule");
 let status = {
     countRequest: 0,
@@ -283,117 +283,87 @@ class OpenMeteo extends utils.Adapter {
 
     async setSunCalc(first) {
         const times = SunCalc.getSunTimes(new Date(), this.param.latitude, this.param.longitude);
-        const sunriseStart =
-            `${`0${times.sunriseStart.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.sunriseStart.value.getMinutes()}`.slice(-2)}`;
+        const sunriseStart = this.timeCounting(times.sunriseStart.value);
         await this.setState(`suncalc.sunriseStart`, { val: sunriseStart, ack: true });
         this.timeArray["sunriseStart"] = times.sunriseStart.value;
-        const sunriseEnd =
-            `${`0${times.sunriseEnd.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.sunriseEnd.value.getMinutes()}`.slice(-2)}`;
+        const sunriseEnd = this.timeCounting(times.sunriseEnd.value);
         await this.setState(`suncalc.sunriseEnd`, { val: sunriseEnd, ack: true });
         this.timeArray["sunriseEnd"] = times.sunriseEnd.value;
-        const sunsetStart =
-            `${`0${times.sunsetStart.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.sunsetStart.value.getMinutes()}`.slice(-2)}`;
+        const sunsetStart = this.timeCounting(times.sunsetStart.value);
         await this.setState(`suncalc.sunsetStart`, { val: sunsetStart, ack: true });
         this.timeArray["sunsetStart"] = times.sunsetStart.value;
-        const sunsetEnd =
-            `${`0${times.sunsetEnd.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.sunsetEnd.value.getMinutes()}`.slice(-2)}`;
+        const sunsetEnd = this.timeCounting(times.sunsetEnd.value);
         await this.setState(`suncalc.sunsetEnd`, { val: sunsetEnd, ack: true });
         this.timeArray["sunsetEnd"] = times.sunsetEnd.value;
-        const solarNoon =
-            `${`0${times.solarNoon.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.solarNoon.value.getMinutes()}`.slice(-2)}`;
+        const solarNoon = this.timeCounting(times.solarNoon.value);
         await this.setState(`suncalc.solarNoon`, { val: solarNoon, ack: true });
         this.timeArray["solarNoon"] = times.solarNoon.value;
-        const goldenHourDuskStart =
-            `${`0${times.goldenHourDuskStart.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.goldenHourDuskStart.value.getMinutes()}`.slice(-2)}`;
+        const goldenHourDuskStart = this.timeCounting(times.goldenHourDuskStart.value);
         await this.setState(`suncalc.goldenHourDuskStart`, { val: goldenHourDuskStart, ack: true });
-        this.timeArray["goldenHourDuskStart"] = times.goldenHourDuskStart.value;
-        const goldenHourDuskEnd =
-            `${`0${times.goldenHourDuskEnd.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.goldenHourDuskEnd.value.getMinutes()}`.slice(-2)}`;
+        this.timeArray["goldenHourDuskStart"] = times.goldenHourDuskEnd.value;
+        const goldenHourDuskEnd = this.timeCounting(times.amateurDawn.value);
         await this.setState(`suncalc.goldenHourDuskEnd`, { val: goldenHourDuskEnd, ack: true });
-        this.timeArray["goldenHourDuskEnd"] = times.goldenHourDuskEnd.value;
-        const nadir =
-            `${`0${times.nadir.value.getHours()}`.slice(-2)}:` + `${`0${times.nadir.value.getMinutes()}`.slice(-2)}`;
+        this.timeArray["goldenHourDuskEnd"] = times.nadir.value;
+        const nadir = this.timeCounting(times.amateurDawn.value);
         await this.setState(`suncalc.nadir`, { val: nadir, ack: true });
         this.timeArray["nadir"] = times.nadir.value;
-        const civilDusk =
-            `${`0${times.civilDusk.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.civilDusk.value.getMinutes()}`.slice(-2)}`;
+        const civilDusk = this.timeCounting(times.civilDusk.value);
         await this.setState(`suncalc.civilDusk`, { val: civilDusk, ack: true });
         this.timeArray["civilDusk"] = times.civilDusk.value;
-        const civilDawn =
-            `${`0${times.civilDawn.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.civilDawn.value.getMinutes()}`.slice(-2)}`;
+        const civilDawn = this.timeCounting(times.civilDawn.value);
         await this.setState(`suncalc.civilDawn`, { val: civilDawn, ack: true });
         this.timeArray["civilDawn"] = times.civilDawn.value;
-        const astronomicalDusk =
-            `${`0${times.astronomicalDusk.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.astronomicalDusk.value.getMinutes()}`.slice(-2)}`;
+        const astronomicalDusk = this.timeCounting(times.astronomicalDusk.value);
         await this.setState(`suncalc.astronomicalDusk`, { val: astronomicalDusk, ack: true });
         this.timeArray["astronomicalDusk"] = times.astronomicalDusk.value;
-        const astronomicalDawn =
-            `${`0${times.astronomicalDawn.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.astronomicalDawn.value.getMinutes()}`.slice(-2)}`;
+        const astronomicalDawn = this.timeCounting(times.astronomicalDawn.value);
         await this.setState(`suncalc.astronomicalDawn`, { val: astronomicalDawn, ack: true });
         this.timeArray["astronomicalDawn"] = times.astronomicalDawn.value;
-        const blueHourDawnStart =
-            `${`0${times.blueHourDawnStart.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.blueHourDawnStart.value.getMinutes()}`.slice(-2)}`;
+        const blueHourDawnStart = this.timeCounting(times.blueHourDawnStart.value);
         await this.setState(`suncalc.blueHourDawnStart`, { val: blueHourDawnStart, ack: true });
         this.timeArray["blueHourDawnStart"] = times.blueHourDawnStart.value;
-        const blueHourDawnEnd =
-            `${`0${times.blueHourDawnEnd.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.blueHourDawnEnd.value.getMinutes()}`.slice(-2)}`;
+        const blueHourDawnEnd = this.timeCounting(times.blueHourDawnEnd.value);
         await this.setState(`suncalc.blueHourDawnEnd`, { val: blueHourDawnEnd, ack: true });
         this.timeArray["blueHourDawnEnd"] = times.blueHourDawnEnd.value;
-        const blueHourDuskStart =
-            `${`0${times.blueHourDuskStart.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.blueHourDuskStart.value.getMinutes()}`.slice(-2)}`;
+        const blueHourDuskStart = this.timeCounting(times.blueHourDuskStart.value);
         await this.setState(`suncalc.blueHourDuskStart`, { val: blueHourDuskStart, ack: true });
         this.timeArray["blueHourDuskStart"] = times.blueHourDuskStart.value;
-        const blueHourDuskEnd =
-            `${`0${times.blueHourDuskEnd.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.blueHourDuskEnd.value.getMinutes()}`.slice(-2)}`;
+        const blueHourDuskEnd = this.timeCounting(times.blueHourDuskEnd.value);
         await this.setState(`suncalc.blueHourDuskEnd`, { val: blueHourDuskEnd, ack: true });
         this.timeArray["blueHourDuskEnd"] = times.blueHourDuskEnd.value;
-        const goldenHourDawnStart =
-            `${`0${times.goldenHourDawnStart.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.goldenHourDawnStart.value.getMinutes()}`.slice(-2)}`;
+        const goldenHourDawnStart = this.timeCounting(times.goldenHourDawnStart.value);
         await this.setState(`suncalc.goldenHourDawnStart`, { val: goldenHourDawnStart, ack: true });
         this.timeArray["goldenHourDawnStart"] = times.goldenHourDawnStart.value;
-        const goldenHourDawnEnd =
-            `${`0${times.goldenHourDawnEnd.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.goldenHourDawnEnd.value.getMinutes()}`.slice(-2)}`;
+        const goldenHourDawnEnd = this.timeCounting(times.goldenHourDawnEnd.value);
         await this.setState(`suncalc.goldenHourDawnEnd`, { val: goldenHourDawnEnd, ack: true });
         this.timeArray["goldenHourDawnEnd"] = times.goldenHourDawnEnd.value;
-        const nauticalDawn =
-            `${`0${times.nauticalDawn.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.nauticalDawn.value.getMinutes()}`.slice(-2)}`;
+        const nauticalDawn = this.timeCounting(times.nauticalDawn.value);
         await this.setState(`suncalc.nauticalDawn`, { val: nauticalDawn, ack: true });
         this.timeArray["nauticalDawn"] = times.nauticalDawn.value;
-        const nauticalDusk =
-            `${`0${times.nauticalDusk.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.nauticalDusk.value.getMinutes()}`.slice(-2)}`;
+        const nauticalDusk = this.timeCounting(times.nauticalDusk.value);
         await this.setState(`suncalc.nauticalDusk`, { val: nauticalDusk, ack: true });
         this.timeArray["nauticalDusk"] = times.nauticalDusk.value;
-        const amateurDawn =
-            `${`0${times.amateurDawn.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.amateurDawn.value.getMinutes()}`.slice(-2)}`;
+        const amateurDawn = this.timeCounting(times.amateurDawn.value);
         await this.setState(`suncalc.amateurDawn`, { val: amateurDawn, ack: true });
         this.timeArray["amateurDawn"] = times.amateurDawn.value;
-        const amateurDusk =
-            `${`0${times.amateurDusk.value.getHours()}`.slice(-2)}:` +
-            `${`0${times.amateurDusk.value.getMinutes()}`.slice(-2)}`;
+        const amateurDusk = this.timeCounting(times.amateurDusk.value);
         await this.setState(`suncalc.amateurDusk`, { val: amateurDusk, ack: true });
         this.timeArray["amateurDusk"] = times.amateurDusk.value;
         await this.setState(`suncalc.seasons`, { val: this.seasonalBackground(), ack: true });
         this.getPosition(first);
+    }
+
+    timeCounting(times) {
+        if (this.config.am_pm === 12) {
+            const now = new Date(times);
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            if (hours > 12) {
+                return `0${hours % 12}:${`0${minutes}}`.slice(-2)} PM`;
+            }
+            return `0${hours % 12}:${`0${minutes}}`.slice(-2)} AM`;
+        }
+        return `${`0${times.getHours()}`.slice(-2)}:` + `${`0${times.getMinutes()}`.slice(-2)}`;
     }
 
     async getPosition(first) {
@@ -650,6 +620,7 @@ class OpenMeteo extends utils.Adapter {
 
     async updateStates() {
         const data = await this.getWeatherData();
+        //const data = constants.DUMMY_FOR_TESTING;
         if (data) {
             this.log.debug(JSON.stringify(data));
             await this.setState(`result`, { val: JSON.stringify(data), ack: true });
@@ -1295,7 +1266,7 @@ class OpenMeteo extends utils.Adapter {
     async updateHTML() {
         const bg =
             this.html.bg_color != "#000"
-                ? `	 body {background-color:${this.hexToRGBA(this.html.bg_color, this.html.bg_color_alpha)};}`
+                ? `	 background-color:${this.hexToRGBA(this.html.bg_color, this.html.bg_color_alpha)};`
                 : "";
         const font =
             this.html.font_color != "#000"
@@ -1319,7 +1290,7 @@ class OpenMeteo extends utils.Adapter {
             `<head>` +
             `<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">` +
             `<style>` +
-            `   ${bg}` +
+            `   body {overflow:hidden;${bg}}` +
             `   span {text-align:${this.html.today_text_algin}${font};` +
             `   border-radius:${this.html.today_border_radius}px;border-collapse:separate;border:${this.html.today_border}px solid gainsboro;` +
             `   border-color:${this.hexToRGBA(this.html.today_border_color, this.html.today_border_color_alpha)};}` +

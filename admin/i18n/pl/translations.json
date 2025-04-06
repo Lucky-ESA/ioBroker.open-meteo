@@ -102,5 +102,6 @@
     "Mean Relative Humidity": "Średnia wilgotność względna (2 m)",
     "Mean Temperature": "Średnia temperatura (2 m)",
     "Empty": "Pusty",
-    "select an objectId": "ID obiektu bieżącej temperatury"
+    "select an objectId": "ID obiektu bieżącej temperatury",
+    "AM_PM": "Liczenie godzin"
 }

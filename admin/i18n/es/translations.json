@@ -102,5 +102,6 @@
     "Mean Relative Humidity": "Humedad relativa media (2 m)",
     "Mean Temperature": "Temperatura media (2 m)",
     "Empty": "Vacío",
-    "select an objectId": "ID de objeto de la temperatura actual"
+    "select an objectId": "ID de objeto de la temperatura actual",
+    "AM_PM": "Conteo de horas"
 }

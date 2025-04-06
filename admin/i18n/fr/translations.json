@@ -102,5 +102,6 @@
     "Mean Relative Humidity": "Humidité relative moyenne (2 m)",
     "Mean Temperature": "Température moyenne (2 m)",
     "Empty": "Vide",
-    "select an objectId": "ID d'objet de la température actuelle"
+    "select an objectId": "ID d'objet de la température actuelle",
+    "AM_PM": "Haleure"
 }
