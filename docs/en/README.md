@@ -42,8 +42,10 @@
 | Wind speed                           | At what speed should WInd Icon be displayed                 |
 | Weather model                        | See [open-meteo.com](https://open-meteo.com)                |
 | Object ID of the current temperature | Current Temperature for IQontrol                            |
+| Hour counting                        | Switch between 24 or 12 hour display                        |
 
-![weather_instance_1.png](img/weather_instance_1.png)
+![weather_instance_1.png](img/weather_instance_1.png)</br>
+![weather_instance_1_1.png](img/weather_instance_1_1.png)
 
 ### Hourly instance settings
 
@@ -465,9 +467,67 @@
 
 [Summary](#summary)
 
-| Objects | Description |
-| ------- | ----------- |
+| Objects                       | Description                                                        |
+| ----------------------------- | ------------------------------------------------------------------ |
+| bg_color                      | Background color (RGBA)                                            |
+| bg_color_alpha                | Background color Alpha (RGB`A`)                                    |
+| cell_color                    | Cell color (RGBA)                                                  |
+| cell_color_alpha              | Cell color (RGB`A`)                                                |
+| font_color                    | Font color (RGBA)                                                  |
+| font_color_alpha              | Font color (RGB`A`)                                                |
+| forecast_border               | Weather forecast border width                                      |
+| forecast_border_color         | Weather forecast border color (RGBA)                               |
+| forecast_border_color_alpha   | (RGB`A`)                                                           |
+| forecast_border_radius        | Weather forecast border radius                                     |
+| forecast_font_size            | Weather forecast font size                                         |
+| forecast_image_height         | Weather forecast image height                                      |
+| forecast_image_width          | Image width of the weather forecast                                |
+| html_code                     | HTML code for IQontrol, VIS and VIS2 [VIS2 Script](#java-for-vis2) |
+| icon_own_path                 | Path of the icon                                                   |
+| icon_select                   | Select icon (path, icon with color change, own icon)               |
+| today_border                  | Border width of the current day                                    |
+| today_border_color            | Border color of the current day (RGBA)                             |
+| today_border_color_alpha      | Border color alpha of the current day (RGB`A`)                     |
+| today_border_radius           | Border radius of the current day                                   |
+| today_clock_font_size         | Font size of the clock for the current day                         |
+| today_image_height            | Image height of the current day                                    |
+| today_image_width             | Image width of the current day                                     |
+| today_text_algin              | Text alignment of the current day                                  |
+| today_text_border             | Text border width of the current day                               |
+| today_text_border_color       | Alpha text border color of the current day (RGBA)                  |
+| today_text_border_color_alpha | Alpha text border color of the current day (RGB`A`)                |
+| today_text_border_radius      | Text border radius of the current day                              |
+| today_weather_font_size       | Weather font size of the current day                               |
+| trigger                       | ONLY for IQontrol to display the weather forecast                  |
+| trigger_iqontrol              | ONLY for IQontrol to display the weather forecast                  |
 
-![wweather_states_icon_3.png](img/weather_states_icon_3.png)
+![wweather_states_html_1.png](img/weather_states_html_1.png)</br>
+![wweather_states_html_2.png](img/weather_states_html_2.png)
+
+### Java for VIS2
+
+```json
+function setState(stateId, value){
+    sendPostMessage("setState", stateId, value);
+}
+function sendPostMessage(command, stateId, value){
+     message = {command: command, stateId: stateId, value: value};
+    window.parent.postMessage(message, "*");
+}
+```
+
+![vis2.png](img/vis2.png)
+
+[Summary](#summary)
+
+1. Create a view (e.g. Home)</br>
+   ![wweather_iqontrol_1.png](img/weather_iqontrol_1.png)</br>
+2. Under `Devices`, select the `Home` view and create a device (e.g. Weather)</br>
+3. Click on the pen to edit</br>
+   ![wweather_iqontrol_2.png](img/weather_iqontrol_2.png)</br>
+4. Under `BACKGROUND_HTML` select state and use the pen to select the object `open-meteo.0.html.html_code`
+   ![wweather_iqontrol_3.png](img/weather_iqontrol_3.png)</br>
+5. [Import this file](https://github.com/Lucky-ESA/ioBroker.open-meteo/blob/main/docs/de/deviceoptions.json)</br>
+   ![wweather_iqontrol_4.png](img/weather_iqontrol_4.png)
 
 [Summary](#summary)

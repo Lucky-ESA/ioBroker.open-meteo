@@ -1287,6 +1287,7 @@ class OpenMeteo extends utils.Adapter {
             actual_temperature = parseFloat(actual_temp.val.toString());
         }
         let html =
+            `<html>` +
             `<head>` +
             `<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">` +
             `<style>` +
@@ -1306,7 +1307,7 @@ class OpenMeteo extends utils.Adapter {
             `   .box_time {font-size:${this.html.today_clock_font_size}vmax;}` +
             `   .box_date {font-size:${this.html.today_date_font_size}vmax;text-align:center;}` +
             `   .box_weather {font-size:${this.html.today_weather_font_size}vmax;margin-right:1.5vw;text-align:left;}` +
-            `   .table_forecast {margin-top:4vw;border-collapse: collapse;font-size:${this.html.forecast_font_size}vmax${font};}` +
+            `   .table_forecast {margin-top:4vw;width: 100%;border-collapse: collapse;font-size:${this.html.forecast_font_size}vmax${font};}` +
             `</style>` +
             `<script type="text/javascript">` +
             `    function setState(stateId, value){` +
@@ -1318,6 +1319,7 @@ class OpenMeteo extends utils.Adapter {
             `    }` +
             `</script>` +
             `</head>` +
+            `<body>` +
             `<div class="container_row"><span class="box_time"><b>${actual_clock}</b></span>` +
             `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger_iqontrol', true)" src='${this.setIcon("current", id)}' />` +
             `</div>` +
@@ -1347,7 +1349,7 @@ class OpenMeteo extends utils.Adapter {
                         <td align=left>${text}</td>
                     </tr>`;
         }
-        html += `    </table>` + `</div>`;
+        html += `    </table>` + `</div></body></html>`;
         this.log.debug(html);
         await this.setState(`html.html_code`, { val: html, ack: true });
     }
