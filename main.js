@@ -424,16 +424,8 @@ class OpenMeteo extends utils.Adapter {
         this.log.debug(JSON.stringify(timeJSON));
         this.log.debug(JSON.stringify(diff));
         if (!constants.ASTRO[timeJSON[current]]) {
-            this.log.warn(JSON.stringify(this.timeArray));
-            this.log.warn(`current: ${current}`);
-            this.log.warn(`timeJSON: ${timeJSON[current]}`);
-            this.log.warn(`constants: ${JSON.stringify(constants.ASTRO[timeJSON[current]])}`);
-        }
-        if (!constants.ASTRO[timeJSON[next]]) {
-            this.log.warn(JSON.stringify(this.timeArray));
-            this.log.warn(`next: ${next}`);
-            this.log.warn(`timeJSON: ${timeJSON[next]}`);
-            this.log.warn(`constants: ${JSON.stringify(constants.ASTRO[timeJSON[next]])}`);
+            this.log.info(`Current: ${JSON.stringify(this.timeArray)}`);
+            this.log.info(`constants: ${this.lastCurrent}`);
         }
         await this.setState(`suncalc.currentAstroTime`, {
             val: constants.ASTRO[timeJSON[current]] ? constants.ASTRO[timeJSON[current]][this.lang] : this.lastCurrent,
