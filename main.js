@@ -628,7 +628,7 @@ class OpenMeteo extends utils.Adapter {
         const current = val.current;
         const times = new Date();
         this.isDay = "night";
-        if (times > new Date(this.timeArray["sunriseStart"]) && times < new Date(this.timeArray["sunsetStart"])) {
+        if (times > new Date(this.timeArray["sunriseStart"]) && times < new Date(this.timeArray["civilDusk"])) {
             this.isDay = "day";
         }
         if (current) {

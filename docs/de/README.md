@@ -308,8 +308,8 @@
 | ------------------- | ---------------------------------------------- |
 | amateurDawn         | Amateurmorgendämmerung 🟢                      |
 | amateurDusk         | Amateurdämmerung 🟢                            |
-| astronomicalDawn    | Sonnenuntergang 🟢                             |
-| astronomicalDusk    | Abenddämmerung 🟢                              |
+| astronomicalDawn    | Die Nacht endet 🟢                             |
+| astronomicalDusk    | Die Nacht beginnd 🟢                           |
 | blueHourDawnEnd     | Ende der blauen Stunde im Morgengraue 🟢       |
 | blueHourDawnStart   | Beginn der blauen Stunde im Morgengraue 🟢     |
 | blueHourDuskEnd     | Ende der blauen Stunde in der Dämmerung 🟢     |

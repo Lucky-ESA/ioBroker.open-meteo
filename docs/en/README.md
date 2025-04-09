@@ -308,8 +308,8 @@
 | ------------------- | ------------------------------------- |
 | amateurDawn         | Amateur dawn 🟢                       |
 | amateurDusk         | Amateur dusk 🟢                       |
-| astronomicalDawn    | Astronomical dawn 🟢                  |
-| astronomicalDusk    | Astronomical dusk 🟢                  |
+| astronomicalDawn    | The night ends 🟢                     |
+| astronomicalDusk    | The night begins 🟢                   |
 | blueHourDawnEnd     | End of the blue hour at dawn 🟢       |
 | blueHourDawnStart   | Beginning of the blue hour at dawn 🟢 |
 | blueHourDuskEnd     | End of the blue hour at dusk 🟢       |
