@@ -428,7 +428,7 @@
 | 0    | Sunny                         | Clear Sky                     |
 | 1    | Mainly Sunny                  | Mainly Clear Sky              |
 | 2    | Partly Cloudy                 | Partly Cloudy                 |
-| 3    | Cloudy                        | Cloudy                        |
+| 3    | Overcast                      | Overcast                      |
 | 45   | Foggy                         | Foggy                         |
 | 48   | Rime Fog                      | Rime Fog                      |
 | 51   | Light Drizzle                 | Light Drizzle                 |

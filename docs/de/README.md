@@ -428,7 +428,7 @@
 | 0    | Sonne                                  | klarer Himmel                          |
 | 1    | Überwiegend sonnig                     | Überwiegend klarer Himmel              |
 | 2    | Teilweise bewölkt                      | Teilweise bewölkt                      |
-| 3    | Wolkig                                 | Wolkig                                 |
+| 3    | Bedeckt                                | Bedeckt                                |
 | 45   | Nebelig                                | Nebelig                                |
 | 48   | Raureifnebel                           | Raureifnebel                           |
 | 51   | Leichter Nieselregen                   | Leichter Nieselregen                   |
