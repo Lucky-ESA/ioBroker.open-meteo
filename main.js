@@ -1280,7 +1280,7 @@ class OpenMeteo extends utils.Adapter {
         }
         const actual =
             `<img width="${this.html.today_weather_font_size * 5}px" height="${this.html.today_weather_font_size * 5}px" ` +
-            `alt="${actual_temperature}" title="${actual_temperature}" ` +
+            `style="vertical-align:middle" alt="${actual_temperature}" title="${actual_temperature}" ` +
             `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(actual_temperature)}'/>`;
         let html =
             `<html>` +
@@ -1337,19 +1337,27 @@ class OpenMeteo extends utils.Adapter {
             const temp_max = this.value[`daily.day0${i}.temperature_2m_max`];
             const text = this.value[`daily.day0${i}.weather_code_text`];
             const humidity = this.value[`daily.day0${i}.relative_humidity_2m_mean`];
+            const humi =
+                `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                `style="vertical-align:middle" alt="${temp_min}" title="${temp_min}" ` +
+                `src='/adapter/open-meteo/img/weathericons/humidity-water-drop.svg'/>`;
             const min =
                 `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
-                `alt="${temp_min}" title="${temp_min}" ` +
+                `style="vertical-align:middle" alt="${temp_min}" title="${temp_min}" ` +
                 `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(temp_min)}'/>`;
             const max =
                 `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
-                `alt="${temp_max}" title="${temp_max}" ` +
+                `style="vertical-align:middle" alt="${temp_max}" title="${temp_max}" ` +
                 `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(temp_max)}'/>`;
+            const daily =
+                `<img style="vertical-align:middle" width="${this.html.forecast_image_width}px" ` +
+                `height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" ` +
+                `src='${this.setIcon(`daily.day0${i}`, daily_id)}'/>`;
             html += `<tr>
                         <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]}</td>
-                        <td><img width="${this.html.forecast_image_width}px" height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" src='${this.setIcon(`daily.day0${i}`, daily_id)}'/></td>
+                        <td>${daily}</td>
                         <td nowrap>${min} ${temp_min}°C ${constants.DAYNAME.unit[this.lang]} ${max} ${temp_max}°C</td>
-                        <td>${humidity}%</td>
+                        <td>${humi} ${humidity}%</td>
                         <td align=left>${text}</td>
                     </tr>`;
         }
