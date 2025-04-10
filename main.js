@@ -145,7 +145,6 @@ class OpenMeteo extends utils.Adapter {
         await this.createIconColor();
         await this.readColor();
         await this.setColor();
-        await this.checkObjects();
         await this.createObjectsSunCalc();
         this.setIntervalData();
         await this.setWeatherData(true);
@@ -167,6 +166,7 @@ class OpenMeteo extends utils.Adapter {
         }
         this.sunCalculation();
         this.setIntervalPosition();
+        await this.checkObjects();
         this.subscribeStates("*");
     }
 
@@ -1278,6 +1278,10 @@ class OpenMeteo extends utils.Adapter {
         if (actual_temp && actual_temp.val != null && actual_temp.val != "") {
             actual_temperature = parseFloat(actual_temp.val.toString());
         }
+        const actual =
+            `<img width="${this.html.today_weather_font_size * 5}px" height="${this.html.today_weather_font_size * 5}px" ` +
+            `alt="${actual_temperature}" title="${actual_temperature}" ` +
+            `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(actual_temperature)}'/>`;
         let html =
             `<html>` +
             `<head>` +
@@ -1320,7 +1324,7 @@ class OpenMeteo extends utils.Adapter {
             `        <span class="box_date"><b><i>${name}, ${actual_date}</i></b></span>` +
             `    </div>` +
             `    <div class="container_column">` +
-            `        <span class="box_weather"><b><i>${actual_temperature}°C</i></b></span>` +
+            `        <span class="box_weather">${actual} <b><i>${actual_temperature}°C</i></b></span>` +
             `        <span class="box_weather"><i>${actual_text}</i></span>` +
             `    </div>` +
             `</div>` +
@@ -1333,10 +1337,18 @@ class OpenMeteo extends utils.Adapter {
             const temp_max = this.value[`daily.day0${i}.temperature_2m_max`];
             const text = this.value[`daily.day0${i}.weather_code_text`];
             const humidity = this.value[`daily.day0${i}.relative_humidity_2m_mean`];
+            const min =
+                `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                `alt="${temp_min}" title="${temp_min}" ` +
+                `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(temp_min)}'/>`;
+            const max =
+                `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                `alt="${temp_max}" title="${temp_max}" ` +
+                `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(temp_max)}'/>`;
             html += `<tr>
                         <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]}</td>
                         <td><img width="${this.html.forecast_image_width}px" height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" src='${this.setIcon(`daily.day0${i}`, daily_id)}'/></td>
-                        <td nowrap>${temp_min}°C ${constants.DAYNAME.unit[this.lang]} ${temp_max}°C</td>
+                        <td nowrap>${min} ${temp_min}°C ${constants.DAYNAME.unit[this.lang]} ${max} ${temp_max}°C</td>
                         <td>${humidity}%</td>
                         <td align=left>${text}</td>
                     </tr>`;
@@ -1357,6 +1369,27 @@ class OpenMeteo extends utils.Adapter {
             return icon;
         }
         return this.html.icon_own_path.replace("<code>", id.val).replace("<day>", this.isDay);
+    }
+
+    getThermalStress(val) {
+        if ((val > 8 && val < 27) || (val > 0 && val < 9)) {
+            return "thermalstress-none.svg";
+        } else if (val > 26 && val < 33) {
+            return "stress-heat-minor.svg";
+        } else if (val > 32 && val < 39) {
+            return "thermalstress-heat-moderate.svg";
+        } else if (val > 38 && val < 47) {
+            return "thermalstress-heat-severe.svg";
+        } else if (val > 46) {
+            return "thermalstress-heat-extreme.svg";
+        } else if (val < 1 && val > -14) {
+            return "thermalstress-cold-minor.svg";
+        } else if (val < 13 && val > -28) {
+            return "thermalstress-cold-moderate.svg";
+        } else if (val < 27 && val > -46) {
+            return "thermalstress-cold-severe.svg";
+        }
+        return "thermalstress-cold-extreme.svg";
     }
 }
 

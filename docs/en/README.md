@@ -21,6 +21,7 @@
 - [Icon Color](#icon-color)
 - [Weather Code](#weather-code)
 - [IQontrol](#iqontrol)
+- [Thermal stress](#thermal-stress)
 
 # Instance settings
 
@@ -529,5 +530,17 @@ function sendPostMessage(command, stateId, value){
    ![wweather_iqontrol_3.png](img/weather_iqontrol_3.png)</br>
 5. [Import this file](https://github.com/Lucky-ESA/ioBroker.open-meteo/blob/main/docs/de/deviceoptions.json)</br>
    ![wweather_iqontrol_4.png](img/weather_iqontrol_4.png)
+
+[Summary](#summary)
+
+### Thermal stress
+
+| +9 to +26                                                     | +27 to +32                                                           | +33 to +38                                                                 | +39 to +46                                                             | Above +47                                                                |
+| ------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| ![none](../../admin/img/thermalstress/thermalstress-none.svg) | ![minor](../../admin/img/thermalstress/thermalstress-heat-minor.svg) | ![moderate](../../admin/img/thermalstress/thermalstress-heat-moderate.svg) | ![severe](../../admin/img/thermalstress/thermalstress-heat-severe.svg) | ![extreme](../../admin/img/thermalstress/thermalstress-heat-extreme.svg) |
+
+| +1 to +8                                                      | −13 to 0                                                             | −27 to −14                                                                 | −46 to −28                                                             | Under -47                                                                |
+| ------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| ![none](../../admin/img/thermalstress/thermalstress-none.svg) | ![minor](../../admin/img/thermalstress/thermalstress-cold-minor.svg) | ![moderate](../../admin/img/thermalstress/thermalstress-cold-moderate.svg) | ![severe](../../admin/img/thermalstress/thermalstress-cold-severe.svg) | ![extreme](../../admin/img/thermalstress/thermalstress-cold-extreme.svg) |
 
 [Summary](#summary)
