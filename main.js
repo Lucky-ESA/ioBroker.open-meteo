@@ -148,7 +148,6 @@ class OpenMeteo extends utils.Adapter {
         await this.createObjectsSunCalc();
         this.setIntervalData();
         await this.setWeatherData(true);
-        this.stateCheck = [];
         this.conn = true;
         this.setState("info.connection", true, true);
         this.clearCounter();
@@ -167,6 +166,7 @@ class OpenMeteo extends utils.Adapter {
         this.sunCalculation();
         this.setIntervalPosition();
         await this.checkObjects();
+        this.stateCheck = [];
         this.subscribeStates("*");
     }
 
