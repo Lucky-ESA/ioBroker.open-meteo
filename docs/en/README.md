@@ -507,7 +507,7 @@
 
 ### Java for VIS2
 
-```json
+```java
 function setState(stateId, value){
     sendPostMessage("setState", stateId, value);
 }

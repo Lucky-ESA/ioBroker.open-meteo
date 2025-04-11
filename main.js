@@ -933,7 +933,11 @@ class OpenMeteo extends utils.Adapter {
         constants.WeatherCode[45].night.svg = val;
         constants.WeatherCode[48].day.svg = val;
         constants.WeatherCode[48].night.svg = val;
-        val = this.svg.niesel_gesamt(this.own_color.rain, this.own_color.cloud, this.own_color.cloud_filled);
+        val =
+            WW_XML +
+            WW_SVG1 +
+            this.svg.niesel_gesamt(this.own_color.rain, this.own_color.cloud, this.own_color.cloud_filled) +
+            WW_SVG2;
         constants.WeatherCode[51].day.svg = val;
         constants.WeatherCode[51].night.svg = val;
         constants.WeatherCode[53].day.svg = val;
