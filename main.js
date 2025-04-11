@@ -1083,7 +1083,7 @@ class OpenMeteo extends utils.Adapter {
         constants.WeatherCode[165].day.svg = val;
         constants.WeatherCode[165].night.svg = val;
         if (this.own_color.unknown && this.own_color.unknown_filled) {
-            val = this.svg.unknown(this.own_color.unknown, this.own_color.unknown_filled);
+            val = WW_XML + WW_SVG1 + this.svg.unknown(this.own_color.unknown, this.own_color.unknown_filled) + WW_SVG2;
             constants.WeatherCode[200].day.svg = val;
             constants.WeatherCode[200].night.svg = val;
         }
