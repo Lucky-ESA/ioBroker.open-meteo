@@ -644,8 +644,8 @@ class OpenMeteo extends utils.Adapter {
     }
 
     async updateStates() {
-        //const data = await this.getWeatherData(this.param);
-        const data = constants.DUMMY_FOR_TESTING;
+        const data = await this.getWeatherData(this.param);
+        //const data = constants.DUMMY_FOR_TESTING;
         if (data) {
             this.setStatusRequest(Math.round(this.req * 1.7));
             this.log.debug(JSON.stringify(data));
