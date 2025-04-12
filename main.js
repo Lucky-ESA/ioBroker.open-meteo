@@ -70,11 +70,13 @@ class OpenMeteo extends utils.Adapter {
             timeout: 5000,
         });
         this.param = {};
+        this.param_second = {};
         this.interval = null;
         this.lang = "de";
         this.stateCheck = [];
         this.conn = false;
         this.req = 0;
+        this.req_second = 0;
         this.clearCount = null;
         this.updateSun = null;
         this.intervalPosition = null;
@@ -137,6 +139,10 @@ class OpenMeteo extends utils.Adapter {
         this.param.timezone = utc;
         this.param.latitude = coo[0];
         this.param.longitude = coo[1];
+        this.param_second.timezone = utc;
+        this.param_second.latitude = coo[0];
+        this.param_second.longitude = coo[1];
+        this.param_second.models = "best_match";
         if (this.config.model != "none") {
             this.param.models = this.config.model;
         }
@@ -481,7 +487,7 @@ class OpenMeteo extends utils.Adapter {
                 }
             }
         }
-        this.req = Math.round(count * 1.7);
+        this.req = count;
     }
 
     /**
@@ -524,7 +530,28 @@ class OpenMeteo extends utils.Adapter {
             return;
         }
         // ToDo More request on days > 7 and model > 1 and past days
-        const req = Math.round(Object.keys(val).length * 1.7);
+        let count_variable = 0;
+        if (val.current) {
+            const split_current = val.current.split(",");
+            count_variable = count_variable + split_current.length;
+        }
+        if (val.daily) {
+            const split_daily = val.daily.split(",");
+            count_variable = count_variable + split_daily.length;
+        }
+        if (val.hourly) {
+            const split_hourly = val.hourly.split(",");
+            count_variable = count_variable + split_hourly.length;
+        }
+        if (val.minutely_15) {
+            const split_minutely_15 = val.minutely_15.split(",");
+            count_variable = count_variable + split_minutely_15.length;
+        }
+        let req = Math.round(count_variable * 1.7);
+        if (val.models) {
+            const split_models = val.models.split(",");
+            req = req * split_models.length;
+        }
         const data = await this.requestClient({
             method: "get",
             url: `https://${customer}api.open-meteo.com/v1/forecast`,
@@ -558,15 +585,19 @@ class OpenMeteo extends utils.Adapter {
     async setWeatherData(first) {
         if (this.config.temperaturUnit !== "default") {
             this.param.temperature_unit = this.config.temperaturUnit;
+            this.param_second.temperature_unit = this.config.temperaturUnit;
         }
         if (this.config.windSpeedUnit !== "default") {
             this.param.wind_speed_unit = this.config.windSpeedUnit;
+            this.param_second.wind_speed_unit = this.config.windSpeedUnit;
         }
         if (this.config.precipitationUnit !== "default") {
             this.param.precipitation_unit = this.config.precipitationUnit;
+            this.param_second.precipitation_unit = this.config.precipitationUnit;
         }
         if (this.config.timeformat !== "default") {
             this.param.timeformat = this.config.timeformat;
+            this.param_second.timeformat = this.config.timeformat;
         }
         for (const config in this.config) {
             if (config.startsWith("h_") && this.config[config]) {
@@ -598,12 +629,14 @@ class OpenMeteo extends utils.Adapter {
         }
         if (this.config.forecast != 7) {
             this.param.forecast_days = this.config.forecast;
+            this.param_second.forecast_days = this.config.forecast;
         }
         if (this.config.apiKey && this.config.apiKey != "") {
             this.param.apikey = this.config.apiKey;
+            this.param_second.apikey = this.config.apiKey;
             customer = "customer-";
         }
-        this.log.debug(`ParaM ${JSON.stringify(this.param)}`);
+        this.log.debug(`Param ${JSON.stringify(this.param)}`);
         await this.setState(`param`, { val: JSON.stringify(this.param), ack: true });
         await this.setSunCalc(first);
         this.calculateAPIrequest();
@@ -611,15 +644,35 @@ class OpenMeteo extends utils.Adapter {
     }
 
     async updateStates() {
-        const data = await this.getWeatherData();
-        //const data = constants.DUMMY_FOR_TESTING;
+        //const data = await this.getWeatherData(this.param);
+        const data = constants.DUMMY_FOR_TESTING;
         if (data) {
+            this.setStatusRequest(Math.round(this.req * 1.7));
             this.log.debug(JSON.stringify(data));
             await this.setState(`result`, { val: JSON.stringify(data), ack: true });
             await this.setWeatherStates(data);
             await this.setState("last_update", new Date().getTime(), true);
         } else {
             this.log.error(`Cannot read data!`);
+        }
+        if (this.config.model_second) {
+            if (
+                this.param_second.hourly != null ||
+                this.param_second.daily != null ||
+                this.param_second.current != null ||
+                this.param_second.minutely_15 != null
+            ) {
+                const data = await this.getWeatherData(this.param_second);
+                //const data = constants.DUMMY_FOR_TESTING;
+                if (data) {
+                    this.setStatusRequest(Math.round(this.req_second * 1.7));
+                    this.log.debug(JSON.stringify(data));
+                    await this.setState(`result_second`, { val: JSON.stringify(data), ack: true });
+                    await this.setWeatherStates(data);
+                } else {
+                    this.log.error(`Cannot read second data!`);
+                }
+            }
         }
     }
 
@@ -632,6 +685,7 @@ class OpenMeteo extends utils.Adapter {
             this.isDay = "day";
         }
         if (current) {
+            this.checkResponse("current", val.current_units);
             for (const variable in current) {
                 if (variable === "time") {
                     await this.setValue(`current.${variable}`, new Date(current.time).toString());
@@ -664,6 +718,7 @@ class OpenMeteo extends utils.Adapter {
         const daily = val.daily;
         let count = 0;
         if (daily) {
+            this.checkResponse("daily", val.daily_units);
             for (let i = 1; i < this.config.forecast + 1; i++) {
                 const path2 = `daily.day${`0${i}`.slice(-2)}`;
                 for (const variable in daily) {
@@ -708,6 +763,7 @@ class OpenMeteo extends utils.Adapter {
         }
         const hourly = val.hourly;
         if (hourly) {
+            this.checkResponse("hourly", val.hourly_units);
             count = 0;
             for (let i = 1; i < this.config.forecast + 1; i++) {
                 const path = `hourly.day${`0${i}`.slice(-2)}`;
@@ -746,6 +802,7 @@ class OpenMeteo extends utils.Adapter {
         }
         const minutely_15 = val.minutely_15;
         if (minutely_15) {
+            this.checkResponse("minutely_15", val.minutely_15_units);
             count = 0;
             const min = { 0: "00", 1: "15", 2: "30", 3: "45" };
             for (let i = 1; i < this.config.forecast + 1; i++) {
@@ -773,6 +830,36 @@ class OpenMeteo extends utils.Adapter {
         this.log.info(`${countVal} States have been updated!`);
     }
 
+    async checkResponse(resp, units) {
+        if (!units) {
+            return;
+        }
+        const check = this.param_second[resp] ? true : false;
+        for (const unit in units) {
+            if (units[unit] === "undefined") {
+                if (check) {
+                    this.log.warn(
+                        `The variable ${unit} in "${resp}" has no value. Please disable it in the instance settings or select a different model.`,
+                    );
+                } else {
+                    if (!this.config.model_second) {
+                        this.log.warn(
+                            `The second query is disabled. The variable ${unit} in ${resp} has no value and is deleted from the query.`,
+                        );
+                    }
+                    this.param[resp] = this.param[resp].replace(`${unit},`, "").replace(`,${unit}`, "");
+                    if (this.param[resp] === unit) {
+                        delete this.param[resp];
+                    }
+                    --this.req;
+                    ++this.req_second;
+                    this.param_second[resp] = this.param_second[resp] ? `${this.param_second[resp]},${unit}` : unit;
+                }
+            }
+        }
+        await this.setState(`param_second`, { val: JSON.stringify(this.param_second), ack: true });
+    }
+
     async setValue(id, val) {
         if (!this.value[id] || this.value[id] != val) {
             this.value[id] = val;
@@ -784,7 +871,7 @@ class OpenMeteo extends utils.Adapter {
         }
     }
 
-    async getWeatherData() {
+    async getWeatherData(param) {
         if (status.countRequest > status.countRequestMaxDay) {
             this.log.error(
                 `The maximum number of queries of 10,000 has been reached! New queries will be possible again from 12:01 AM.`,
@@ -794,14 +881,13 @@ class OpenMeteo extends utils.Adapter {
         return await this.requestClient({
             method: "get",
             url: `https://${customer}api.open-meteo.com/v1/forecast`,
-            params: this.param,
+            params: param,
             ...this.getHeader,
         })
             .then(res => {
                 if (!this.conn) {
                     this.setState("info.connection", true, true);
                 }
-                this.setStatusRequest(this.req);
                 return res.data ? res.data : false;
             })
             .catch(error => {

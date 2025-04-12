@@ -103,5 +103,7 @@
     "Mean Temperature": "Mean Temperature (2 m)",
     "Empty": "Empty",
     "select an objectId": "Object ID of the current temperature",
-    "AM_PM": "Hour counting"
+    "AM_PM": "Hour counting",
+    "model_second": "Empty answers will be requested again using the `Best Match` model (Attention! 2 requests per interval)",
+    "model_second_label": "Second request"
 }

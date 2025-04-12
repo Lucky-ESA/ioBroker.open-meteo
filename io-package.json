@@ -101,6 +101,7 @@
         "maxRequest": 10000,
         "maxWind": 20,
         "model": "none",
+        "model_second": false,
         "objectId": "",
         "am_pm": 24,
         "h_temperature_2m": false,

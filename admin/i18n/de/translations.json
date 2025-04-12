@@ -103,5 +103,7 @@
     "Mean Temperature": "Mittlere Temperatur (2 m)",
     "Empty": "Leer",
     "select an objectId": "Objekt-ID der aktuellen Temperatur",
-    "AM_PM": "Stundenzählung"
+    "AM_PM": "Stundenzählung",
+    "model_second": "Leere Antworten werden erneut mit dem 'Best Match' Modell angefordert (Achtung! 2 Anfragen pro Intervall)",
+    "model_second_label": "Zweite Anfrage"
 }

@@ -29,21 +29,22 @@
 
 [Summary](#summary)
 
-| Settings                             | Description                                                 |
-| ------------------------------------ | ----------------------------------------------------------- |
-| Use system settings for position     | Choose between automatic or manual input                    |
-| Forecast days                        | Choose between 1-7 days                                     |
-| Update Interval                      | Update interval in minutes (max. 10,000 requests per day)   |
-| Temperature Unit                     | Choose between celsius or fahrenheit                        |
-| Wind Speed Unit                      | Choose between km/h, m/s, mph or knots                      |
-| Precipitation Unit                   | Choose between millimeter or inch                           |
-| Timeformat                           | Choose between ISO 8610 (e.g. 2025-01-01) or Unix timestamp |
-| API key                              | Your API Key                                                |
-| Maximum requests per day             | Maximum queries per day. 10,000 by default for a free API.  |
-| Wind speed                           | At what speed should WInd Icon be displayed                 |
-| Weather model                        | See [open-meteo.com](https://open-meteo.com)                |
-| Object ID of the current temperature | Current Temperature for IQontrol                            |
-| Hour counting                        | Switch between 24 or 12 hour display                        |
+| Settings                             | Description                                                        |
+| ------------------------------------ | ------------------------------------------------------------------ |
+| Use system settings for position     | Choose between automatic or manual input                           |
+| Forecast days                        | Choose between 1-7 days                                            |
+| Update Interval                      | Update interval in minutes (max. 10,000 requests per day)          |
+| Temperature Unit                     | Choose between celsius or fahrenheit                               |
+| Wind Speed Unit                      | Choose between km/h, m/s, mph or knots                             |
+| Precipitation Unit                   | Choose between millimeter or inch                                  |
+| Timeformat                           | Choose between ISO 8610 (e.g. 2025-01-01) or Unix timestamp        |
+| API key                              | Your API Key                                                       |
+| Maximum requests per day             | Maximum queries per day. 10,000 by default for a free API.         |
+| Wind speed                           | At what speed should WInd Icon be displayed                        |
+| Weather model                        | See [open-meteo.com](https://open-meteo.com)                       |
+| Second request                       | Empty answers will be requested again using the `Best Match` model |
+| Object ID of the current temperature | Current Temperature for IQontrol                                   |
+| Hour counting                        | Switch between 24 or 12 hour display                               |
 
 ![weather_instance_1.png](img/weather_instance_1.png)</br>
 ![weather_instance_1_1.png](img/weather_instance_1_1.png)
@@ -350,13 +351,15 @@
 
 [Summary](#summary)
 
-| Objects     | Description                                         |
-| ----------- | --------------------------------------------------- |
-| last_update | Last update                                         |
-| param       | Own parameters (see https://open-meteo.com/en/docs) |
-| result      | Result of your own parameters or interval query     |
-| status      | Status and counter of requests                      |
-| update      | Manual update                                       |
+| Objects       | Description                                                                                             |
+| ------------- | ------------------------------------------------------------------------------------------------------- |
+| last_update   | Last update                                                                                             |
+| param         | Own parameters (see https://open-meteo.com/en/docs)                                                     |
+| param_second  | Can be activated in the instance settings. Is set automatically if variables do not receive any values. |
+| result        | Result of your own parameters or interval query                                                         |
+| result_second | Result of param_second                                                                                  |
+| status        | Status and counter of requests                                                                          |
+| update        | Manual update                                                                                           |
 
 ### Status JSON
 

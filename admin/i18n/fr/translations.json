@@ -103,5 +103,7 @@
     "Mean Temperature": "Température moyenne (2 m)",
     "Empty": "Vide",
     "select an objectId": "ID d'objet de la température actuelle",
-    "AM_PM": "Haleure"
+    "AM_PM": "Haleure",
+    "model_second": "Des réponses vides seront à nouveau demandées en utilisant le modèle de «meilleur match» (attention! 2 demandes par intervalle)",
+    "model_second_label": "Deuxième demande"
 }

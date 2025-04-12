@@ -29,21 +29,22 @@
 
 [Zusammenfassung](#zusammenfassung)
 
-| Einstellung                                    | Beschreibung                                                       |
-| ---------------------------------------------- | ------------------------------------------------------------------ |
-| Systemeinstellungen für die Position verwenden | Zwischen automatisch oder manuell wählen                           |
-| Prognosetage                                   | Zwischen 1-7 Tage wählen                                           |
-| Aktualisierungsintervall                       | Aktualisierungsintervall in Minuten (max. 10.000 Anfragen pro Tag) |
-| Temperatureinheit                              | Zwischen Celsius oder Fahrenheit wählen                            |
-| Windgeschwindigkeitseinheit                    | Zwischen km/h, m/s, mph oder knoten wählen                         |
-| Niederschlagseinheit                           | Zwischen Millimeter und Zoll wählen                                |
-| Timeformat                                     | Wählen zwischen ISO 8610 (z. B. 2025-01-01) oder Unix-Zeitstempel  |
-| API-Schlüssel                                  | API-Schlüssel                                                      |
-| Maximale Anfragen pro Tag                      | Maximale Abfragen pro Tag. Standard 10000 einer kostenlose API.    |
-| Windgeschwindigkeit                            | Geschwindigkeit ab dem Wind Icons angezeigt werden                 |
-| Wettermodell                                   | Siehe [open-meteo.com](https://open-meteo.com)                     |
-| Objekt-ID der aktuellen Temperatur             | Aktuelle Temperatur für IQontrol                                   |
-| Stundenzählung                                 | Wechseln zwischen 24 oder 12 Stundenanzeige                        |
+| Einstellung                                    | Beschreibung                                                          |
+| ---------------------------------------------- | --------------------------------------------------------------------- |
+| Systemeinstellungen für die Position verwenden | Zwischen automatisch oder manuell wählen                              |
+| Prognosetage                                   | Zwischen 1-7 Tage wählen                                              |
+| Aktualisierungsintervall                       | Aktualisierungsintervall in Minuten (max. 10.000 Anfragen pro Tag)    |
+| Temperatureinheit                              | Zwischen Celsius oder Fahrenheit wählen                               |
+| Windgeschwindigkeitseinheit                    | Zwischen km/h, m/s, mph oder knoten wählen                            |
+| Niederschlagseinheit                           | Zwischen Millimeter und Zoll wählen                                   |
+| Timeformat                                     | Wählen zwischen ISO 8610 (z. B. 2025-01-01) oder Unix-Zeitstempel     |
+| API-Schlüssel                                  | API-Schlüssel                                                         |
+| Maximale Anfragen pro Tag                      | Maximale Abfragen pro Tag. Standard 10000 einer kostenlose API.       |
+| Windgeschwindigkeit                            | Geschwindigkeit ab dem Wind Icons angezeigt werden                    |
+| Wettermodell                                   | Siehe [open-meteo.com](https://open-meteo.com)                        |
+| Zweite Anfrage                                 | Leere Antworten werden erneut mit dem 'Best Match' Modell angefordert |
+| Objekt-ID der aktuellen Temperatur             | Aktuelle Temperatur für IQontrol                                      |
+| Stundenzählung                                 | Wechseln zwischen 24 oder 12 Stundenanzeige                           |
 
 ![weather_instance_1.png](img/weather_instance_1.png)</br>
 ![weather_instance_1_1.png](img/weather_instance_1_1.png)
@@ -350,13 +351,15 @@
 
 [Zusammenfassung](#zusammenfassung)
 
-| Objekte     | Beschreibung                                             |
-| ----------- | -------------------------------------------------------- |
-| last_update | Letzte Update                                            |
-| param       | Eigene Parameters (siehe https://open-meteo.com/en/docs) |
-| result      | Ergebnis eigene Parameter oder Intervallabfrage          |
-| status      | Status und Counter der Abfragen                          |
-| update      | Manuelles Update                                         |
+| Objekte       | Beschreibung                                                                                         |
+| ------------- | ---------------------------------------------------------------------------------------------------- |
+| last_update   | Letzte Update                                                                                        |
+| param         | Eigene Parameters (siehe https://open-meteo.com/en/docs)                                             |
+| param_second  | Aktivierbar in der Instanz Einstellung. Wird automatisch gesetzt wenn Variabeln keine Werte bekommen |
+| result        | Ergebnis eigene Parameter oder Intervallabfrage                                                      |
+| result_second | Ergebnis von param_second                                                                            |
+| status        | Status und Counter der Abfragen                                                                      |
+| update        | Manuelles Update                                                                                     |
 
 ### Status JSON
 

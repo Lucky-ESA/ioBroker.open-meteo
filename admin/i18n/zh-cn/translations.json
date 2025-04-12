@@ -103,5 +103,7 @@
     "Mean Temperature": "平均温度（2 m）",
     "Empty": "空的",
     "select an objectId": "当前温度的对象ID",
-    "AM_PM": "小时计数"
+    "AM_PM": "小时计数",
+    "model_second": "使用“最佳匹配”型号再次请求空答案（注意！2个请求）",
+    "model_second_label": "第二个请求"
 }

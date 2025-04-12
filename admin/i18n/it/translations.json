@@ -103,5 +103,7 @@
     "Mean Temperature": "Temperatura media (2 m)",
     "Empty": "Vuoto",
     "select an objectId": "ID oggetto della temperatura corrente",
-    "AM_PM": "Conteggio delle ore"
+    "AM_PM": "Conteggio delle ore",
+    "model_second": "Le risposte vuote verranno nuovamente richieste utilizzando il modello `Best Match` (attenzione! 2 richieste per intervallo)",
+    "model_second_label": "Seconda richiesta"
 }

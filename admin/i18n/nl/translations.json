@@ -103,5 +103,7 @@
     "Mean Temperature": "Gemiddelde temperatuur (2 m)",
     "Empty": "Leeg",
     "select an objectId": "Object -ID van de huidige temperatuur",
-    "AM_PM": "Uur tellen"
+    "AM_PM": "Uur tellen",
+    "model_second": "Lege antwoorden worden opnieuw gevraagd met behulp van het `Best Match` -model (aandacht! 2 aanvragen per interval)",
+    "model_second_label": "Tweede verzoek"
 }
