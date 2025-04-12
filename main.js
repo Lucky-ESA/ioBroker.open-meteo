@@ -857,7 +857,9 @@ class OpenMeteo extends utils.Adapter {
                 }
             }
         }
-        await this.setState(`param_second`, { val: JSON.stringify(this.param_second), ack: true });
+        if (this.config.model_second) {
+            await this.setState(`param_second`, { val: JSON.stringify(this.param_second), ack: true });
+        }
     }
 
     async setValue(id, val) {
