@@ -227,11 +227,14 @@ class OpenMeteo extends utils.Adapter {
             } else if (command === "param") {
                 this.setOwnParam(state);
                 this.setState(id, { ack: true });
-            } else if (command === "trigger_iqontrol") {
-                this.html.trigger_iqontrol = state.val;
+            } else if (command === "trigger") {
+                this.html.trigger = state.val;
+                this.updateHTML();
                 this.setState(id, { ack: true });
-                this.setState(`html.trigger`, { val: this.html.trigger ? false : true, ack: true });
-                this.html.trigger = this.html.trigger ? false : true;
+            } else if (command === "trigger_hourly") {
+                this.html.trigger_hourly = state.val;
+                this.updateHTML();
+                this.setState(id, { ack: true });
             } else if (this.html[command]) {
                 this.log.debug(`HTML changed!`);
                 this.html[command] = state.val;
@@ -663,7 +666,7 @@ class OpenMeteo extends utils.Adapter {
                 this.param_second.minutely_15 != null
             ) {
                 const data = await this.getWeatherData(this.param_second);
-                //const data = constants.DUMMY_FOR_TESTING;
+                //const data = constants.TESTINGUV;
                 if (data) {
                     this.setStatusRequest(Math.round(this.req_second * 1.7));
                     this.log.debug(JSON.stringify(data));
@@ -1374,6 +1377,7 @@ class OpenMeteo extends utils.Adapter {
             `<img width="${this.html.today_weather_font_size * 5}px" height="${this.html.today_weather_font_size * 5}px" ` +
             `style="vertical-align:middle" alt="${actual_temperature}" title="${actual_temperature}" ` +
             `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(actual_temperature)}'/>`;
+        const trigger_val = this.html.trigger ? false : true;
         let html =
             `<html>` +
             `<head>` +
@@ -1409,7 +1413,7 @@ class OpenMeteo extends utils.Adapter {
             `</head>` +
             `<body>` +
             `<div class="container_row"><span class="box_time"><b>${actual_clock}</b></span>` +
-            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger_iqontrol', true)" src='${this.setIcon("current", id)}' />` +
+            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger', ${trigger_val})" src='${this.setIcon("current", id)}' />` +
             `</div>` +
             `<div class="container_row">` +
             `    <div class="container_column">` +
@@ -1431,7 +1435,7 @@ class OpenMeteo extends utils.Adapter {
             const humidity = this.value[`daily.day0${i}.relative_humidity_2m_mean`];
             const humi =
                 `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
-                `style="vertical-align:middle" alt="${temp_min}" title="${temp_min}" ` +
+                `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
                 `src='/adapter/open-meteo/img/weathericons/humidity-water-drop.svg'/>`;
             const min =
                 `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
@@ -1456,6 +1460,142 @@ class OpenMeteo extends utils.Adapter {
         html += `    </table>` + `</div></body></html>`;
         this.log.debug(html);
         await this.setState(`html.html_code`, { val: html, ack: true });
+        this.updateHTMLHourly(actual_temperature);
+    }
+
+    async updateHTMLHourly(actual_temperature) {
+        let h = new Date().getHours();
+        const bg =
+            this.html.bg_color != "#000"
+                ? `	 background-color:${this.hexToRGBA(this.html.bg_color, this.html.bg_color_alpha)};`
+                : "";
+        const font =
+            this.html.font_color != "#000"
+                ? `;color:${this.hexToRGBA(this.html.font_color, this.html.font_color_alpha)}`
+                : "";
+        const id = this.value[`hourly.day01.hour${`0${h}`.slice(-2)}.weather_code`];
+        const actual_times = this.value[`hourly.day01.hour${`0${h}`.slice(-2)}.time`];
+        const name = constants.DAYNAME[new Date(actual_times).getDay()][this.lang];
+        const actual_date = this.formatDate(new Date(actual_times), "DD.MM.YYYY");
+        const actual_text = this.value[`hourly.day01.hour${`0${h}`.slice(-2)}.weather_code_text`];
+        const actual_clock = `${`0${new Date().getHours()}`.slice(-2)}:` + `${`0${new Date().getMinutes()}`.slice(-2)}`;
+        const actual =
+            `<img width="${this.html.today_weather_font_size * 5}px" height="${this.html.today_weather_font_size * 5}px" ` +
+            `style="vertical-align:middle" alt="${actual_temperature}" title="${actual_temperature}" ` +
+            `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(actual_temperature)}'/>`;
+        const trigger_val = this.html.trigger_hourly ? false : true;
+        let html =
+            `<html>` +
+            `<head>` +
+            `<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">` +
+            `<style>` +
+            `   body {${bg}}` +
+            `   span {text-align:${this.html.today_text_algin}${font};` +
+            `   border-radius:${this.html.today_border_radius}px;border-collapse:separate;border:${this.html.today_border}px solid gainsboro;` +
+            `   border-color:${this.hexToRGBA(this.html.today_border_color, this.html.today_border_color_alpha)};}` +
+            `   td {border-width:0px;border-style:solid;border-color:silver;}` +
+            `   input {height:10vw;width:10vw;}` +
+            `   .container_column {display:flex;flex-direction: column;justify-content: flex-start;` +
+            `   border-radius:${this.html.forecast_border_radius}px;border-collapse:separate;border:${this.html.forecast_border}px solid gainsboro;` +
+            `   border-color:${this.hexToRGBA(this.html.forecast_border_color, this.html.forecast_border_color_alpha)};}` +
+            `   .container_row {display: flex;flex-direction: row;justify-content: space-between;` +
+            `   border-radius:${this.html.today_text_border_radius}px;border-collapse:separate;border:${this.html.today_text_border}px solid gainsboro;` +
+            `   border-color:${this.hexToRGBA(this.html.today_text_border_color, this.html.today_text_border_color_alpha)};}` +
+            `   .img_weather {height:${this.html.today_image_height}vw;width:${this.html.today_image_width}vw;}` +
+            `   .box_time {font-size:${this.html.today_clock_font_size}vmax;}` +
+            `   .box_date {font-size:${this.html.today_date_font_size}vmax;text-align:center;}` +
+            `   .box_weather {font-size:${this.html.today_weather_font_size}vmax;margin-right:1.5vw;text-align:left;}` +
+            `   .table_forecast {margin-top:4vw;width: 100%;border-collapse: collapse;font-size:${this.html.forecast_font_size}vmax${font};}` +
+            `</style>` +
+            `<script type="text/javascript">` +
+            `    function setState(stateId, value){` +
+            `        sendPostMessage("setState", stateId, value);` +
+            `    }` +
+            `    function sendPostMessage(command, stateId, value){` +
+            `        message = {command: command, stateId: stateId, value: value};` +
+            `        window.parent.postMessage(message, "*");` +
+            `    }` +
+            `</script>` +
+            `</head>` +
+            `<body>` +
+            `<div class="container_row"><span class="box_time"><b>${actual_clock}</b></span>` +
+            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger_hourly', ${trigger_val})" src='${this.setIcon("current", id)}' />` +
+            `</div>` +
+            `<div class="container_row">` +
+            `    <div class="container_column">` +
+            `        <span class="box_date"><b><i>${name}, ${actual_date}</i></b></span>` +
+            `    </div>` +
+            `    <div class="container_column">` +
+            `        <span class="box_weather">${actual} <b><i>${actual_temperature}°C</i></b></span>` +
+            `        <span class="box_weather"><i>${actual_text}</i></span>` +
+            `    </div>` +
+            `</div>` +
+            `<div class="container_column">` +
+            `    <table class="table_forecast">`;
+        if (h === 23) {
+            h = 0;
+        } else {
+            ++h;
+        }
+        if (this.config.forecast > 1) {
+            for (let i = h; i < 24; i++) {
+                const daily_id = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.weather_code`];
+                const times = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.time`];
+                const temp = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.apparent_temperature`];
+                const text = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.weather_code_text`];
+                const humidity = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.relative_humidity_2m`];
+                const humi =
+                    `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                    `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
+                    `src='/adapter/open-meteo/img/weathericons/humidity-water-drop.svg'/>`;
+                const min =
+                    `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                    `style="vertical-align:middle" alt="${temp}" title="${temp}" ` +
+                    `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(temp)}'/>`;
+                const daily =
+                    `<img style="vertical-align:middle" width="${this.html.forecast_image_width}px" ` +
+                    `height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" ` +
+                    `src='${this.setIcon(`daily.day0${i}`, daily_id)}'/>`;
+                html += `<tr>
+                                <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
+                                <td>${daily}</td>
+                                <td nowrap>${min} ${temp}°C</td>
+                                <td>${humi} ${humidity}%</td>
+                                <td align=left>${text}</td>
+                            </tr>`;
+            }
+            if (h > 0) {
+                for (let i = 0; i < h; i++) {
+                    const daily_id = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.weather_code`];
+                    const times = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.time`];
+                    const temp = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.apparent_temperature`];
+                    const text = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.weather_code_text`];
+                    const humidity = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.relative_humidity_2m`];
+                    const humi =
+                        `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                        `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
+                        `src='/adapter/open-meteo/img/weathericons/humidity-water-drop.svg'/>`;
+                    const min =
+                        `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                        `style="vertical-align:middle" alt="${temp}" title="${temp}" ` +
+                        `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(temp)}'/>`;
+                    const daily =
+                        `<img style="vertical-align:middle" width="${this.html.forecast_image_width}px" ` +
+                        `height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" ` +
+                        `src='${this.setIcon(`daily.day0${i}`, daily_id)}'/>`;
+                    html += `<tr>
+                                    <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
+                                    <td>${daily}</td>
+                                    <td nowrap>${min} ${temp}°C</td>
+                                    <td>${humi} ${humidity}%</td>
+                                    <td align=left>${text}</td>
+                                </tr>`;
+                }
+            }
+            this.log.debug(html);
+            html += `    </table>` + `</div></body></html>`;
+            await this.setState(`html.html_code_hourly`, { val: html, ack: true });
+        }
     }
 
     setIcon(path, id) {

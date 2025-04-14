@@ -487,6 +487,7 @@
 | forecast_image_height         | Bildhöhe von der Wettervorhersage                                  |
 | forecast_image_width          | Bildbreite von der Wettervorhersage                                |
 | html_code                     | HTML Code für IQontrol, VIS und VIS2 [VIS2 Script](#java-für-vis2) |
+| html_code_hourly              | HTML Code für IQontrol, VIS und VIS2 [VIS2 Script](#java-für-vis2) |
 | icon_own_path                 | Path vom Icon                                                      |
 | icon_select                   | Auswahl Icon (Pfad, Icon mt Farbänderung, eigene Icon)             |
 | today_border                  | Rahmenbreite vom aktuellen Tag                                     |
@@ -503,7 +504,7 @@
 | today_text_border_radius      | Rahmenradius Text vom aktuellen Tag                                |
 | today_weather_font_size       | Schriftgröße Wetter vom aktuellen Tag                              |
 | trigger                       | NUR für IQontrol um die Wettervorhersage anzuzeigen                |
-| trigger_iqontrol              | NUR für IQontrol um die Wettervorhersage anzuzeigen                |
+| trigger_hourly                | NUR für IQontrol um die stündliche Wettervorhersage anzuzeigen     |
 
 ![wweather_states_html_1.png](img/weather_states_html_1.png)</br>
 ![wweather_states_html_2.png](img/weather_states_html_2.png)
