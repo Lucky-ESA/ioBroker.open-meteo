@@ -1413,7 +1413,7 @@ class OpenMeteo extends utils.Adapter {
             `</head>` +
             `<body>` +
             `<div class="container_row"><span class="box_time"><b>${actual_clock}</b></span>` +
-            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger', ${trigger_val})" src='${this.setIcon("current", id)}' />` +
+            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger', ${trigger_val})" src='${this.setIcon("current", id, actual_times)}' />` +
             `</div>` +
             `<div class="container_row">` +
             `    <div class="container_column">` +
@@ -1448,7 +1448,7 @@ class OpenMeteo extends utils.Adapter {
             const daily =
                 `<img style="vertical-align:middle" width="${this.html.forecast_image_width}px" ` +
                 `height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" ` +
-                `src='${this.setIcon(`daily.day0${i}`, daily_id)}'/>`;
+                `src='${this.setIcon(`daily.day0${i}`, daily_id, false)}'/>`;
             html += `<tr>
                         <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]}</td>
                         <td>${daily}</td>
@@ -1519,7 +1519,7 @@ class OpenMeteo extends utils.Adapter {
             `</head>` +
             `<body>` +
             `<div class="container_row"><span class="box_time"><b>${actual_clock}</b></span>` +
-            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger_hourly', ${trigger_val})" src='${this.setIcon("current", id)}' />` +
+            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger_hourly', ${trigger_val})" src='${this.setIcon("current", id, actual_times)}' />` +
             `</div>` +
             `<div class="container_row">` +
             `    <div class="container_column">` +
@@ -1555,7 +1555,7 @@ class OpenMeteo extends utils.Adapter {
                 const daily =
                     `<img style="vertical-align:middle" width="${this.html.forecast_image_width}px" ` +
                     `height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" ` +
-                    `src='${this.setIcon(`daily.day0${i}`, daily_id)}'/>`;
+                    `src='${this.setIcon(`daily.day0${i}`, daily_id, times)}'/>`;
                 html += `<tr>
                                 <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
                                 <td>${daily}</td>
@@ -1582,7 +1582,7 @@ class OpenMeteo extends utils.Adapter {
                     const daily =
                         `<img style="vertical-align:middle" width="${this.html.forecast_image_width}px" ` +
                         `height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" ` +
-                        `src='${this.setIcon(`daily.day0${i}`, daily_id)}'/>`;
+                        `src='${this.setIcon(`daily.day0${i}`, daily_id, times)}'/>`;
                     html += `<tr>
                                     <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
                                     <td>${daily}</td>
@@ -1598,9 +1598,14 @@ class OpenMeteo extends utils.Adapter {
         }
     }
 
-    setIcon(path, id) {
+    setIcon(path, id, day) {
+        const times = day ? new Date(day) : new Date();
+        let isDay = "night";
+        if (day && times > new Date(this.timeArray["sunriseStart"]) && times < new Date(this.timeArray["civilDusk"])) {
+            isDay = "day";
+        }
         if (this.html.icon_select == "own") {
-            return `/${this.namespace}/${id}${this.isDay}.svg`;
+            return `/${this.namespace}/${id}${isDay}.svg`;
         } else if (this.html.icon_select == "path") {
             const icon = this.value[`${path}.weather_code_path`];
             if (!icon) {
@@ -1608,7 +1613,7 @@ class OpenMeteo extends utils.Adapter {
             }
             return icon;
         }
-        return this.html.icon_own_path.replace("<code>", id.val).replace("<day>", this.isDay);
+        return this.html.icon_own_path.replace("<code>", id.val).replace("<day>", isDay);
     }
 
     getThermalStress(val) {
