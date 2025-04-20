@@ -11,6 +11,7 @@ const { find } = require("geo-tz");
 const axios = require("axios");
 const helper = require("./lib/helper");
 const constants = require("./lib/constants");
+const dummy = require("./lib/dummy_request");
 const SVG = require("./lib/svgCreater");
 const SunCalc = require("suncalc3");
 const { RecurrenceRule, scheduleJob } = require("node-schedule");
@@ -87,6 +88,7 @@ class OpenMeteo extends utils.Adapter {
         this.own_color = {};
         this.html = {};
         this.isDay = "night";
+        this.images = {};
     }
 
     /**
@@ -174,6 +176,7 @@ class OpenMeteo extends utils.Adapter {
         await this.checkObjects();
         this.stateCheck = [];
         this.subscribeStates("*");
+        await this.readAllFiles();
     }
 
     /**
@@ -238,6 +241,9 @@ class OpenMeteo extends utils.Adapter {
             } else if (this.html[command]) {
                 this.log.debug(`HTML changed!`);
                 this.html[command] = state.val;
+                if (command && command.indexOf("compass") !== -1 && command.indexOf("color") !== -1) {
+                    this.images = {};
+                }
                 this.updateHTML();
                 this.setState(id, { ack: true });
             } else if (this.own_color[command]) {
@@ -648,7 +654,7 @@ class OpenMeteo extends utils.Adapter {
 
     async updateStates() {
         const data = await this.getWeatherData(this.param);
-        //const data = constants.DUMMY_FOR_TESTING;
+        //const data = dummy.DUMMY_FOR_TESTING;
         if (data) {
             this.setStatusRequest(Math.round(this.req * 1.7));
             this.log.debug(JSON.stringify(data));
@@ -666,7 +672,7 @@ class OpenMeteo extends utils.Adapter {
                 this.param_second.minutely_15 != null
             ) {
                 const data = await this.getWeatherData(this.param_second);
-                //const data = constants.TESTINGUV;
+                //const data = dummy.TESTINGUV;
                 if (data) {
                     this.setStatusRequest(Math.round(this.req_second * 1.7));
                     this.log.debug(JSON.stringify(data));
@@ -690,6 +696,21 @@ class OpenMeteo extends utils.Adapter {
         if (current) {
             this.checkResponse("current", val.current_units);
             for (const variable in current) {
+                if (variable === "wind_speed_10m") {
+                    await this.setValue(
+                        `current.${variable}_animated`,
+                        constants.Beaufort[this.msToBeaufort(current[variable])],
+                    );
+                }
+                if (variable === "wind_direction_10m") {
+                    const compass = await this.svg.windrose(current[variable], this.html);
+                    if (!this.images[`grad${current[variable]}.svg`]) {
+                        this.images[`grad${current[variable]}.svg`] = false;
+                        await this.writeFileAsync(this.namespace, `grad${current[variable]}.svg`, compass);
+                    }
+                    await this.setValue(`current.${variable}_compass`, compass);
+                    await this.setValue(`current.${variable}_name`, this.getDirectionName(current[variable]));
+                }
                 if (variable === "time") {
                     await this.setValue(`current.${variable}`, new Date(current.time).toString());
                 } else if (variable === "interval") {
@@ -709,10 +730,12 @@ class OpenMeteo extends utils.Adapter {
                     const path = constants.WeatherCode[code][this.isDay].image;
                     const text = constants.WeatherCode[code][this.isDay].description[this.lang];
                     const svg = constants.WeatherCode[code][this.isDay].svg;
+                    const animated = constants.WeatherCode[code][this.isDay].animated;
                     await this.setValue(`current.${variable}`, code);
                     await this.setValue(`current.${variable}_text`, text);
                     await this.setValue(`current.${variable}_path`, path);
                     await this.setValue(`current.${variable}_own`, svg);
+                    await this.setValue(`current.${variable}_path_animated`, animated);
                 } else if (current[variable] != null) {
                     await this.setValue(`current.${variable}`, current[variable]);
                 }
@@ -725,6 +748,21 @@ class OpenMeteo extends utils.Adapter {
             for (let i = 1; i < this.config.forecast + 1; i++) {
                 const path2 = `daily.day${`0${i}`.slice(-2)}`;
                 for (const variable in daily) {
+                    if (variable === "wind_speed_10m_max") {
+                        await this.setValue(
+                            `${path2}.${variable}_animated`,
+                            constants.Beaufort[this.msToBeaufort(daily[variable][count])],
+                        );
+                    }
+                    if (variable === "wind_direction_10m_dominant") {
+                        const compass = await this.svg.windrose(daily[variable][count], this.html);
+                        if (!this.images[`grad${current[variable]}.svg`]) {
+                            this.images[`grad${daily[variable][count]}.svg`] = false;
+                            await this.writeFileAsync(this.namespace, `grad${daily[variable][count]}.svg`, compass);
+                        }
+                        await this.setValue(`${path2}.${variable}_compass`, compass);
+                        await this.setValue(`${path2}.${variable}_name`, this.getDirectionName(daily[variable][count]));
+                    }
                     if (variable === "time") {
                         await this.setValue(`${path2}.${variable}`, new Date(daily.time[count]).toString());
                     } else if (variable === "weather_code") {
@@ -743,10 +781,12 @@ class OpenMeteo extends utils.Adapter {
                         const path = constants.WeatherCode[code][this.isDay].image;
                         const text = constants.WeatherCode[code][this.isDay].description[this.lang];
                         const svg = constants.WeatherCode[code][this.isDay].svg;
+                        const animated = constants.WeatherCode[code][this.isDay].animated;
                         await this.setValue(`${path2}.${variable}`, code);
                         await this.setValue(`${path2}.${variable}_text`, text);
                         await this.setValue(`${path2}.${variable}_path`, path);
                         await this.setValue(`${path2}.${variable}_own`, svg);
+                        await this.setValue(`${path2}.${variable}_path_animated`, animated);
                     } else if (variable === "uv_index_clear_sky_max" && daily[variable][count] != null) {
                         let uv = Math.round(daily[variable][count]);
                         uv = uv < 12 ? uv : 11;
@@ -773,6 +813,38 @@ class OpenMeteo extends utils.Adapter {
                 for (let a = 0; a < 24; a++) {
                     const path2 = `${path}.hour${`0${a}`.slice(-2)}`;
                     for (const variable in hourly) {
+                        if (
+                            variable === "wind_speed_10m" ||
+                            variable === "wind_speed_80m" ||
+                            variable === "wind_speed_120m" ||
+                            variable === "wind_speed_180m"
+                        ) {
+                            await this.setValue(
+                                `${path2}.${variable}_animated`,
+                                constants.Beaufort[this.msToBeaufort(hourly[variable][count])],
+                            );
+                        }
+                        if (
+                            variable === "wind_direction_10m" ||
+                            variable === "wind_direction_80m" ||
+                            variable === "wind_direction_120m" ||
+                            variable === "wind_direction_180m"
+                        ) {
+                            const compass = await this.svg.windrose(hourly[variable][count], this.html);
+                            if (!this.images[`grad${current[variable]}.svg`]) {
+                                this.images[`grad${hourly[variable][count]}.svg`] = false;
+                                await this.writeFileAsync(
+                                    this.namespace,
+                                    `grad${hourly[variable][count]}.svg`,
+                                    compass,
+                                );
+                            }
+                            await this.setValue(`${path2}.${variable}_compass`, compass);
+                            await this.setValue(
+                                `${path2}.${variable}_name`,
+                                this.getDirectionName(hourly[variable][count]),
+                            );
+                        }
                         if (variable === "time") {
                             await this.setValue(`${path2}.${variable}`, new Date(hourly.time[count]).toString());
                         } else if (variable === "weather_code") {
@@ -791,10 +863,12 @@ class OpenMeteo extends utils.Adapter {
                             const path = constants.WeatherCode[code][this.isDay].image;
                             const text = constants.WeatherCode[code][this.isDay].description[this.lang];
                             const svg = constants.WeatherCode[code][this.isDay].svg;
+                            const animated = constants.WeatherCode[code][this.isDay].animated;
                             await this.setValue(`${path2}.${variable}`, code);
                             await this.setValue(`${path2}.${variable}_text`, text);
                             await this.setValue(`${path2}.${variable}_path`, path);
                             await this.setValue(`${path2}.${variable}_own`, svg);
+                            await this.setValue(`${path2}.${variable}_path_animated`, animated);
                         } else if (hourly[variable][count] != null) {
                             await this.setValue(`${path2}.${variable}`, hourly[variable][count]);
                         }
@@ -1361,6 +1435,7 @@ class OpenMeteo extends utils.Adapter {
                 : "";
         const id = this.value[`current.weather_code`];
         const actual_times = this.value[`current.time`];
+        const direction = this.value[`current.wind_direction_10m`];
         const name = constants.DAYNAME[new Date(actual_times).getDay()][this.lang];
         const actual_date = this.formatDate(new Date(actual_times), "DD.MM.YYYY");
         const actual_text = this.value[`current.weather_code_text`];
@@ -1384,6 +1459,7 @@ class OpenMeteo extends utils.Adapter {
             `<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">` +
             `<style>` +
             `   body {overflow:hidden;${bg}}` +
+            `   svg {height:10vw;width:10vw;}` +
             `   span {text-align:${this.html.today_text_algin}${font};` +
             `   border-radius:${this.html.today_border_radius}px;border-collapse:separate;border:${this.html.today_border}px solid gainsboro;` +
             `   border-color:${this.hexToRGBA(this.html.today_border_color, this.html.today_border_color_alpha)};}` +
@@ -1413,6 +1489,7 @@ class OpenMeteo extends utils.Adapter {
             `</head>` +
             `<body>` +
             `<div class="container_row"><span class="box_time"><b>${actual_clock}</b></span>` +
+            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger', ${trigger_val})" src='/open-meteo.0/grad${direction}.svg' />` +
             `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger', ${trigger_val})" src='${this.setIcon("current", id, actual_times)}' />` +
             `</div>` +
             `<div class="container_row">` +
@@ -1433,6 +1510,11 @@ class OpenMeteo extends utils.Adapter {
             const temp_max = this.value[`daily.day0${i}.temperature_2m_max`];
             const text = this.value[`daily.day0${i}.weather_code_text`];
             const humidity = this.value[`daily.day0${i}.relative_humidity_2m_mean`];
+            const direction = this.value[`daily.day0${i}.wind_direction_10m_dominant`];
+            const direc =
+                `<img width="${this.html.compass_forecast_image_width}px" height="${this.html.compass_forecast_image_height}px" ` +
+                `style="vertical-align:middle" alt="${direction}°" title="${direction}°" ` +
+                `src='/open-meteo.0/grad${direction}.svg'/>`;
             const humi =
                 `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
                 `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
@@ -1453,6 +1535,7 @@ class OpenMeteo extends utils.Adapter {
                         <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]}</td>
                         <td>${daily}</td>
                         <td nowrap>${min} ${temp_min}°C ${constants.DAYNAME.unit[this.lang]} ${max} ${temp_max}°C</td>
+                        <td>${direc}</td>
                         <td>${humi} ${humidity}%</td>
                         <td align=left>${text}</td>
                     </tr>`;
@@ -1475,6 +1558,7 @@ class OpenMeteo extends utils.Adapter {
                 : "";
         const id = this.value[`hourly.day01.hour${`0${h}`.slice(-2)}.weather_code`];
         const actual_times = this.value[`hourly.day01.hour${`0${h}`.slice(-2)}.time`];
+        const direction = this.value[`hourly.day01.hour${`0${h}`.slice(-2)}.wind_direction_10m`];
         const name = constants.DAYNAME[new Date(actual_times).getDay()][this.lang];
         const actual_date = this.formatDate(new Date(actual_times), "DD.MM.YYYY");
         const actual_text = this.value[`hourly.day01.hour${`0${h}`.slice(-2)}.weather_code_text`];
@@ -1519,6 +1603,7 @@ class OpenMeteo extends utils.Adapter {
             `</head>` +
             `<body>` +
             `<div class="container_row"><span class="box_time"><b>${actual_clock}</b></span>` +
+            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger_hourly', ${trigger_val})" src='/open-meteo.0/grad${direction}.svg' />` +
             `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger_hourly', ${trigger_val})" src='${this.setIcon("current", id, actual_times)}' />` +
             `</div>` +
             `<div class="container_row">` +
@@ -1541,9 +1626,14 @@ class OpenMeteo extends utils.Adapter {
             for (let i = h; i < 24; i++) {
                 const daily_id = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.weather_code`];
                 const times = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.time`];
-                const temp = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.apparent_temperature`];
+                const temp = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.temperature_2m`];
                 const text = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.weather_code_text`];
                 const humidity = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.relative_humidity_2m`];
+                const direction = this.value[`hourly.day01.hour${`0${i}`.slice(-2)}.wind_direction_10m`];
+                const direc =
+                    `<img width="${this.html.compass_forecast_image_width}px" height="${this.html.compass_forecast_image_height}px" ` +
+                    `style="vertical-align:middle" alt="${direction}°" title="${direction}°" ` +
+                    `src='/open-meteo.0/grad${direction}.svg'/>`;
                 const humi =
                     `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
                     `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
@@ -1560,6 +1650,7 @@ class OpenMeteo extends utils.Adapter {
                                 <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
                                 <td>${daily}</td>
                                 <td nowrap>${min} ${temp}°C</td>
+                                <td>${direc}</td>
                                 <td>${humi} ${humidity}%</td>
                                 <td align=left>${text}</td>
                             </tr>`;
@@ -1568,9 +1659,14 @@ class OpenMeteo extends utils.Adapter {
                 for (let i = 0; i < h; i++) {
                     const daily_id = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.weather_code`];
                     const times = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.time`];
-                    const temp = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.apparent_temperature`];
+                    const temp = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.temperature_2m`];
                     const text = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.weather_code_text`];
                     const humidity = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.relative_humidity_2m`];
+                    const direction = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.wind_direction_10m`];
+                    const direc =
+                        `<img width="${this.html.compass_forecast_image_width}px" height="${this.html.compass_forecast_image_height}px" ` +
+                        `style="vertical-align:middle" alt="${direction}°" title="${direction}°" ` +
+                        `src='/open-meteo.0/grad${direction}.svg'/>`;
                     const humi =
                         `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
                         `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
@@ -1587,6 +1683,7 @@ class OpenMeteo extends utils.Adapter {
                                     <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
                                     <td>${daily}</td>
                                     <td nowrap>${min} ${temp}°C</td>
+                                    <td>${direc}</td>
                                     <td>${humi} ${humidity}%</td>
                                     <td align=left>${text}</td>
                                 </tr>`;
@@ -1608,6 +1705,12 @@ class OpenMeteo extends utils.Adapter {
             return `/${this.namespace}/${id}${isDay}.svg`;
         } else if (this.html.icon_select == "path") {
             const icon = this.value[`${path}.weather_code_path`];
+            if (!icon) {
+                return "";
+            }
+            return icon;
+        } else if (this.html.icon_select == "animed_icon") {
+            const icon = this.value[`${path}.weather_code_path_animed`];
             if (!icon) {
                 return "";
             }
@@ -1635,6 +1738,69 @@ class OpenMeteo extends utils.Adapter {
             return "thermalstress-cold-severe.svg";
         }
         return "thermalstress-cold-extreme.svg";
+    }
+
+    async readAllFiles() {
+        const images = await this.readDirAsync(this.namespace, "");
+        for (const image of images) {
+            this.images[image.file] = image.isDir;
+        }
+    }
+
+    getDirectionName(degrees) {
+        const directionDE = [
+            "↑N",
+            "NNO",
+            "↗NO",
+            "ONO",
+            "→O",
+            "OSO",
+            "↘SO",
+            "SSO",
+            "↓S",
+            "SSW",
+            "↙SW",
+            "WSW",
+            "←W",
+            "WNW",
+            "↖NW",
+            "NNW",
+            "↑N",
+        ];
+        const directionEN = [
+            "↑N",
+            "NNE",
+            "↗NE",
+            "ENE",
+            "→E",
+            "ESE",
+            "↘SE",
+            "SSE",
+            "↓S",
+            "SSW",
+            "↙SW",
+            "WSW",
+            "←W",
+            "WNW",
+            "↖NW",
+            "NNW",
+            "↑N",
+        ];
+        if (this.lang === "de") {
+            return directionDE[Math.round((degrees + 11.25) / 22.5 - 1)];
+        }
+        return directionEN[Math.round((degrees + 11.25) / 22.5 - 1)];
+    }
+
+    msToBeaufort(ms) {
+        if (this.config.windSpeedUnit === "default") {
+            ms = ms * 0.27778;
+        } else if (this.config.windSpeedUnit === "Knots") {
+            ms = ms * 0.514444;
+        } else if (this.config.windSpeedUnit === "mph") {
+            ms = ms * 0.44704;
+        }
+        return Math.ceil(Math.cbrt(Math.pow(ms / 0.836, 2)));
     }
 }
 

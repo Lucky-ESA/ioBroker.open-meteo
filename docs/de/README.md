@@ -169,114 +169,140 @@
 
 [Zusammenfassung](#zusammenfassung)
 
-| Objekte              | Beschreibung                                                                                                                                                                          |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| apparent_temperature | Die gefühlte Temperatur ist die gefühlte Temperatur, die sich aus Windchill-Faktor, relativer Luftfeuchtigkeit und Sonneneinstrahlung zusammensetzt.                                  |
-| cloud_cover          | Gesamtbewölkung als Flächenanteil                                                                                                                                                     |
-| precipitation        | Gesamtniederschlag (Regen, Schauer, Schnee) Summe der vorhergehenden Stunde                                                                                                           |
-| rain                 | Regen aus Großwetterlagen der letzten Stunde in Millimeter                                                                                                                            |
-| relative_humidity_2m | Relative Luftfeuchtigkeit in 2 Metern Höhe                                                                                                                                            |
-| showers              | Schauer aus konvektivem Niederschlag in Millimetern der letzten Stunde                                                                                                                |
-| snowfall             | Schneefallmenge der letzten Stunde in Zentimetern. Um das Wasseräquivalent in Millimetern zu erhalten, dividiere durch 7. Beispiel: 7 cm Schnee = 10 mm Niederschlagswasseräquivalent |
-| temperature_2m       | Lufttemperatur in 2 Metern Höhe                                                                                                                                                       |
-| time                 | Datum                                                                                                                                                                                 |
-| weather_code         | Wetterbedingungen als numerische code.                                                                                                                                                |
-| weather_code_own     | Eigendes Icon mit den ausgewählten Farben                                                                                                                                             |
-| weather_code_path    | Pfad zum Icon                                                                                                                                                                         |
-| weather_code_text    | Wetterbedingungen als Zeichenfolge.                                                                                                                                                   |
-| wind_speed_10m       | Windgeschwindigkeit in 10 Metern Höhe über Grund.                                                                                                                                     |
+| Objekte                    | Beschreibung                                                                                                                                                                          |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| apparent_temperature       | Die gefühlte Temperatur ist die gefühlte Temperatur, die sich aus Windchill-Faktor, relativer Luftfeuchtigkeit und Sonneneinstrahlung zusammensetzt.                                  |
+| cloud_cover                | Gesamtbewölkung als Flächenanteil                                                                                                                                                     |
+| precipitation              | Gesamtniederschlag (Regen, Schauer, Schnee) Summe der vorhergehenden Stunde                                                                                                           |
+| rain                       | Regen aus Großwetterlagen der letzten Stunde in Millimeter                                                                                                                            |
+| relative_humidity_2m       | Relative Luftfeuchtigkeit in 2 Metern Höhe                                                                                                                                            |
+| showers                    | Schauer aus konvektivem Niederschlag in Millimetern der letzten Stunde                                                                                                                |
+| snowfall                   | Schneefallmenge der letzten Stunde in Zentimetern. Um das Wasseräquivalent in Millimetern zu erhalten, dividiere durch 7. Beispiel: 7 cm Schnee = 10 mm Niederschlagswasseräquivalent |
+| temperature_2m             | Lufttemperatur in 2 Metern Höhe                                                                                                                                                       |
+| time                       | Datum                                                                                                                                                                                 |
+| weather_code               | Wetterbedingungen als numerische code.                                                                                                                                                |
+| weather_code_own           | Eigendes Icon mit den ausgewählten Farben                                                                                                                                             |
+| weather_code_path          | Pfad zum Icon                                                                                                                                                                         |
+| weather_code_path_animated | Animiertes Wetter Icon                                                                                                                                                                |
+| weather_code_text          | Wetterbedingungen als Zeichenfolge.                                                                                                                                                   |
+| wind_direction_10m         | Windrichtung                                                                                                                                                                          |
+| wind_direction_10m_compass | Kompass für Windrichtung                                                                                                                                                              |
+| wind_direction_10m_name    | Buchstaben für Windrichtung                                                                                                                                                           |
+| wind_gusts_10m             | Böengeschwindigkeit an einem Tag                                                                                                                                                      |
+| wind_speed_10m             | Windgeschwindigkeit in 10 Metern Höhe über Grund.                                                                                                                                     |
+| wind_speed_10m_animated    | Animiertes Icon für Windgeschwindigkeit in 10 Metern Höhe über Grund.                                                                                                                 |
 
-![weather_states_current.png](img/weather_states_current.png)
+![weather_states_current.png](img/weather_states_current.png)</br>
+![weather_states_current_1.png](img/weather_states_current_1.png)
 
 ### Objekte Täglich
 
 [Zusammenfassung](#zusammenfassung)
 
-| Objekte                       | Beschreibung                                                                                                                                       |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| apparent_temperature_max      | Maximum daily apparent temperature                                                                                                                 |
-| apparent_temperature_min      | Minimum daily apparent temperature                                                                                                                 |
-| cloud_cover_mean              | Mittlere Wolkendecke                                                                                                                               |
-| daylight_duration             | Anzahl der Sekunden Tageslicht pro Tag                                                                                                             |
-| precipitation_hours           | Die Anzahl der Stunden mit Regen                                                                                                                   |
-| precipitation_probability_max | Summe der täglichen Niederschlagsmengen (einschließlich Regen, Schauer und Schneefall)                                                             |
-| precipitation_sum             | Summe der täglichen Niederschlagsmengen (einschließlich Regen, Schauer und Schneefall)                                                             |
-| rain_sum                      | Summe des täglichen Niederschlags                                                                                                                  |
-| relative_humidity_2m_mean     | Mittlere relative Luftfeuchtigkeit (2 m)                                                                                                           |
-| showers_sum                   | Summe der täglichen Regenfälle                                                                                                                     |
-| snowfall_sum                  | Summe der täglichen Schneefälle                                                                                                                    |
-| sunshine_duration             | Anzahl der Sonnenscheinsekunden der vorangegangenen Stunde pro Stunde, berechnet durch die direkte normalisierte Bestrahlungsstärke über 120 W/m². |
-| temperature_2m_max            | Maximum tägliche Lufttemperatur in 2 Metern Höhe                                                                                                   |
-| temperature_2m_mean           | Mittlere Temperatur (2 m)                                                                                                                          |
-| temperature_2m_min            | Minimum tägliche Lufttemperatur in 2 Metern Höhe                                                                                                   |
-| time                          | Datum                                                                                                                                              |
-| uv_index_clear_sky_max        | UV-Index bei klarem Himmel                                                                                                                         |
-| uv_index_clear_sky_max_own    | Eigenes Icon mit den ausgewählten Farben                                                                                                           |
-| uv_index_clear_sky_max_path   | Pfad zum UV Icon                                                                                                                                   |
-| uv_index_max                  | UV Index                                                                                                                                           |
-| uv_index_max_own              | Eigenes Icon mit den ausgewählten Farben                                                                                                           |
-| uv_index_max_path             | Pfad zum UV Icon                                                                                                                                   |
-| weather_code                  | Wetterbedingungen als numerische code.                                                                                                             |
-| weather_code_own              | Eigendes Icon mit den ausgewählten Farben                                                                                                          |
-| weather_code_path             | Pfad zum Icon                                                                                                                                      |
-| weather_code_text             | Wetterbedingungen als Zeichenfolge.                                                                                                                |
-| wind_direction_10m_dominant   | Dominante Windrichtung                                                                                                                             |
-| wind_speed_10m_max            | Maximale Windgeschwindigkeit an einem Tag                                                                                                          |
-| wind_gusts_10m_max            | Maximale Böengeschwindigkeit an einem Tag                                                                                                          |
+| Objekte                             | Beschreibung                                                                                                                                       |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| apparent_temperature_max            | Maximum daily apparent temperature                                                                                                                 |
+| apparent_temperature_min            | Minimum daily apparent temperature                                                                                                                 |
+| cloud_cover_mean                    | Mittlere Wolkendecke                                                                                                                               |
+| daylight_duration                   | Anzahl der Sekunden Tageslicht pro Tag                                                                                                             |
+| precipitation_hours                 | Die Anzahl der Stunden mit Regen                                                                                                                   |
+| precipitation_probability_max       | Summe der täglichen Niederschlagsmengen (einschließlich Regen, Schauer und Schneefall)                                                             |
+| precipitation_sum                   | Summe der täglichen Niederschlagsmengen (einschließlich Regen, Schauer und Schneefall)                                                             |
+| rain_sum                            | Summe des täglichen Niederschlags                                                                                                                  |
+| relative_humidity_2m_mean           | Mittlere relative Luftfeuchtigkeit (2 m)                                                                                                           |
+| showers_sum                         | Summe der täglichen Regenfälle                                                                                                                     |
+| snowfall_sum                        | Summe der täglichen Schneefälle                                                                                                                    |
+| sunshine_duration                   | Anzahl der Sonnenscheinsekunden der vorangegangenen Stunde pro Stunde, berechnet durch die direkte normalisierte Bestrahlungsstärke über 120 W/m². |
+| temperature_2m_max                  | Maximum tägliche Lufttemperatur in 2 Metern Höhe                                                                                                   |
+| temperature_2m_mean                 | Mittlere Temperatur (2 m)                                                                                                                          |
+| temperature_2m_min                  | Minimum tägliche Lufttemperatur in 2 Metern Höhe                                                                                                   |
+| time                                | Datum                                                                                                                                              |
+| uv_index_clear_sky_max              | UV-Index bei klarem Himmel                                                                                                                         |
+| uv_index_clear_sky_max_own          | Eigenes Icon mit den ausgewählten Farben                                                                                                           |
+| uv_index_clear_sky_max_path         | Pfad zum UV Icon                                                                                                                                   |
+| uv_index_max                        | UV Index                                                                                                                                           |
+| uv_index_max_own                    | Eigenes Icon mit den ausgewählten Farben                                                                                                           |
+| uv_index_max_path                   | Pfad zum UV Icon                                                                                                                                   |
+| weather_code                        | Wetterbedingungen als numerische code.                                                                                                             |
+| weather_code_own                    | Eigendes Icon mit den ausgewählten Farben                                                                                                          |
+| weather_code_path                   | Pfad zum Icon                                                                                                                                      |
+| weather_code_path_animated          | Animiertes Wetter Icon                                                                                                                             |
+| weather_code_text                   | Wetterbedingungen als Zeichenfolge.                                                                                                                |
+| wind_direction_10m_dominant         | Dominante Windrichtung                                                                                                                             |
+| wind_direction_10m_dominant_compass | Kompass für dominante Windrichtung                                                                                                                 |
+| wind_direction_10m_dominant_name    | Buchstaben für dominante Windrichtung                                                                                                              |
+| wind_gusts_10m_max                  | Maximale Böengeschwindigkeit an einem Tag                                                                                                          |
+| wind_speed_10m_max                  | Maximale Windgeschwindigkeit an einem Tag                                                                                                          |
+| wind_speed_10m_max_animated         | Animiertes Icon für maximale Windgeschwindigkeit an einem Tag                                                                                      |
 
 ![weather_states_daily_1.png](img/weather_states_daily_1.png)</br>
-![weather_states_daily_2.png](img/weather_states_daily_2.png)
+![weather_states_daily_2.png](img/weather_states_daily_2.png)</br>
+![weather_states_daily_3.png](img/weather_states_daily_3.png)
 
 ### Objekte Stündlich
 
 [Zusammenfassung](#zusammenfassung)
 
-| Objekte                   | Beschreibung                                                                                                                                                                          |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| apparent_temperature      | Die gefühlte Temperatur ist die gefühlte Temperatur, die sich aus Windchill-Faktor, relativer Luftfeuchtigkeit und Sonneneinstrahlung zusammensetzt.                                  |
-| cloud_cover               | Gesamtbewölkung als Flächenanteil                                                                                                                                                     |
-| cloud_cover_high          | Hohe Wolken ab 8 km Höhe                                                                                                                                                              |
-| cloud_cover_low           | Niedrige Wolken und Nebel bis zu 3 km Höhe                                                                                                                                            |
-| cloud_cover_mid           | Mittlere Wolkenhöhe von 3 bis 8 km Höhe                                                                                                                                               |
-| dew_point_2m              | Taupunkttemperatur in 2 Metern Höhe über dem Boden                                                                                                                                    |
-| precipitation             | Gesamtniederschlag (Regen, Schauer, Schnee) Summe der vorhergehenden Stunde                                                                                                           |
-| precipitation_probability | Niederschlagswahrscheinlichkeit                                                                                                                                                       |
-| snow_depth                | Schneehöhe auf dem Boden                                                                                                                                                              |
-| snowfall                  | Schneefallmenge der letzten Stunde in Zentimetern. Um das Wasseräquivalent in Millimetern zu erhalten, dividiere durch 7. Beispiel: 7 cm Schnee = 10 mm Niederschlagswasseräquivalent |
-| soil_moisture_0_to_1_cm   | Durchschnittlicher Bodenwassergehalt als volumetrisches Mischungsverhältnis in 0-1 cm Tiefe.                                                                                          |
-| soil_moisture_1_to_3_cm   | Durchschnittlicher Bodenwassergehalt als volumetrisches Mischungsverhältnis in 1-3 cm Tiefe.                                                                                          |
-| soil_moisture_27_to_81_cm | Durchschnittlicher Bodenwassergehalt als volumetrisches Mischungsverhältnis in 27-81 cm Tiefe.                                                                                        |
-| soil_moisture_3_to_9_cm   | Durchschnittlicher Bodenwassergehalt als volumetrisches Mischungsverhältnis in 3-9 cm Tiefe.                                                                                          |
-| soil_moisture_9_to_27_cm  | Durchschnittlicher Bodenwassergehalt als volumetrisches Mischungsverhältnis in 9-27 cm Tiefe.                                                                                         |
-| soil_temperature_0cm      | Temperatur im Boden in 0, 6, 18 und 54 cm Tiefe. 0 cm ist die Oberflächentemperatur an Land bzw. die Wasseroberflächentemperatur auf Wasser.                                          |
-| soil_temperature_18cm     | Temperatur im Boden in 18 cm Tiefe. 0 cm ist die Oberflächentemperatur an Land bzw. die Wasseroberflächentemperatur auf Wasser.                                                       |
-| soil_temperature_54cm     | Temperatur im Boden in 54 cm Tiefe. 0 cm ist die Oberflächentemperatur an Land bzw. die Wasseroberflächentemperatur auf Wasser.                                                       |
-| soil_temperature_6cm      | Temperatur im Boden in 6 cm Tiefe. 0 cm ist die Oberflächentemperatur an Land bzw. die Wasseroberflächentemperatur auf Wasser.                                                        |
-| temperature_120m          | Lufttemperatur in 120 Metern Höhe                                                                                                                                                     |
-| temperature_180m          | Lufttemperatur in 180 Metern Höhe                                                                                                                                                     |
-| temperature_2m            | Lufttemperatur in 2 Metern Höhe                                                                                                                                                       |
-| temperature_80m           | Lufttemperatur in 80 Metern Höhe                                                                                                                                                      |
-| time                      | Datum                                                                                                                                                                                 |
-| visibility                | Betrachtungsdistanz in Metern. Beeinflusst durch niedrige Wolken, Luftfeuchtigkeit und Aerosole.                                                                                      |
-| weather_code              | Wetterbedingungen als numerische code.                                                                                                                                                |
-| weather_code_own          | Eigenes Icon mit den ausgewählten Farben                                                                                                                                              |
-| weather_code_path         | Pfad zum Icon                                                                                                                                                                         |
-| weather_code_text         | Wetterbedingungen als Zeichenfolge.                                                                                                                                                   |
-| wind_direction_10m        | Windrichtung in 10 Metern Höhe                                                                                                                                                        |
-| wind_direction_120m       | Windrichtung in 120 Metern Höhe                                                                                                                                                       |
-| wind_direction_180m       | Windrichtung in 180 Metern Höhe                                                                                                                                                       |
-| wind_direction_80m        | Windrichtung in 80 Metern Höhe                                                                                                                                                        |
-| wind_gusts_10m            | Böen in 10 Metern Höhe als Maximum der vorangegangenen Stunde                                                                                                                         |
-| wind_speed_10m            | Windgeschwindigkeit in 10 Metern Höhe über Grund.                                                                                                                                     |
-| wind_speed_120m           | Windgeschwindigkeit in 120 Metern Höhe über Grund.                                                                                                                                    |
-| wind_speed_180m           | Windgeschwindigkeit in 180 Metern Höhe über Grund.                                                                                                                                    |
-| wind_speed_80m            | Windgeschwindigkeit in 80 Metern Höhe über Grund.                                                                                                                                     |
+| Objekte                     | Beschreibung                                                                                                                                                                          |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| apparent_temperature        | Die gefühlte Temperatur ist die gefühlte Temperatur, die sich aus Windchill-Faktor, relativer Luftfeuchtigkeit und Sonneneinstrahlung zusammensetzt.                                  |
+| cloud_cover                 | Gesamtbewölkung als Flächenanteil                                                                                                                                                     |
+| cloud_cover_high            | Hohe Wolken ab 8 km Höhe                                                                                                                                                              |
+| cloud_cover_low             | Niedrige Wolken und Nebel bis zu 3 km Höhe                                                                                                                                            |
+| cloud_cover_mid             | Mittlere Wolkenhöhe von 3 bis 8 km Höhe                                                                                                                                               |
+| dew_point_2m                | Taupunkttemperatur in 2 Metern Höhe über dem Boden                                                                                                                                    |
+| precipitation               | Gesamtniederschlag (Regen, Schauer, Schnee) Summe der vorhergehenden Stunde                                                                                                           |
+| precipitation_probability   | Niederschlagswahrscheinlichkeit                                                                                                                                                       |
+| snow_depth                  | Schneehöhe auf dem Boden                                                                                                                                                              |
+| snowfall                    | Schneefallmenge der letzten Stunde in Zentimetern. Um das Wasseräquivalent in Millimetern zu erhalten, dividiere durch 7. Beispiel: 7 cm Schnee = 10 mm Niederschlagswasseräquivalent |
+| soil_moisture_0_to_1_cm     | Durchschnittlicher Bodenwassergehalt als volumetrisches Mischungsverhältnis in 0-1 cm Tiefe.                                                                                          |
+| soil_moisture_1_to_3_cm     | Durchschnittlicher Bodenwassergehalt als volumetrisches Mischungsverhältnis in 1-3 cm Tiefe.                                                                                          |
+| soil_moisture_27_to_81_cm   | Durchschnittlicher Bodenwassergehalt als volumetrisches Mischungsverhältnis in 27-81 cm Tiefe.                                                                                        |
+| soil_moisture_3_to_9_cm     | Durchschnittlicher Bodenwassergehalt als volumetrisches Mischungsverhältnis in 3-9 cm Tiefe.                                                                                          |
+| soil_moisture_9_to_27_cm    | Durchschnittlicher Bodenwassergehalt als volumetrisches Mischungsverhältnis in 9-27 cm Tiefe.                                                                                         |
+| soil_temperature_0cm        | Temperatur im Boden in 0, 6, 18 und 54 cm Tiefe. 0 cm ist die Oberflächentemperatur an Land bzw. die Wasseroberflächentemperatur auf Wasser.                                          |
+| soil_temperature_18cm       | Temperatur im Boden in 18 cm Tiefe. 0 cm ist die Oberflächentemperatur an Land bzw. die Wasseroberflächentemperatur auf Wasser.                                                       |
+| soil_temperature_54cm       | Temperatur im Boden in 54 cm Tiefe. 0 cm ist die Oberflächentemperatur an Land bzw. die Wasseroberflächentemperatur auf Wasser.                                                       |
+| soil_temperature_6cm        | Temperatur im Boden in 6 cm Tiefe. 0 cm ist die Oberflächentemperatur an Land bzw. die Wasseroberflächentemperatur auf Wasser.                                                        |
+| temperature_120m            | Lufttemperatur in 120 Metern Höhe                                                                                                                                                     |
+| temperature_180m            | Lufttemperatur in 180 Metern Höhe                                                                                                                                                     |
+| temperature_2m              | Lufttemperatur in 2 Metern Höhe                                                                                                                                                       |
+| temperature_80m             | Lufttemperatur in 80 Metern Höhe                                                                                                                                                      |
+| time                        | Datum                                                                                                                                                                                 |
+| visibility                  | Betrachtungsdistanz in Metern. Beeinflusst durch niedrige Wolken, Luftfeuchtigkeit und Aerosole.                                                                                      |
+| weather_code                | Wetterbedingungen als numerische code.                                                                                                                                                |
+| weather_code_own            | Eigenes Icon mit den ausgewählten Farben                                                                                                                                              |
+| weather_code_path           | Pfad zum Icon                                                                                                                                                                         |
+| weather_code_path_animated  | Animiertes Wetter Icon                                                                                                                                                                |
+| weather_code_text           | Wetterbedingungen als Zeichenfolge.                                                                                                                                                   |
+| wind_direction_10m          | Windrichtung in 10 Metern Höhe                                                                                                                                                        |
+| wind_direction_10m_compass  | Buchstaben für Windrichtung in 10 Metern Höhe                                                                                                                                         |
+| wind_direction_10m_name     | Buchstaben für Windrichtung in 10 Metern Höhe                                                                                                                                         |
+| wind_direction_120m         | Windrichtung in 120 Metern Höhe                                                                                                                                                       |
+| wind_direction_120m_compass |                                                                                                                                                                                       |
+| wind_direction_120m_name    | Buchstaben für Windrichtung in 120 Metern Höhe                                                                                                                                        |
+| wind_direction_180m         | Windrichtung in 180 Metern Höhe                                                                                                                                                       |
+| wind_direction_180m_compass | Kompass für Windrichtung in 180 Metern Höhe                                                                                                                                           |
+| wind_direction_180m_name    | Buchstaben für Windrichtung in 180 Metern Höhe                                                                                                                                        |
+| wind_direction_80m          | Windrichtung in 80 Metern Höhe                                                                                                                                                        |
+| wind_direction_80m_compass  | Kompass für Windrichtung in 80 Metern Höhe                                                                                                                                            |
+| wind_direction_80m_name     | Buchstaben für Windrichtung in 80 Metern Höhe                                                                                                                                         |
+| wind_gusts_10m              | Böen in 10 Metern Höhe als Maximum der vorangegangenen Stunde                                                                                                                         |
+| wind_speed_10m              | Windgeschwindigkeit in 10 Metern Höhe über Grund.                                                                                                                                     |
+| wind_speed_10m_animated     | Animiertes Icon für Windgeschwindigkeit in 10 Metern Höhe über Grund.                                                                                                                 |
+| wind_speed_120m             | Windgeschwindigkeit in 120 Metern Höhe über Grund.                                                                                                                                    |
+| wind_speed_120m_animated    | Animiertes Icon für Windgeschwindigkeit in 120 Metern Höhe über Grund.                                                                                                                |
+| wind_speed_180m             | Windgeschwindigkeit in 180 Metern Höhe über Grund.                                                                                                                                    |
+| wind_speed_180m_animated    | Animiertes Icon für Windgeschwindigkeit in 180 Metern Höhe über Grund.                                                                                                                |
+| wind_speed_80m              | Windgeschwindigkeit in 80 Metern Höhe über Grund.                                                                                                                                     |
+| wind_speed_80m_animated     | Animiertes Icon für Windgeschwindigkeit in 80 Metern Höhe über Grund.                                                                                                                 |
 
 ![weather_states_hourly_1.png](img/weather_states_hourly_1.png)</br>
 ![weather_states_hourly_2.png](img/weather_states_hourly_2.png)</br>
 ![weather_states_hourly_3.png](img/weather_states_hourly_3.png)</br>
 ![weather_states_hourly_4.png](img/weather_states_hourly_4.png)</br>
-![weather_states_hourly_5.png](img/weather_states_hourly_5.png)
+![weather_states_hourly_5.png](img/weather_states_hourly_5.png)</br>
+![weather_states_hourly_6.png](img/weather_states_hourly_6.png)
 
 ### Objekte 15-Minütlich
 
@@ -477,6 +503,15 @@
 | bg_color_alpha                | Hintergrundfarbe Aplha (RGB`A`)                                    |
 | cell_color                    | Zellfarbe (RGBA)                                                   |
 | cell_color_alpha              | Zellfarbe (RGB`A`)                                                 |
+| compass_bg_color_bottom       | Hintergrundfarbe unten                                             |
+| compass_bg_color_left         | Hintergrundfarbe links                                             |
+| compass_bg_color_right        | Hintergrundfarbe rechte                                            |
+| compass_color_border          | Randfarbe                                                          |
+| compass_color_font            | Schriftfarbe                                                       |
+| compass_color_needle_north    | Farbe Nordpfeil                                                    |
+| compass_color_needle_south    | Farbe Südpfeil                                                     |
+| compass_forecast_image_height | Höhe in der Wettervorhersage                                       |
+| compass_forecast_image_width  | Breite in der Wettervorhersage                                     |
 | font_color                    | Schriftfarbe (RGBA)                                                |
 | font_color_alpha              | Schriftfarbe (RGB`A`)                                              |
 | forecast_border               | Rahmenbreite von der Wettervorhersage                              |
@@ -507,7 +542,8 @@
 | trigger_hourly                | NUR für IQontrol um die stündliche Wettervorhersage anzuzeigen     |
 
 ![wweather_states_html_1.png](img/weather_states_html_1.png)</br>
-![wweather_states_html_2.png](img/weather_states_html_2.png)
+![wweather_states_html_2.png](img/weather_states_html_2.png)</br>
+![wweather_states_html_3.png](img/weather_states_html_3.png)
 
 ### Java für VIS2
 
