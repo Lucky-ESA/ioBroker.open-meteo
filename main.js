@@ -1710,7 +1710,7 @@ class OpenMeteo extends utils.Adapter {
             }
             return icon;
         } else if (this.html.icon_select == "animed_icon") {
-            const icon = this.value[`${path}.weather_code_path_animed`];
+            const icon = this.value[`${path}.weather_code_path_animated`];
             if (!icon) {
                 return "";
             }
