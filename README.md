@@ -22,6 +22,17 @@
 
 Weather forecast from [OpenMeteo](https://open-meteo.com/en/docs/dwd-api)
 
+In the instance setting, individual variables can be activated for 15 minutes, hourly, daily and currently.
+Each variable has a factor of 1.7 queries. A maximum of 10,000 queries per day is allowed. 79 variables can be selected.
+This would be 79 x 1.7 = 134.3 requests per request.
+
+## Icons
+
+The icons are from these providers and are subject to the MIT license!
+https://github.com/basmilius/weather-icons
+https://github.com/Makin-Things/weather-icons
+https://github.com/roe-dl/weathericons
+
 ## Requirements
 
 - Node 20 or 22
