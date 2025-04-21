@@ -1515,10 +1515,14 @@ class OpenMeteo extends utils.Adapter {
                 `<img width="${this.html.compass_forecast_image_width}px" height="${this.html.compass_forecast_image_height}px" ` +
                 `style="vertical-align:middle" alt="${direction}°" title="${direction}°" ` +
                 `src='/open-meteo.0/grad${direction}.svg'/>`;
+            const humi_path =
+                this.html.icon_select == "animed_icon"
+                    ? "/adapter/open-meteo/img/weatheranimated/humidity.svg"
+                    : "/adapter/open-meteo/img/weathericons/humidity-water-drop.svg";
             const humi =
                 `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
                 `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
-                `src='/adapter/open-meteo/img/weathericons/humidity-water-drop.svg'/>`;
+                `src='${humi_path}'/>`;
             const min =
                 `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
                 `style="vertical-align:middle" alt="${temp_min}" title="${temp_min}" ` +
@@ -1634,10 +1638,14 @@ class OpenMeteo extends utils.Adapter {
                     `<img width="${this.html.compass_forecast_image_width}px" height="${this.html.compass_forecast_image_height}px" ` +
                     `style="vertical-align:middle" alt="${direction}°" title="${direction}°" ` +
                     `src='/open-meteo.0/grad${direction}.svg'/>`;
+                const humi_path =
+                    this.html.icon_select == "animed_icon"
+                        ? "/adapter/open-meteo/img/weatheranimated/humidity.svg"
+                        : "/adapter/open-meteo/img/weathericons/humidity-water-drop.svg";
                 const humi =
                     `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
                     `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
-                    `src='/adapter/open-meteo/img/weathericons/humidity-water-drop.svg'/>`;
+                    `src='${humi_path}'/>`;
                 const min =
                     `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
                     `style="vertical-align:middle" alt="${temp}" title="${temp}" ` +
@@ -1645,7 +1653,7 @@ class OpenMeteo extends utils.Adapter {
                 const daily =
                     `<img style="vertical-align:middle" width="${this.html.forecast_image_width}px" ` +
                     `height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" ` +
-                    `src='${this.setIcon(`daily.day0${i}`, daily_id, times)}'/>`;
+                    `src='${this.setIcon(`hourly.day01.hour${`0${i}`.slice(-2)}`, daily_id, times)}'/>`;
                 html += `<tr>
                                 <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
                                 <td>${daily}</td>
@@ -1663,6 +1671,10 @@ class OpenMeteo extends utils.Adapter {
                     const text = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.weather_code_text`];
                     const humidity = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.relative_humidity_2m`];
                     const direction = this.value[`hourly.day02.hour${`0${i}`.slice(-2)}.wind_direction_10m`];
+                    const humi_path =
+                        this.html.icon_select == "animed_icon"
+                            ? "/adapter/open-meteo/img/weatheranimated/humidity.svg"
+                            : "/adapter/open-meteo/img/weathericons/humidity-water-drop.svg";
                     const direc =
                         `<img width="${this.html.compass_forecast_image_width}px" height="${this.html.compass_forecast_image_height}px" ` +
                         `style="vertical-align:middle" alt="${direction}°" title="${direction}°" ` +
@@ -1670,7 +1682,7 @@ class OpenMeteo extends utils.Adapter {
                     const humi =
                         `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
                         `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
-                        `src='/adapter/open-meteo/img/weathericons/humidity-water-drop.svg'/>`;
+                        `src='${humi_path}'/>`;
                     const min =
                         `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
                         `style="vertical-align:middle" alt="${temp}" title="${temp}" ` +
@@ -1678,7 +1690,7 @@ class OpenMeteo extends utils.Adapter {
                     const daily =
                         `<img style="vertical-align:middle" width="${this.html.forecast_image_width}px" ` +
                         `height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" ` +
-                        `src='${this.setIcon(`daily.day0${i}`, daily_id, times)}'/>`;
+                        `src='${this.setIcon(`hourly.day02.hour${`0${i}`.slice(-2)}`, daily_id, times)}'/>`;
                     html += `<tr>
                                     <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
                                     <td>${daily}</td>
