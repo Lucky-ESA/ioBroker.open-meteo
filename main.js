@@ -87,7 +87,6 @@ class OpenMeteo extends utils.Adapter {
         this.lastCurrent = "";
         this.own_color = {};
         this.html = {};
-        this.isDay = "night";
         this.images = {};
     }
 
@@ -691,9 +690,9 @@ class OpenMeteo extends utils.Adapter {
         countVal = 0;
         const current = val.current;
         const times = new Date();
-        this.isDay = "night";
+        let isDay = "night";
         if (times > new Date(this.timeArray["sunriseStart"]) && times < new Date(this.timeArray["civilDusk"])) {
-            this.isDay = "day";
+            isDay = "day";
         }
         if (current) {
             this.checkResponse("current", val.current_units);
@@ -729,10 +728,10 @@ class OpenMeteo extends utils.Adapter {
                     if (!constants.WeatherCode[code]) {
                         code = 200;
                     }
-                    const path = constants.WeatherCode[code][this.isDay].image;
-                    const text = constants.WeatherCode[code][this.isDay].description[this.lang];
-                    const svg = constants.WeatherCode[code][this.isDay].svg;
-                    const animated = constants.WeatherCode[code][this.isDay].animated;
+                    const path = constants.WeatherCode[code][isDay].image;
+                    const text = constants.WeatherCode[code][isDay].description[this.lang];
+                    const svg = constants.WeatherCode[code][isDay].svg;
+                    const animated = constants.WeatherCode[code][isDay].animated;
                     await this.setValue(`current.${variable}`, code);
                     await this.setValue(`current.${variable}_text`, text);
                     await this.setValue(`current.${variable}_path`, path);
@@ -780,10 +779,10 @@ class OpenMeteo extends utils.Adapter {
                         if (!constants.WeatherCode[code]) {
                             code = 200;
                         }
-                        const path = constants.WeatherCode[code][this.isDay].image;
-                        const text = constants.WeatherCode[code][this.isDay].description[this.lang];
-                        const svg = constants.WeatherCode[code][this.isDay].svg;
-                        const animated = constants.WeatherCode[code][this.isDay].animated;
+                        const path = constants.WeatherCode[code].day.image;
+                        const text = constants.WeatherCode[code].day.description[this.lang];
+                        const svg = constants.WeatherCode[code].day.svg;
+                        const animated = constants.WeatherCode[code].day.animated;
                         await this.setValue(`${path2}.${variable}`, code);
                         await this.setValue(`${path2}.${variable}_text`, text);
                         await this.setValue(`${path2}.${variable}_path`, path);
@@ -862,10 +861,11 @@ class OpenMeteo extends utils.Adapter {
                             if (!constants.WeatherCode[code]) {
                                 code = 200;
                             }
-                            const path = constants.WeatherCode[code][this.isDay].image;
-                            const text = constants.WeatherCode[code][this.isDay].description[this.lang];
-                            const svg = constants.WeatherCode[code][this.isDay].svg;
-                            const animated = constants.WeatherCode[code][this.isDay].animated;
+                            const dayNight = await this.isDayNight(new Date(hourly.time[count]));
+                            const path = constants.WeatherCode[code][dayNight].image;
+                            const text = constants.WeatherCode[code][dayNight].description[this.lang];
+                            const svg = constants.WeatherCode[code][dayNight].svg;
+                            const animated = constants.WeatherCode[code][dayNight].animated;
                             await this.setValue(`${path2}.${variable}`, code);
                             await this.setValue(`${path2}.${variable}_text`, text);
                             await this.setValue(`${path2}.${variable}_path`, path);
@@ -907,6 +907,14 @@ class OpenMeteo extends utils.Adapter {
             }
         }
         this.log.info(`${countVal} States have been updated!`);
+    }
+
+    async isDayNight(times) {
+        const astro_time = SunCalc.getSunTimes(new Date(times), this.param.latitude, this.param.longitude);
+        if (times > new Date(astro_time.sunriseStart.value) && times < new Date(astro_time.civilDusk.value)) {
+            return "day";
+        }
+        return "night";
     }
 
     async checkResponse(resp, units) {
