@@ -1492,7 +1492,7 @@ class OpenMeteo extends utils.Adapter {
             `<body>` +
             `<div class="container_row"><span class="box_time"><b>${actual_clock}</b></span>` +
             `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger', ${trigger_val})" src='/open-meteo.0/grad${direction}.svg' />` +
-            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger', ${trigger_val})" src='${this.setIcon("current", id, actual_times)}' />` +
+            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger', ${trigger_val})" src='${await this.setIcon("current", id, actual_times)}' />` +
             `</div>` +
             `<div class="container_row">` +
             `    <div class="container_column">` +
@@ -1536,7 +1536,7 @@ class OpenMeteo extends utils.Adapter {
             const daily =
                 `<img style="vertical-align:middle" width="${this.html.forecast_image_width}px" ` +
                 `height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" ` +
-                `src='${this.setIcon(`daily.day0${i}`, daily_id, false)}'/>`;
+                `src='${await this.setIcon(`daily.day0${i}`, daily_id, false)}'/>`;
             html += `<tr>
                         <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]}</td>
                         <td>${daily}</td>
@@ -1610,7 +1610,7 @@ class OpenMeteo extends utils.Adapter {
             `<body>` +
             `<div class="container_row"><span class="box_time"><b>${actual_clock}</b></span>` +
             `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger_hourly', ${trigger_val})" src='/open-meteo.0/grad${direction}.svg' />` +
-            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger_hourly', ${trigger_val})" src='${this.setIcon("current", id, actual_times)}' />` +
+            `    <input type="image" class="img_weather" onclick="setState('${this.namespace}.html.trigger_hourly', ${trigger_val})" src='${await this.setIcon("current", id, actual_times)}' />` +
             `</div>` +
             `<div class="container_row">` +
             `    <div class="container_column">` +
@@ -1655,7 +1655,7 @@ class OpenMeteo extends utils.Adapter {
                 const daily =
                     `<img style="vertical-align:middle" width="${this.html.forecast_image_width}px" ` +
                     `height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" ` +
-                    `src='${this.setIcon(`hourly.day01.hour${`0${i}`.slice(-2)}`, daily_id, times)}'/>`;
+                    `src='${await this.setIcon(`hourly.day01.hour${`0${i}`.slice(-2)}`, daily_id, times)}'/>`;
                 html += `<tr>
                                 <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
                                 <td>${daily}</td>
@@ -1692,7 +1692,7 @@ class OpenMeteo extends utils.Adapter {
                     const daily =
                         `<img style="vertical-align:middle" width="${this.html.forecast_image_width}px" ` +
                         `height="${this.html.forecast_image_height}px" alt="${text}" title="${text}" ` +
-                        `src='${this.setIcon(`hourly.day02.hour${`0${i}`.slice(-2)}`, daily_id, times)}'/>`;
+                        `src='${await this.setIcon(`hourly.day02.hour${`0${i}`.slice(-2)}`, daily_id, times)}'/>`;
                     html += `<tr>
                                     <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
                                     <td>${daily}</td>
@@ -1717,9 +1717,9 @@ class OpenMeteo extends utils.Adapter {
         return "night";
     }
 
-    setIcon(path, id, day) {
+    async setIcon(path, id, day) {
         const times = day ? new Date(day) : new Date();
-        let isDay = this.isDayNight(times);
+        let isDay = await this.isDayNight(times);
         if (this.html.icon_select == "own") {
             return `/${this.namespace}/${id}${isDay}.svg`;
         } else if (this.html.icon_select == "path") {
