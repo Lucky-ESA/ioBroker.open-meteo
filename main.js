@@ -909,14 +909,6 @@ class OpenMeteo extends utils.Adapter {
         this.log.info(`${countVal} States have been updated!`);
     }
 
-    async isDayNight(times) {
-        const astro_time = SunCalc.getSunTimes(new Date(times), this.param.latitude, this.param.longitude);
-        if (times > new Date(astro_time.sunriseStart.value) && times < new Date(astro_time.civilDusk.value)) {
-            return "day";
-        }
-        return "night";
-    }
-
     async checkResponse(resp, units) {
         if (!units) {
             return;
@@ -1717,12 +1709,17 @@ class OpenMeteo extends utils.Adapter {
         }
     }
 
+    async isDayNight(times) {
+        const astro_time = SunCalc.getSunTimes(new Date(times), this.param.latitude, this.param.longitude);
+        if (times > new Date(astro_time.sunriseStart.value) && times < new Date(astro_time.civilDusk.value)) {
+            return "day";
+        }
+        return "night";
+    }
+
     setIcon(path, id, day) {
         const times = day ? new Date(day) : new Date();
-        let isDay = "night";
-        if (day && times > new Date(this.timeArray["sunriseStart"]) && times < new Date(this.timeArray["civilDusk"])) {
-            isDay = "day";
-        }
+        let isDay = this.isDayNight(times);
         if (this.html.icon_select == "own") {
             return `/${this.namespace}/${id}${isDay}.svg`;
         } else if (this.html.icon_select == "path") {
