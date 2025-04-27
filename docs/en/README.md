@@ -350,9 +350,10 @@
 | goldenHourDawnStart | Beginning of golden hour at dawn 🟢   |
 | goldenHourDuskEnd   | End of golden hour at dusk 🟢         |
 | goldenHourDuskStart | Beginning of golden hour at dusk 🟢   |
+| moonAltitude        | Moon altitude 🔴                      |
 | moonAltitudeDegrees | Altitude Degrees 🔴                   |
+| moonAzimuth         | Moon azimuth 🔴                       |
 | moonAzimuthDegrees  | Azimuth 🔴                            |
-| moonElevation       | Moon elevation 🔴                     |
 | moonEmoji           | Moon Emoji 🔴                         |
 | nadir               | Nadir 🔴                              |
 | nauticalDawn        | Nautical dawn 🟢                      |
@@ -361,9 +362,10 @@
 | nextState           | next Object (State - Name) 🔴         |
 | seasons             | Seasons 🟢                            |
 | solarNoon           | Solar noon 🟢                         |
+| sunAltitude         | Sun altitude 🔴                       |
 | sunAltitudeDegrees  | Sun altitude degrees 🔴               |
+| sunAzimuth          | Sun azimuth 🔴                        |
 | sunAzimuthDegrees   | Sun azimuth degrees 🔴                |
-| sunElevation        | Elevation 🔴                          |
 | sunriseEnd          | Sunrise end 🟢                        |
 | sunriseStart        | Sunrise start 🟢                      |
 | sunsetEnd           | Sunset end 🟢                         |

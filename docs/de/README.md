@@ -350,9 +350,10 @@
 | goldenHourDawnStart | Beginn der goldenen Stunde im Morgengrauen 🟢  |
 | goldenHourDuskEnd   | Ende der goldenen Stunde in der Dämmerung 🟢   |
 | goldenHourDuskStart | Beginn der goldenen Stunde in der Dämmerung 🟢 |
+| moonAltitude        | Mondhöhe 🔴                                    |
 | moonAltitudeDegrees | Mond Höhengrad 🔴                              |
+| moonAzimuth         | Mondazimuth 🔴                                 |
 | moonAzimuthDegrees  | Mond Azimut 🔴                                 |
-| moonElevation       | Mondhöhe 🔴                                    |
 | moonEmoji           | Mond Emoji 🔴                                  |
 | nadir               | Mitternacht 🔴                                 |
 | nauticalDawn        | Nautische Morgendämmerung 🟢                   |
@@ -361,9 +362,10 @@
 | nextState           | Nächstes Objekt (State - Name) 🔴              |
 | seasons             | Jahreszeiten 🟢                                |
 | solarNoon           | Mittagssonne 🟢                                |
+| sunAltitude         | Sonnenhöhe 🔴                                  |
 | sunAltitudeDegrees  | Sonne Höhengrade 🔴                            |
+| sunAzimuth          | Sonnenazimuth 🔴                               |
 | sunAzimuthDegrees   | Azimuth Sonnenhöhe 🔴                          |
-| sunElevation        | Sonnenhöhe 🔴                                  |
 | sunriseEnd          | Ende Sonnenaufgang 🟢                          |
 | sunriseStart        | Beginn Sonnenaufgang 🟢                        |
 | sunsetEnd           | Ende Sonnenuntergang 🟢                        |

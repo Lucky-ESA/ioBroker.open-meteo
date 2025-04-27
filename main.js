@@ -386,7 +386,8 @@ class OpenMeteo extends utils.Adapter {
         this.log.debug(JSON.stringify(sunPosition));
         const moonPosition = SunCalc.getMoonData(new Date(), this.param.latitude, this.param.longitude);
         this.log.debug(JSON.stringify(moonPosition));
-        await this.setState(`suncalc.sunElevation`, { val: this.roundToTwo(sunPosition.azimuth), ack: true });
+        await this.setState(`suncalc.sunAltitude`, { val: this.roundToTwo(sunPosition.altitude), ack: true });
+        await this.setState(`suncalc.sunAzimuth`, { val: this.roundToTwo(sunPosition.azimuth), ack: true });
         await this.setState(`suncalc.sunAltitudeDegrees`, {
             val: this.roundToTwo(sunPosition.altitudeDegrees),
             ack: true,
@@ -395,7 +396,8 @@ class OpenMeteo extends utils.Adapter {
             val: this.roundToTwo(sunPosition.azimuthDegrees),
             ack: true,
         });
-        await this.setState(`suncalc.moonElevation`, { val: this.roundToTwo(moonPosition.azimuth), ack: true });
+        await this.setState(`suncalc.moonAltitude`, { val: this.roundToTwo(moonPosition.altitude), ack: true });
+        await this.setState(`suncalc.moonAzimuth`, { val: this.roundToTwo(moonPosition.azimuth), ack: true });
         await this.setState(`suncalc.moonAltitudeDegrees`, {
             val: this.roundToTwo(moonPosition.altitudeDegrees),
             ack: true,
