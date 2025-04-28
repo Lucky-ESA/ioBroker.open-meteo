@@ -175,4 +175,17 @@
         fill="#c6deff" stroke="#fff" stroke-linejoin="round" stroke-width="1.2" />
     </g>
   </g>
-</svg>
+<g class="currentLayer" style=""><title>Layer 2</title><g filter="url(#blur)" id="svg_1" class="selected">
+    <g class="am-weather-wind" fill="none" stroke="#89cff0" stroke-linecap="round" stroke-width="2" id="svg_2">
+      <path stroke-dasharray="150 10" d="M38.24681630730629,20.405359387397766 A2.9948222637176514,2.6344876289367676 0 1 1 40.867285788059235,24.357090830802917 H26.64188003540039 " id="svg_3">
+        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0s"/>
+      </path>
+      <path stroke-dasharray="144 16" d="M48.72869423031807,24.357090830802917 A2.9948222637176514,2.6344876289367676 0 1 1 51.349163711071014,28.30882227420807 H23.64705777168274 " id="svg_4">
+        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0.5s"/>
+      </path>
+      <path stroke-dasharray="150 10" d="M40.49293300509453,36.21228516101837 A2.9948222637176514,2.6344876289367676 0 1 0 43.11340248584747,32.26055371761322 H30.385407865047455 " id="svg_5">
+        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0.25s"/>
+      </path>
+    </g>
+  </g>
+ </g></svg>

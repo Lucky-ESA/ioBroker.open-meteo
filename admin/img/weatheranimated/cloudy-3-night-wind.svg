@@ -1,14 +1,16 @@
-<svg width="54.52941179275513" height="39.17647075653075" version="1.1" xmlns="http://www.w3.org/2000/svg"><rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none" style="" class="selected"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (c) ammap.com | SVG weather icons -->
+<svg width="56" height="40" version="1.1" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="blur" x="-0.19471000134944916" y="-0.2608700096607208" width="1.374400019645691" height="1.6884000301361084">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
-      <feOffset dx="0" dy="4" result="offsetblur"/>
+    <filter id="blur" x="-.19471" y="-.26087" width="1.3744" height="1.6884">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+      <feOffset dx="0" dy="4" result="offsetblur" />
       <feComponentTransfer>
-        <feFuncA slope="0.05" type="linear"/>
+        <feFuncA slope="0.05" type="linear" />
       </feComponentTransfer>
       <feMerge>
-        <feMergeNode/>
-        <feMergeNode in="SourceGraphic"/>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
     <style type="text/css">
@@ -16,7 +18,7 @@
       /*
 ** CLOUDS
 */
-      @keyframes am-weather-cloud-2 {
+      @keyframes am-weather-cloud {
         0% {
           -webkit-transform: translate(0px, 0px);
           -moz-transform: translate(0px, 0px);
@@ -39,10 +41,10 @@
         }
       }
 
-      .am-weather-cloud-2 {
-        -webkit-animation-name: am-weather-cloud-2;
-        -moz-animation-name: am-weather-cloud-2;
-        animation-name: am-weather-cloud-2;
+      .am-weather-cloud {
+        -webkit-animation-name: am-weather-cloud;
+        -moz-animation-name: am-weather-cloud;
+        animation-name: am-weather-cloud;
         -webkit-animation-duration: 3s;
         -moz-animation-duration: 3s;
         animation-duration: 3s;
@@ -175,20 +177,44 @@
       ]]>
     </style>
   </defs>
-  
-<g class="currentLayer" style=""><title>Layer 1</title><g filter="url(#blur)" id="svg_1">
-    <g id="svg_2">
-      <g class="am-weather-moon-star-1" style="-moz-animation-delay:3s;-moz-animation-duration:5s;-moz-animation-iteration-count:1;-moz-animation-name:am-weather-moon-star-1;-moz-animation-timing-function:linear;-ms-animation-delay:3s;-ms-animation-duration:5s;-ms-animation-iteration-count:1;-ms-animation-name:am-weather-moon-star-1;-ms-animation-timing-function:linear;-webkit-animation-delay:3s;-webkit-animation-duration:5s;-webkit-animation-iteration-count:1;-webkit-animation-name:am-weather-moon-star-1;-webkit-animation-timing-function:linear" stroke-width="0" id="svg_3">
-        <polygon points="33.20000025629997,4.63999997138977 34.16000088095666,4.160000040531159 34.63999966740607,3.199999988079071 35.200000286102295,4.160000040531159 36.16000091075898,4.63999997138977 35.200000286102295,5.200000017881393 34.63999966740607,6.159999879598615 34.16000088095666,5.200000017881393 " fill="#ffa500" stroke-miterlimit="10" stroke-width="0" id="svg_4"/>
+  <g transform="translate(16,-2)" filter="url(#blur)">
+    <g transform="matrix(.8 0 0 .8 16 4)">
+      <g class="am-weather-moon-star-1"
+        style="-moz-animation-delay:3s;-moz-animation-duration:5s;-moz-animation-iteration-count:1;-moz-animation-name:am-weather-moon-star-1;-moz-animation-timing-function:linear;-ms-animation-delay:3s;-ms-animation-duration:5s;-ms-animation-iteration-count:1;-ms-animation-name:am-weather-moon-star-1;-ms-animation-timing-function:linear;-webkit-animation-delay:3s;-webkit-animation-duration:5s;-webkit-animation-iteration-count:1;-webkit-animation-name:am-weather-moon-star-1;-webkit-animation-timing-function:linear">
+        <polygon points="3.3 1.5 4 2.7 5.2 3.3 4 4 3.3 5.2 2.7 4 1.5 3.3 2.7 2.7" fill="#ffa500"
+          stroke-miterlimit="10" />
       </g>
-      <g class="am-weather-moon-star-2" style="-moz-animation-delay:5s;-moz-animation-duration:4s;-moz-animation-iteration-count:1;-moz-animation-name:am-weather-moon-star-2;-moz-animation-timing-function:linear;-ms-animation-delay:5s;-ms-animation-duration:4s;-ms-animation-iteration-count:1;-ms-animation-name:am-weather-moon-star-2;-ms-animation-timing-function:linear;-webkit-animation-delay:5s;-webkit-animation-duration:4s;-webkit-animation-iteration-count:1;-webkit-animation-name:am-weather-moon-star-2;-webkit-animation-timing-function:linear" stroke-width="0" id="svg_5">
-        <polygon points="49.20000025629997,12.63999997138977 50.16000088095666,12.160000040531159 50.63999966740607,11.199999988079071 51.200000286102295,12.160000040531159 52.16000091075898,12.63999997138977 51.200000286102295,13.200000017881393 50.63999966740607,14.159999879598615 50.16000088095666,13.200000017881393 " fill="#ffa500" stroke-miterlimit="10" stroke-width="0" id="svg_6"/>
+      <g class="am-weather-moon-star-2"
+        style="-moz-animation-delay:5s;-moz-animation-duration:4s;-moz-animation-iteration-count:1;-moz-animation-name:am-weather-moon-star-2;-moz-animation-timing-function:linear;-ms-animation-delay:5s;-ms-animation-duration:4s;-ms-animation-iteration-count:1;-ms-animation-name:am-weather-moon-star-2;-ms-animation-timing-function:linear;-webkit-animation-delay:5s;-webkit-animation-duration:4s;-webkit-animation-iteration-count:1;-webkit-animation-name:am-weather-moon-star-2;-webkit-animation-timing-function:linear">
+        <polygon transform="translate(20,10)" points="3.3 1.5 4 2.7 5.2 3.3 4 4 3.3 5.2 2.7 4 1.5 3.3 2.7 2.7"
+          fill="#ffa500" stroke-miterlimit="10" />
       </g>
-      <g class="am-weather-moon" style="-moz-animation-duration:6s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-moon;-moz-animation-timing-function:linear;-moz-transform-origin:12.5px 15.15px 0;-ms-animation-duration:6s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-moon;-ms-animation-timing-function:linear;-ms-transform-origin:12.5px 15.15px 0;-webkit-animation-duration:6s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-moon;-webkit-animation-timing-function:linear;-webkit-transform-origin:12.5px 15.15px 0" stroke-width="0" id="svg_7">
-        <path d="m43.60000041127205,12.56000012755394 c0,-2.9600000441074372 1.600000023841858,-5.52000008225441 4.000000059604645,-6.9600001037120816 c-1.2000000178813934,-0.7200000107288361 -2.5600000381469727,-1.0400000154972078 -4.000000059604645,-1.0400000154972078 c-4.400000065565109,0 -8.00000011920929,3.6000000536441803 -8.00000011920929,8.00000011920929 s3.6000000536441803,8.00000011920929 8.00000011920929,8.00000011920929 c1.4400000214576723,0 2.8000000417232513,-0.4000000059604645 4.000000059604645,-1.0400000154972078 c-2.400000035762787,-1.3600000202655793 -4.000000059604645,-4.000000059604645 -4.000000059604645,-6.9600001037120816 z" fill="#ffa500" stroke="#ffa500" stroke-linejoin="round" stroke-width="1.600000023841858" id="svg_8"/>
+      <g class="am-weather-moon"
+        style="-moz-animation-duration:6s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-moon;-moz-animation-timing-function:linear;-moz-transform-origin:12.5px 15.15px 0;-ms-animation-duration:6s;-ms-animation-iteration-count:infinite;-ms-animation-name:am-weather-moon;-ms-animation-timing-function:linear;-ms-transform-origin:12.5px 15.15px 0;-webkit-animation-duration:6s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-moon;-webkit-animation-timing-function:linear;-webkit-transform-origin:12.5px 15.15px 0">
+        <path
+          d="m14.5 13.2c0-3.7 2-6.9 5-8.7-1.5-0.9-3.2-1.3-5-1.3-5.5 0-10 4.5-10 10s4.5 10 10 10c1.8 0 3.5-0.5 5-1.3-3-1.7-5-5-5-8.7z"
+          fill="#ffa500" stroke="#ffa500" stroke-linejoin="round" stroke-width="2" />
       </g>
     </g>
-    <g class="am-weather-cloud-2" style="-moz-animation-duration:3s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-cloud-2;-moz-animation-timing-function:linear;-webkit-animation-duration:3s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-cloud-2;-webkit-animation-timing-function:linear" id="svg_9">
-      <path d="m43.7,22.4 c0,-4.6 -3.7,-8.2 -8.2,-8.2 c-1,0 -1.9,0.2 -2.8,0.5 c-0.3000000000000001,-3.4 -3.1,-6.2 -6.6,-6.2 c-3.7,0 -6.7,3 -6.7,6.7 c0,0.8 0.2,1.6 0.4,2.3 c-0.3000000000000001,-0.1 -0.7000000000000002,-0.1 -1,-0.1 c-3.7,0 -6.7,3 -6.7,6.7 c0,3.6 2.9,6.6 6.5,6.7 h17.2 c4.4,-0.5 7.9,-4 7.9,-8.4 z" fill="#c6deff" stroke="#fff" stroke-linejoin="round" stroke-width="1.2" id="svg_10"/>
+    <g class="am-weather-cloud"
+      style="-moz-animation-duration:3s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-cloud;-moz-animation-timing-function:linear;-webkit-animation-duration:3s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-cloud;-webkit-animation-timing-function:linear">
+      <path transform="translate(-20,-11)"
+        d="m47.7 35.4c0-4.6-3.7-8.2-8.2-8.2-1 0-1.9 0.2-2.8 0.5-0.3-3.4-3.1-6.2-6.6-6.2-3.7 0-6.7 3-6.7 6.7 0 0.8 0.2 1.6 0.4 2.3-0.3-0.1-0.7-0.1-1-0.1-3.7 0-6.7 3-6.7 6.7 0 3.6 2.9 6.6 6.5 6.7h17.2c4.4-0.5 7.9-4 7.9-8.4z"
+        fill="#57a0ee" stroke="#fff" stroke-linejoin="round" stroke-width="1.2" />
     </g>
-  </g></g></svg>
+  </g>
+<g class="currentLayer" style=""><title>Layer 1</title><g filter="url(#blur)" id="svg_1" class="">
+    <g class="am-weather-wind" fill="none" stroke="#89cff0" stroke-linecap="round" stroke-width="2" id="svg_2">
+      <path stroke-dasharray="150 10" d="M19.864464432001114,6.434772372245789 A2.9948222637176514,2.6344876289367676 0 1 1 22.48493391275406,10.38650381565094 H8.259528160095215 " id="svg_3">
+        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0s"/>
+      </path>
+      <path stroke-dasharray="144 16" d="M30.346342355012894,10.38650381565094 A2.9948222637176514,2.6344876289367676 0 1 1 32.96681183576584,14.338235259056091 H5.2647058963775635 " id="svg_4">
+        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0.5s"/>
+      </path>
+      <path stroke-dasharray="150 10" d="M22.110581129789352,22.241698145866394 A2.9948222637176514,2.6344876289367676 0 1 0 24.731050610542297,18.289966702461243 H12.003055989742279 " id="svg_5">
+        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0.25s"/>
+      </path>
+    </g>
+  </g>
+ </g>
+</svg>

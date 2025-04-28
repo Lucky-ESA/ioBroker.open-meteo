@@ -191,4 +191,19 @@
     <g class="am-weather-cloud-2" style="-moz-animation-duration:3s;-moz-animation-iteration-count:infinite;-moz-animation-name:am-weather-cloud-2;-moz-animation-timing-function:linear;-webkit-animation-duration:3s;-webkit-animation-iteration-count:infinite;-webkit-animation-name:am-weather-cloud-2;-webkit-animation-timing-function:linear" id="svg_9">
       <path d="m43.7,22.4 c0,-4.6 -3.7,-8.2 -8.2,-8.2 c-1,0 -1.9,0.2 -2.8,0.5 c-0.3000000000000001,-3.4 -3.1,-6.2 -6.6,-6.2 c-3.7,0 -6.7,3 -6.7,6.7 c0,0.8 0.2,1.6 0.4,2.3 c-0.3000000000000001,-0.1 -0.7000000000000002,-0.1 -1,-0.1 c-3.7,0 -6.7,3 -6.7,6.7 c0,3.6 2.9,6.6 6.5,6.7 h17.2 c4.4,-0.5 7.9,-4 7.9,-8.4 z" fill="#c6deff" stroke="#fff" stroke-linejoin="round" stroke-width="1.2" id="svg_10"/>
     </g>
-  </g></g></svg>
+  </g></g>
+<g class="currentLayer" style=""><title>Layer 2</title><g filter="url(#blur)" id="svg_1" class="">
+    <g class="am-weather-wind" fill="none" stroke="#89cff0" stroke-linecap="round" stroke-width="2" id="svg_2">
+      <path stroke-dasharray="150 10" d="M19.864464432001114,6.434772372245789 A2.9948222637176514,2.6344876289367676 0 1 1 22.48493391275406,10.38650381565094 H8.259528160095215 " id="svg_3">
+        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0s"/>
+      </path>
+      <path stroke-dasharray="144 16" d="M30.346342355012894,10.38650381565094 A2.9948222637176514,2.6344876289367676 0 1 1 32.96681183576584,14.338235259056091 H5.2647058963775635 " id="svg_4">
+        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0.5s"/>
+      </path>
+      <path stroke-dasharray="150 10" d="M22.110581129789352,22.241698145866394 A2.9948222637176514,2.6344876289367676 0 1 0 24.731050610542297,18.289966702461243 H12.003055989742279 " id="svg_5">
+        <animate attributeName="stroke-dashoffset" dur="3s" repeatCount="indefinite" values="0; 160" begin="0.25s"/>
+      </path>
+    </g>
+  </g>
+ </g>
+</svg>
