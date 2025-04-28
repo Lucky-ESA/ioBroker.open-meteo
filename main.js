@@ -1522,15 +1522,15 @@ class OpenMeteo extends utils.Adapter {
                     ? "/adapter/open-meteo/img/weatheranimated/humidity.svg"
                     : "/adapter/open-meteo/img/weathericons/humidity-water-drop.svg";
             const humi =
-                `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                `<img width="${this.html.forecast_image_width}px" height="${this.html.forecast_image_height}px" ` +
                 `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
                 `src='${humi_path}'/>`;
             const min =
-                `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                `<img width="${this.html.forecast_image_width}px" height="${this.html.forecast_image_height}px" ` +
                 `style="vertical-align:middle" alt="${temp_min}" title="${temp_min}" ` +
                 `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(temp_min)}'/>`;
             const max =
-                `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                `<img width="${this.html.forecast_image_width}px" height="${this.html.forecast_image_height}px" ` +
                 `style="vertical-align:middle" alt="${temp_max}" title="${temp_max}" ` +
                 `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(temp_max)}'/>`;
             const daily =
@@ -1645,11 +1645,11 @@ class OpenMeteo extends utils.Adapter {
                         ? "/adapter/open-meteo/img/weatheranimated/humidity.svg"
                         : "/adapter/open-meteo/img/weathericons/humidity-water-drop.svg";
                 const humi =
-                    `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                    `<img width="${this.html.forecast_image_width}px" height="${this.html.forecast_image_height}px" ` +
                     `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
                     `src='${humi_path}'/>`;
                 const min =
-                    `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                    `<img width="${this.html.forecast_image_width}px" height="${this.html.forecast_image_height}px" ` +
                     `style="vertical-align:middle" alt="${temp}" title="${temp}" ` +
                     `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(temp)}'/>`;
                 const daily =
@@ -1682,11 +1682,11 @@ class OpenMeteo extends utils.Adapter {
                         `style="vertical-align:middle" alt="${direction}°" title="${direction}°" ` +
                         `src='/open-meteo.0/grad${direction}.svg'/>`;
                     const humi =
-                        `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                        `<img width="${this.html.forecast_image_width}px" height="${this.html.forecast_image_height}px" ` +
                         `style="vertical-align:middle" alt="${humidity}" title="${humidity}" ` +
                         `src='${humi_path}'/>`;
                     const min =
-                        `<img width="${this.html.forecast_font_size * 5}px" height="${this.html.forecast_font_size * 5}px" ` +
+                        `<img width="${this.html.forecast_image_width}px" height="${this.html.forecast_image_height}px" ` +
                         `style="vertical-align:middle" alt="${temp}" title="${temp}" ` +
                         `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(temp)}'/>`;
                     const daily =
