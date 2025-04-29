@@ -1465,7 +1465,7 @@ class OpenMeteo extends utils.Adapter {
             `   span {text-align:${this.html.today_text_algin}${font};` +
             `   border-radius:${this.html.today_border_radius}px;border-collapse:separate;border:${this.html.today_border}px solid gainsboro;` +
             `   border-color:${this.hexToRGBA(this.html.today_border_color, this.html.today_border_color_alpha)};}` +
-            `   td {border-width:0px;border-style:solid;border-color:silver;}` +
+            `   td {border-width:0px;border-style:solid;border-color:silver;white-space:nowrap;}` +
             `   input {height:10vw;width:10vw;}` +
             `   .container_column {display:flex;flex-direction: column;justify-content: flex-start;` +
             `   border-radius:${this.html.forecast_border_radius}px;border-collapse:separate;border:${this.html.forecast_border}px solid gainsboro;` +
@@ -1540,10 +1540,10 @@ class OpenMeteo extends utils.Adapter {
             html += `<tr>
                         <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]}</td>
                         <td>${daily}</td>
-                        <td nowrap>${min} ${temp_min}°C ${constants.DAYNAME.unit[this.lang]} ${max} ${temp_max}°C</td>
+                        <td>${min} ${temp_min}°C ${constants.DAYNAME.unit[this.lang]} ${max} ${temp_max}°C</td>
                         <td>${direc}</td>
-                        <td nowrap>${humi} ${humidity}%</td>
-                        <td align=left>${text}</td>
+                        <td>${humi} ${humidity}%</td>
+                        <td align="left">${text}</td>
                     </tr>`;
         }
         html += `    </table>` + `</div></body></html>`;
@@ -1583,7 +1583,7 @@ class OpenMeteo extends utils.Adapter {
             `   span {text-align:${this.html.today_text_algin}${font};` +
             `   border-radius:${this.html.today_border_radius}px;border-collapse:separate;border:${this.html.today_border}px solid gainsboro;` +
             `   border-color:${this.hexToRGBA(this.html.today_border_color, this.html.today_border_color_alpha)};}` +
-            `   td {border-width:0px;border-style:solid;border-color:silver;}` +
+            `   td {border-width:0px;border-style:solid;border-color:silver;white-space:nowrap;}` +
             `   input {height:10vw;width:10vw;}` +
             `   .container_column {display:flex;flex-direction: column;justify-content: flex-start;` +
             `   border-radius:${this.html.forecast_border_radius}px;border-collapse:separate;border:${this.html.forecast_border}px solid gainsboro;` +
@@ -1659,10 +1659,10 @@ class OpenMeteo extends utils.Adapter {
                 html += `<tr>
                                 <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
                                 <td>${daily}</td>
-                                <td nowrap>${min} ${temp}°C</td>
+                                <td>${min} ${temp}°C</td>
                                 <td>${direc}</td>
-                                <td nowrap>${humi} ${humidity}%</td>
-                                <td align=left>${text}</td>
+                                <td>${humi} ${humidity}%</td>
+                                <td align="left">${text}</td>
                             </tr>`;
             }
             if (h > 0) {
