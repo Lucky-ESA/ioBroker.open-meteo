@@ -499,49 +499,53 @@
 
 [Zusammenfassung](#zusammenfassung)
 
-| Objekte                       | Beschreibung                                                       |
-| ----------------------------- | ------------------------------------------------------------------ |
-| bg_color                      | Hintergrungfarbe (RGBA)                                            |
-| bg_color_alpha                | Hintergrundfarbe Aplha (RGB`A`)                                    |
-| cell_color                    | Zellfarbe (RGBA)                                                   |
-| cell_color_alpha              | Zellfarbe (RGB`A`)                                                 |
-| compass_bg_color_bottom       | Hintergrundfarbe unten                                             |
-| compass_bg_color_left         | Hintergrundfarbe links                                             |
-| compass_bg_color_right        | Hintergrundfarbe rechte                                            |
-| compass_color_border          | Randfarbe                                                          |
-| compass_color_font            | Schriftfarbe                                                       |
-| compass_color_needle_north    | Farbe Nordpfeil                                                    |
-| compass_color_needle_south    | Farbe Südpfeil                                                     |
-| compass_forecast_image_height | Höhe in der Wettervorhersage                                       |
-| compass_forecast_image_width  | Breite in der Wettervorhersage                                     |
-| font_color                    | Schriftfarbe (RGBA)                                                |
-| font_color_alpha              | Schriftfarbe (RGB`A`)                                              |
-| forecast_border               | Rahmenbreite von der Wettervorhersage                              |
-| forecast_border_color         | Rahmenfarbe von der Wettervorhersage (RGBA)                        |
-| forecast_border_color_alpha   | (RGB`A`)                                                           |
-| forecast_border_radius        | Rahmenradius von der Wettervorhersage                              |
-| forecast_font_size            | Schriftgröße von der Wettervorhersage                              |
-| forecast_image_height         | Bildhöhe von der Wettervorhersage                                  |
-| forecast_image_width          | Bildbreite von der Wettervorhersage                                |
-| html_code                     | HTML Code für IQontrol, VIS und VIS2 [VIS2 Script](#java-für-vis2) |
-| html_code_hourly              | HTML Code für IQontrol, VIS und VIS2 [VIS2 Script](#java-für-vis2) |
-| icon_own_path                 | Path vom Icon                                                      |
-| icon_select                   | Auswahl Icon (Pfad, Icon mt Farbänderung, eigene Icon)             |
-| today_border                  | Rahmenbreite vom aktuellen Tag                                     |
-| today_border_color            | Rahmenfarbe vom aktuellen Tag (RGBA)                               |
-| today_border_color_alpha      | Rahmenfarbe Alpha vom aktuellen Tag (RGB`A`)                       |
-| today_border_radius           | Rahmenradius vom aktuellen Tag                                     |
-| today_clock_font_size         | Schriftgröße der Uhr vom aktuellen Tag                             |
-| today_image_height            | Bildhöhe vom aktuellen Tag                                         |
-| today_image_width             | Bildbreite vom aktuellen Tag                                       |
-| today_text_algin              | Textausrichtung vom aktuellen Tag                                  |
-| today_text_border             | Rahmenbreite Text vom aktuellen Tag                                |
-| today_text_border_color       | Rahmenfarbe Alpha Text vom aktuellen Tag(RGBA)                     |
-| today_text_border_color_alpha | Rahmenfarbe Alpha Text vom aktuellen Tag(RGB`A`)                   |
-| today_text_border_radius      | Rahmenradius Text vom aktuellen Tag                                |
-| today_weather_font_size       | Schriftgröße Wetter vom aktuellen Tag                              |
-| trigger                       | NUR für IQontrol um die Wettervorhersage anzuzeigen                |
-| trigger_hourly                | NUR für IQontrol um die stündliche Wettervorhersage anzuzeigen     |
+| Objekte                             | Beschreibung                                                       |
+| ----------------------------------- | ------------------------------------------------------------------ |
+| bg_color                            | Hintergrungfarbe (RGBA)                                            |
+| bg_color_alpha                      | Hintergrundfarbe Aplha (RGB`A`)                                    |
+| cell_color                          | Zellfarbe (RGBA)                                                   |
+| cell_color_alpha                    | Zellfarbe (RGB`A`)                                                 |
+| compass_bg_color_bottom             | Hintergrundfarbe unten                                             |
+| compass_bg_color_left               | Hintergrundfarbe links                                             |
+| compass_bg_color_right              | Hintergrundfarbe rechte                                            |
+| compass_color_border                | Randfarbe                                                          |
+| compass_color_font                  | Schriftfarbe                                                       |
+| compass_color_needle_north          | Farbe Nordpfeil                                                    |
+| compass_color_needle_south          | Farbe Südpfeil                                                     |
+| compass_forecast_image_height       | Höhe in der Wettervorhersage                                       |
+| compass_forecast_image_width        | Breite in der Wettervorhersage                                     |
+| font_color                          | Schriftfarbe (RGBA)                                                |
+| font_color_alpha                    | Schriftfarbe (RGB`A`)                                              |
+| forecast_border                     | Rahmenbreite von der Wettervorhersage                              |
+| forecast_border_color               | Rahmenfarbe von der Wettervorhersage (RGBA)                        |
+| forecast_border_color_alpha         | (RGB`A`)                                                           |
+| forecast_border_radius              | Rahmenradius von der Wettervorhersage                              |
+| forecast_font_size                  | Schriftgröße von der Wettervorhersage                              |
+| forecast_image_height               | Bildhöhe von der Wettervorhersage                                  |
+| forecast_image_humidity_height      | Bildhöhe vom Icon Luftfeuchtigkeit                                 |
+| forecast_image_humidity_width       | Bildbreite vom Icon Luftfeuchtigkeit                               |
+| forecast_image_thermalstress_height | Bildhöhe vom Icon thermische Belastung                             |
+| forecast_image_thermalstress_width  | Bildbreite vom Icon thermische Belastung                           |
+| forecast_image_width                | Bildbreite von der Wettervorhersage                                |
+| html_code                           | HTML Code für IQontrol, VIS und VIS2 [VIS2 Script](#java-für-vis2) |
+| html_code_hourly                    | HTML Code für IQontrol, VIS und VIS2 [VIS2 Script](#java-für-vis2) |
+| icon_own_path                       | Path vom Icon                                                      |
+| icon_select                         | Auswahl Icon (Pfad, Icon mt Farbänderung, eigene Icon)             |
+| today_border                        | Rahmenbreite vom aktuellen Tag                                     |
+| today_border_color                  | Rahmenfarbe vom aktuellen Tag (RGBA)                               |
+| today_border_color_alpha            | Rahmenfarbe Alpha vom aktuellen Tag (RGB`A`)                       |
+| today_border_radius                 | Rahmenradius vom aktuellen Tag                                     |
+| today_clock_font_size               | Schriftgröße der Uhr vom aktuellen Tag                             |
+| today_image_height                  | Bildhöhe vom aktuellen Tag                                         |
+| today_image_width                   | Bildbreite vom aktuellen Tag                                       |
+| today_text_algin                    | Textausrichtung vom aktuellen Tag                                  |
+| today_text_border                   | Rahmenbreite Text vom aktuellen Tag                                |
+| today_text_border_color             | Rahmenfarbe Alpha Text vom aktuellen Tag(RGBA)                     |
+| today_text_border_color_alpha       | Rahmenfarbe Alpha Text vom aktuellen Tag(RGB`A`)                   |
+| today_text_border_radius            | Rahmenradius Text vom aktuellen Tag                                |
+| today_weather_font_size             | Schriftgröße Wetter vom aktuellen Tag                              |
+| trigger                             | NUR für IQontrol um die Wettervorhersage anzuzeigen                |
+| trigger_hourly                      | NUR für IQontrol um die stündliche Wettervorhersage anzuzeigen     |
 
 ![wweather_states_html_1.png](img/weather_states_html_1.png)</br>
 ![wweather_states_html_2.png](img/weather_states_html_2.png)</br>
