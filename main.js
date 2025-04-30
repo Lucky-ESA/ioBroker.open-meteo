@@ -1427,6 +1427,7 @@ class OpenMeteo extends utils.Adapter {
     }
 
     async updateHTML() {
+        const unit = this.config.temperaturUnit === "default" ? "°C" : "F";
         const bg =
             this.html.bg_color != "#000"
                 ? `	 background-color:${this.hexToRGBA(this.html.bg_color, this.html.bg_color_alpha)};`
@@ -1451,7 +1452,7 @@ class OpenMeteo extends utils.Adapter {
             actual_temperature = parseFloat(actual_temp.val.toString());
         }
         const actual =
-            `<img width="${this.html.today_weather_font_size * 5}px" height="${this.html.today_weather_font_size * 5}px" ` +
+            `<img width="${this.html.today_image_thermalstress_width}px" height="${this.html.today_image_thermalstress_height}px" ` +
             `style="vertical-align:middle" alt="${actual_temperature}" title="${actual_temperature}" ` +
             `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(actual_temperature)}'/>`;
         const trigger_val = this.html.trigger ? false : true;
@@ -1499,7 +1500,7 @@ class OpenMeteo extends utils.Adapter {
             `        <span class="box_date"><b><i>${name}, ${actual_date}</i></b></span>` +
             `    </div>` +
             `    <div class="container_column">` +
-            `        <span class="box_weather">${actual} <b><i>${actual_temperature}°C</i></b></span>` +
+            `        <span class="box_weather">${actual} <b><i>${actual_temperature}${unit}</i></b></span>` +
             `        <span class="box_weather"><i>${actual_text}</i></span>` +
             `    </div>` +
             `</div>` +
@@ -1540,7 +1541,7 @@ class OpenMeteo extends utils.Adapter {
             html += `<tr>
                         <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]}</td>
                         <td>${daily}</td>
-                        <td>${min} ${temp_min}°C ${constants.DAYNAME.unit[this.lang]} ${max} ${temp_max}°C</td>
+                        <td>${min} ${temp_min}${unit} ${constants.DAYNAME.unit[this.lang]} ${max} ${temp_max}${unit}</td>
                         <td>${direc}</td>
                         <td>${humi} ${humidity}%</td>
                         <td align="left">${text}</td>
@@ -1553,6 +1554,7 @@ class OpenMeteo extends utils.Adapter {
     }
 
     async updateHTMLHourly(actual_temperature) {
+        const unit = this.config.temperaturUnit === "default" ? "°C" : "F";
         let h = new Date().getHours();
         const bg =
             this.html.bg_color != "#000"
@@ -1570,7 +1572,7 @@ class OpenMeteo extends utils.Adapter {
         const actual_text = this.value[`hourly.day01.hour${`0${h}`.slice(-2)}.weather_code_text`];
         const actual_clock = `${`0${new Date().getHours()}`.slice(-2)}:` + `${`0${new Date().getMinutes()}`.slice(-2)}`;
         const actual =
-            `<img width="${this.html.today_weather_font_size * 5}px" height="${this.html.today_weather_font_size * 5}px" ` +
+            `<img width="${this.html.today_image_thermalstress_width}px" height="${this.html.today_image_thermalstress_height}px" ` +
             `style="vertical-align:middle" alt="${actual_temperature}" title="${actual_temperature}" ` +
             `src='/adapter/open-meteo/img/thermalstress/${this.getThermalStress(actual_temperature)}'/>`;
         const trigger_val = this.html.trigger_hourly ? false : true;
@@ -1617,7 +1619,7 @@ class OpenMeteo extends utils.Adapter {
             `        <span class="box_date"><b><i>${name}, ${actual_date}</i></b></span>` +
             `    </div>` +
             `    <div class="container_column">` +
-            `        <span class="box_weather">${actual} <b><i>${actual_temperature}°C</i></b></span>` +
+            `        <span class="box_weather">${actual} <b><i>${actual_temperature}${unit}</i></b></span>` +
             `        <span class="box_weather"><i>${actual_text}</i></span>` +
             `    </div>` +
             `</div>` +
@@ -1659,7 +1661,7 @@ class OpenMeteo extends utils.Adapter {
                 html += `<tr>
                                 <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
                                 <td>${daily}</td>
-                                <td>${min} ${temp}°C</td>
+                                <td>${min} ${temp}${unit}</td>
                                 <td>${direc}</td>
                                 <td>${humi} ${humidity}%</td>
                                 <td align="left">${text}</td>
@@ -1696,7 +1698,7 @@ class OpenMeteo extends utils.Adapter {
                     html += `<tr>
                                     <td>${constants.DAYNAME[new Date(times).getDay()][this.lang]} ${this.timeCounting(new Date(times))}</td>
                                     <td>${daily}</td>
-                                    <td nowrap>${min} ${temp}°C</td>
+                                    <td nowrap>${min} ${temp}${unit}</td>
                                     <td>${direc}</td>
                                     <td nowrap>${humi} ${humidity}%</td>
                                     <td align=left>${text}</td>

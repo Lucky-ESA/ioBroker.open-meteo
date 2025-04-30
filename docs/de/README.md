@@ -537,6 +537,8 @@
 | today_border_radius                 | Rahmenradius vom aktuellen Tag                                     |
 | today_clock_font_size               | Schriftgröße der Uhr vom aktuellen Tag                             |
 | today_image_height                  | Bildhöhe vom aktuellen Tag                                         |
+| today_image_thermalstress_height    | Bildhöhe vom Icon thermische Belastung (heute)                     |
+| today_image_thermalstress_width     | Bildhöhe vom Icon thermische Belastung (heute)                     |
 | today_image_width                   | Bildbreite vom aktuellen Tag                                       |
 | today_text_algin                    | Textausrichtung vom aktuellen Tag                                  |
 | today_text_border                   | Rahmenbreite Text vom aktuellen Tag                                |

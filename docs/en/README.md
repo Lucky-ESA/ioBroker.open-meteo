@@ -537,6 +537,8 @@
 | today_border_radius                 | Border radius of the current day                                   |
 | today_clock_font_size               | Font size of the clock for the current day                         |
 | today_image_height                  | Image height of the current day                                    |
+| today_image_thermalstress_height    | Image height of the thermal stress icon (today)                    |
+| today_image_thermalstress_width     | Image width of the thermal stress icon (today)                     |
 | today_image_width                   | Image width of the current day                                     |
 | today_text_algin                    | Text alignment of the current day                                  |
 | today_text_border                   | Text border width of the current day                               |
