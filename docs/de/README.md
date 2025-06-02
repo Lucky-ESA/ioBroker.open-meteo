@@ -201,8 +201,8 @@
 
 | Objekte                             | Beschreibung                                                                                                                                       |
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| apparent_temperature_max            | Maximum daily apparent temperature                                                                                                                 |
-| apparent_temperature_min            | Minimum daily apparent temperature                                                                                                                 |
+| apparent_temperature_max            | Maximale scheinbare Tagestemperatur                                                                                                                |
+| apparent_temperature_min            | Minimale scheinbare Tagestemperatur                                                                                                                |
 | cloud_cover_mean                    | Mittlere Wolkendecke                                                                                                                               |
 | daylight_duration                   | Anzahl der Sekunden Tageslicht pro Tag                                                                                                             |
 | precipitation_hours                 | Die Anzahl der Stunden mit Regen                                                                                                                   |
