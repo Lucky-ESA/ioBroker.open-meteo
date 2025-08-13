@@ -440,8 +440,8 @@ class OpenMeteo extends utils.Adapter {
         this.log.debug(JSON.stringify(timeJSON));
         this.log.debug(JSON.stringify(diff));
         if (!constants.ASTRO[timeJSON[current]]) {
-            this.log.info(`Current: ${JSON.stringify(this.timeArray)}`);
-            this.log.info(`constants: ${this.lastCurrent}`);
+            this.log.debug(`Current: ${JSON.stringify(this.timeArray)}`);
+            this.log.debug(`constants: ${this.lastCurrent}`);
         }
         await this.setState(`suncalc.currentAstroTime`, {
             val: constants.ASTRO[timeJSON[current]] ? constants.ASTRO[timeJSON[current]][this.lang] : this.lastCurrent,
@@ -571,6 +571,7 @@ class OpenMeteo extends utils.Adapter {
             .then(res => {
                 if (!this.conn) {
                     this.setState("info.connection", true, true);
+                    this.conn = true;
                 }
                 this.setStatusRequest(req);
                 return res.data ? res.data : false;
@@ -580,6 +581,7 @@ class OpenMeteo extends utils.Adapter {
                 error.response && this.log.error(JSON.stringify(error.response.message));
                 if (this.conn) {
                     this.setState("info.connection", false, true);
+                    this.conn = false;
                 }
                 this.setStatusError(error);
                 return false;
@@ -968,6 +970,7 @@ class OpenMeteo extends utils.Adapter {
             .then(res => {
                 if (!this.conn) {
                     this.setState("info.connection", true, true);
+                    this.conn = true;
                 }
                 return res.data ? res.data : false;
             })
@@ -976,6 +979,7 @@ class OpenMeteo extends utils.Adapter {
                 error.response && this.log.error(JSON.stringify(error.response.message));
                 if (this.conn) {
                     this.setState("info.connection", false, true);
+                    this.conn = false;
                 }
                 this.setStatusError(error);
                 return false;
