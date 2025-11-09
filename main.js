@@ -8,13 +8,14 @@
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
 const { find } = require("geo-tz");
-const axios = require("axios");
+const axios = require("axios").default;
 const helper = require("./lib/helper");
 const constants = require("./lib/constants");
 //const dummy = require("./lib/dummy_request");
 const SVG = require("./lib/svgCreater");
 const SunCalc = require("suncalc3");
 const { RecurrenceRule, scheduleJob } = require("node-schedule");
+
 let status = {
     countRequest: 0,
     countRequestMaxDay: 10000,
@@ -1289,7 +1290,7 @@ class OpenMeteo extends utils.Adapter {
     fromJulian(j) {
         j = +j + 30.0 / (24 * 60 * 60);
         const A = this.julianArray(j, true);
-        // @ts-expect-error // Error OK
+        // @ts-expect-error Error OK
         return new Date(Date.UTC.apply(Date, A));
     }
 
