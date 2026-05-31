@@ -516,7 +516,7 @@ class OpenMeteo extends utils.Adapter {
     /**
      * Save status error JSON
      *
-     * @param {*} err
+     * @param {string} err
      */
     async setStatusError(err) {
         ++status.countError;

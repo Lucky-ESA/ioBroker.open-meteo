@@ -37,7 +37,7 @@ https://github.com/roe-dl/weathericons
 
 - Node 20 or 22
 - JS-Controller >= 6.0.11
-- Admin >= 7.0.23
+- Admin >= 7.8.23
 
 ## Description
 
