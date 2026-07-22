@@ -24,7 +24,7 @@
     },
     "dependencies": {
         "@iobroker/adapter-core": "^3.3.2",
-        "axios": "^1.16.1",
+        "axios": "^1.18.1",
         "geo-tz": "^8.1.8",
         "node-schedule": "^2.1.1",
         "suncalc3": "^2.0.5"
